@@ -787,7 +787,42 @@ class XTCEParser:
         # FIXME: At the moment nested structs are not supported
         return qualified_name.split(xtce_generator.XTCEManager.NAMESPACE_SEPARATOR)[-1]
 
-    def validate_packet(self, packet: bytes, path: str, bit_offset: int):
+
+    def get_value_from_bits(self, value_bits: bitarray, params_map: dict, param_name: str):
+        i_type = get_param_intrinsic_type(params_map, param_name)
+        value = None
+        if type(i_type) == xtce.IntegerParameterType:
+            value = ba2int(value_bits)
+        elif type(i_type) == xtce.FloatParameterType:
+            # >> > struct.unpack('f', b)  # native byte order (little-endian on my machine)
+            # (1.7230105268977664e+16,)
+            # >> > struct.unpack('>f', b)  # big-endian
+            # (-109.22724914550781,)
+            value = struct.unpack('f', value_bits.tobytes())[0]  # little-endian
+
+        elif type(i_type) == xtce.BooleanParameterType:
+            value = bool(ba2int(value_bits))  # little-endian
+
+        elif type(i_type) == xtce.StringParameterType:
+            value = value_bits.tobytes().decode('utf-8')  # little-endian
+
+        elif type(i_type) == xtce.EnumeratedParameterType:
+            # FIXME:Implement properly
+            value = ba2int(value_bits)  # little-endian
+            for enum in i_type.get_EnumerationList().get_Enumeration():
+                enum: xtce.ValueEnumerationType()
+
+                if enum.get_value() == value:
+                    value = enum.get_label()
+
+        # elif type(i_type) == list:
+        #     value = []
+        #     value = ba2int(value_bits)
+        #     for item in i_type:
+        #         value.append(item)
+        return value
+
+    def validate_packet(self, packet: bytes, path: str):
         """
         Returns the value inside of the packet that path points to, but only if packet is valid.
         The packet is validated based on XTCE rules such as criteria for containers.
@@ -829,39 +864,7 @@ class XTCEParser:
             value_bits = container_bits[
                          base_container_size + param_offset:base_container_size + param_offset + param_value_size]
 
-            i_type = get_param_intrinsic_type(container_map[XTCEParser.PARAMS_KEY], param_name)
-            i_type_type = type(i_type)
-            # FIXME:Check byte order
-            if type(i_type) == xtce.IntegerParameterType:
-                value = ba2int(value_bits)
-            elif type(i_type) == xtce.FloatParameterType:
-                # >> > struct.unpack('f', b)  # native byte order (little-endian on my machine)
-                # (1.7230105268977664e+16,)
-                # >> > struct.unpack('>f', b)  # big-endian
-                # (-109.22724914550781,)
-                value = struct.unpack('f', value_bits.tobytes())[0]  # little-endian
-
-            elif type(i_type) == xtce.BooleanParameterType:
-                value = bool(ba2int(value_bits))  # little-endian
-
-            elif type(i_type) == xtce.StringParameterType:
-                value = value_bits.tobytes().decode('utf-8')  # little-endian
-
-            elif type(i_type) == xtce.EnumeratedParameterType:
-                # FIXME:Implement properly
-                value = ba2int(value_bits)  # little-endian
-                for enum in i_type.get_EnumerationList().get_Enumeration():
-                    enum: xtce.ValueEnumerationType()
-
-                    if enum.get_value() == value:
-                        value = enum.get_label()
-
-            elif type(i_type) == List:
-                value = []
-                for item in i_type:
-                    pass
-            else:
-                logging.warning(f"The packet for {path} is valid, but no type for it was found.")
+            value = self.get_value_from_bits(value_bits, container_map[XTCEParser.PARAMS_KEY], param_name)
 
         return value
 
