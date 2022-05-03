@@ -10,6 +10,7 @@ import threading
 import json
 
 import enum
+import time
 from datetime import datetime
 
 from pyliner import util
@@ -34,9 +35,6 @@ from pyliner.pyliner_error import PylinerError
 from pyliner.app import App
 from pyliner.util import init_socket, handler_factory, CallableDefaultDict, \
     RealTimeThread, OrderedSetQueue
-
-
-# TODO Python3 does not see telemetry. This is the only barrier to Python3.
 
 
 class ParseMode(enum.IntEnum):
@@ -224,7 +222,9 @@ class Communication(App):
         # self.listener_thread.start()
         self.parse_mode = parse_mode
         self.parser = parser
-        self.send_command("/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID")
+        for i in range(2048):
+            time.sleep(.004)
+            self.send_command("/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID")
 
     def attach(self, vehicle):
         super(Communication, self).attach(vehicle)
@@ -369,8 +369,6 @@ class Communication(App):
 
         # self.vehicle.debug(
         #     'Sending telemetry to airliner: %s', msg)
-        # for i in range(1):
-        #     print(f"send{i}")
         self.send_bytes(buffer)
         return True
 
@@ -489,10 +487,11 @@ class Communication(App):
         """
         self.all_telemetry.append(tlm)
         # FIXME:Use these for unit testing
-        tlm_value = self.parser.validate_packet(tlm[0],
-                                                "/cfs/cpd/core/cfe/cfe_es/CFE_ES_APP_TLM_MID.Payload.AppInfo.Name", 0)
+        # tlm_value = self.parser.validate_packet(tlm[0],
+        #                                         "/cfs/cpd/core/cfe/cfe_es/CFE_ES_APP_TLM_MID.Payload.AppInfo.Name", 0)
         # tlm_value = self.parser.validate_packet(tlm[0], "/cfs/cpd/core/cfe/cfe_es/CFE_ES_APP_TLM_MID.Payload.AppInfo.Type", 0)
         # tlm_value = self.parser.validate_packet(tlm[0], "/cfs/cpd/apps/ci/CI_HK_TLM_MID.usCmdCnt", 0)
+        tlm_value = self.parser.validate_packet(tlm[0], "/cfs/cpd/core/cfe/cfe_es/CFE_ES_HK_TLM_MID.Payload.PerfFilterMask", 0)
         if tlm_value is not None:
             print(f'value:{tlm_value}')
         # self.vehicle.debug("Recvd tlm: %s", tlm)
@@ -596,7 +595,7 @@ class Communication(App):
                 'Previous.AZ': 1.0,
                 'Previous.AcceptanceRadius': 1.0,
                 'Previous.CruisingSpeed': 100.0,
-                'Previous.CruisingThrottle': 1.0,
+                'Previous.CruisingThrottle': -1.0,
                 'Previous.Valid': 1,
                 'Previous.Type': 1,
                 'Previous.PositionValid': 1,
@@ -656,7 +655,7 @@ class Communication(App):
                 'Next.AZ': 1.0,
                 'Next.AcceptanceRadius': 1.0,
                 'Next.CruisingSpeed': 120.0,
-                'Next.CruisingThrottle': 1.0,
+                'Next.CruisingThrottle': -1.0,
                 'Next.Valid': 1,
                 '_spare0': 0,
                 'Next.Type': 1,
@@ -671,7 +670,7 @@ class Communication(App):
                 'Next.VelocityFrame': 1,
                 }
         for arg in list(args.keys())[:2]:
-            args[arg] = random.uniform(1.5, 1.9) * random.randint(100, 300)
+            args[arg] = random.uniform(1.1, 20.5) * random.randint(0, 30000)
 
         return self.parser.craft_tlm_command(path, args)
 

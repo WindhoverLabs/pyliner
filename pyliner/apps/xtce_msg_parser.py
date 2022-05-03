@@ -830,6 +830,7 @@ class XTCEParser:
                          base_container_size + param_offset:base_container_size + param_offset + param_value_size]
 
             i_type = get_param_intrinsic_type(container_map[XTCEParser.PARAMS_KEY], param_name)
+            i_type_type = type(i_type)
             # FIXME:Check byte order
             if type(i_type) == xtce.IntegerParameterType:
                 value = ba2int(value_bits)
@@ -855,7 +856,7 @@ class XTCEParser:
                     if enum.get_value() == value:
                         value = enum.get_label()
 
-            elif type(i_type) == List[xtce.BaseDataType]:
+            elif type(i_type) == List:
                 value = []
                 for item in i_type:
                     pass
