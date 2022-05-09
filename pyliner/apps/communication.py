@@ -13,9 +13,13 @@ import enum
 import time
 from datetime import datetime
 
+import xtce.xtce_generator
+from xtce.xtce_msg_parser import XTCEParser
+
 from pyliner import util
-from pyliner.apps.xtce_msg_parser import XTCEParser
 from datetime import datetime
+
+from pyliner.telemetry import Telemetry
 
 try:
     import queue
@@ -189,13 +193,13 @@ class Communication(App):
         """
         super(Communication, self).__init__()
 
-        if not isinstance(airliner_map, dict):
-            raise TypeError('airliner_map is expecting a dict but got {}'
-                            .format(type(airliner_map)))
+        # if not isinstance(airliner_map, dict):
+        #     raise TypeError('airliner_map is expecting a dict but got {}'
+        #                     .format(type(airliner_map)))
 
         # Telemetry variables
         self.address = address
-        self.airliner_map = airliner_map
+        # self.airliner_map = airliner_map
         self.all_telemetry = []
         self.ci_port = ci_port
         self.ci_socket = init_socket()
@@ -213,18 +217,18 @@ class Communication(App):
         """:type: dict[str, _Telemetry]"""
 
         # Receive Telemetry
-        # self.tlm_listener = socketserver.UDPServer(
-        #     ("0.0.0.0", self.to_port), handler_factory(self._on_recv_telemetry))
-        # self.listener_thread = threading.Thread(
-        #     target=self.tlm_listener.serve_forever)
-        #
-        # self.listener_thread.setDaemon(True)
-        # self.listener_thread.start()
+        self.tlm_listener = socketserver.UDPServer(
+            ("0.0.0.0", self.to_port), handler_factory(self._on_recv_telemetry))
+        self.listener_thread = threading.Thread(
+            target=self.tlm_listener.serve_forever)
+
+        self.listener_thread.setDaemon(True)
+        self.listener_thread.start()
         self.parse_mode = parse_mode
         self.parser = parser
-        for i in range(2048):
-            time.sleep(.004)
-            self.send_command("/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID")
+        # for i in range(2048):
+        #     time.sleep(.004)
+        #     self.send_command("/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID")
 
     def attach(self, vehicle):
         super(Communication, self).attach(vehicle)
@@ -364,7 +368,7 @@ class Communication(App):
         self.ci_socket.sendto(message, (self.address, self.ci_port))
         return True
 
-    def send_command(self, telemetry_path: str):
+    def send_command(self, telemetry_path: Telemetry):
         buffer = self._serialize(telemetry_path)
 
         # self.vehicle.debug(
@@ -485,15 +489,21 @@ class Communication(App):
         Args:
             tlm(str): Raw bytes received from socket
         """
-        self.all_telemetry.append(tlm)
         # FIXME:Use these for unit testing
         # tlm_value = self.parser.validate_packet(tlm[0],
         #                                         "/cfs/cpd/core/cfe/cfe_es/CFE_ES_APP_TLM_MID.Payload.AppInfo.Name", 0)
         # tlm_value = self.parser.validate_packet(tlm[0], "/cfs/cpd/core/cfe/cfe_es/CFE_ES_APP_TLM_MID.Payload.AppInfo.Type", 0)
         # tlm_value = self.parser.validate_packet(tlm[0], "/cfs/cpd/apps/ci/CI_HK_TLM_MID.usCmdCnt", 0)
-        tlm_value = self.parser.validate_packet(tlm[0], "/cfs/cpd/core/cfe/cfe_es/CFE_ES_HK_TLM_MID.Payload.PerfFilterMask", 0)
+        tlm_value = self.parser.validate_packet(tlm[0],
+                                                "/cfs/cpd/core/cfe/cfe_es/CFE_ES_HK_TLM_MID.Payload.PerfFilterMask")
         if tlm_value is not None:
+            self.all_telemetry.append(tlm_value)
+            self.vehicle.debug("Recvd tlm: %s", tlm)
             print(f'value:{tlm_value}')
+        else:
+            pass
+
+        self.all_telemetry.append(tlm_value)
         # self.vehicle.debug("Recvd tlm: %s", tlm)
 
         # self.parser.validate_packet(tlm[0], None)
@@ -520,9 +530,25 @@ class Communication(App):
             #         if callable(callback):
             #             callback(self._telemetry[op_path])
             if self.parse_mode == ParseMode.XTCE:
-                self.parser.validate_packet(tlm[0], subscribed_tlm['op_path'])
+                        # Get pb msg for this msg
+                        op_path = subscribed_tlm['op_path']
+                        callback = subscribed_tlm['callback']
+                        telemItem = subscribed_tlm['telemItem']
+                        # FIXME:Add pre-processor/post-processor here
+                        tlm_value = self.parser.validate_packet(tlm[0], subscribed_tlm['op_path'])
 
-    def subscribe(self, tlm_item, callback=0):
+                        telemItem.update(
+                            value=tlm_value, time=None)
+
+                        # Update telemetry dictionary with fresh data
+                        # FIXME:Set time correctly
+                        self._telemetry[op_path].update(
+                            value=tlm_value, time=None)
+
+                        if callable(callback):
+                            callback(self._telemetry[op_path])
+
+    def subscribe(self, tlm_path: str, callback=0):
         """
         Receives an operational path to an airliner msg attribute to subscribe
         to, as well as an optional callback function.
@@ -537,34 +563,39 @@ class Communication(App):
                               '/Airliner/ES/HK/ErrCounter']}
         """
 
-        self.vehicle.info('Subscribing to: {}'.format(tlm_item))
+        self.vehicle.info('Subscribing to: {}'.format(tlm_path))
         # Get operation for specified telemetry
-        op = self._get_airliner_op(tlm_item)
-        if not op:
-            err_msg = "Invalid telemetry operational name received. " \
-                      "Operation (%s) not defined." % tlm_item
+        tlm_item = tlm_path
+        if '.' in tlm_path:
+            tlm_item = tlm_path.split('.')[0]
+
+        tlm_path_namesapce = xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR \
+                   + xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR.join(
+            tlm_item.split(xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR)[1:-1])
+        mids = self.parser.get_msg_ids_at(tlm_path_namesapce)
+
+        if mids is None:
+            err_msg = f"Invalid telemetry operational name received:{tlm_item} "
             self.vehicle.error(err_msg)
             raise InvalidOperationException(err_msg)
 
-        if not self._get_op_attr(tlm_item) and len(tlm_item.split('/')) == 5:
-            err_msg = "Invalid telemetry operational name received. " \
-                      "Symbol: {} exists, but attribute: {} does not.".format(
-                tlm_item.split('/')[-2], tlm_item.split('/')[-1])
+        msg_name = tlm_item.split(xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR)[-1]
+
+        if msg_name not in mids:
+            err_msg = f"{msg_name} message does not exist."
             self.vehicle.error(err_msg)
             raise InvalidOperationException(err_msg)
 
-        newTelemetry = _Telemetry(name=tlm_item)
+        mid = mids[msg_name]
+
+        newTelemetry = _Telemetry(name=tlm_path)
 
         # Add entry to subscribers list
         if self.parse_mode == ParseMode.PROTOBUF:
-            self.subscribers.append({'op_path': tlm_item,
-                                     'airliner_mid': op['airliner_mid'],
-                                     'tlmSeqNum': 0,
-                                     'callback': callback,
-                                     'telemItem': newTelemetry})
+            pass
         elif self.parse_mode == ParseMode.XTCE:
-            self.subscribers.append({'op_path': tlm_item,
-                                     'airliner_mid': op['airliner_mid'],
+            self.subscribers.append({'op_path': tlm_path,
+                                     'airliner_mid': mid['msgID'],
                                      'tlmSeqNum': 0,
                                      'callback': callback,
                                      'telemItem': newTelemetry})
@@ -572,106 +603,105 @@ class Communication(App):
         # in user scripts and set default values.
         return newTelemetry
 
-    def _serialize(self, path: str) -> bytes:
+    def _serialize(self, tlm: Telemetry) -> bytes:
         # FIXME:Too large int for python
-        dt = datetime.today()  # Get timezone naive now
-        t = int(dt.timestamp())
-        args = {'Timestamp': 5,
-                'Previous.Lat': 150,
-                'Previous.Lon': 1.0,
-                'Previous.X': 1.0,
-                'Previous.Y': 0.0,
-                'Previous.Z': 1.0,
-                'Previous.VX': 20.0,
-                'Previous.VY': 1.0,
-                'Previous.VZ': 1.0,
-                'Previous.Alt': 1.0,
-                'Previous.Yaw': 1.0,
-                'Previous.Yawspeed': 10.0,
-                'Previous.LoiterRadius': 200.0,
-                'Previous.PitchMin': 1.0,
-                'Previous.AX': 1.0,
-                'Previous.AY': 1.0,
-                'Previous.AZ': 1.0,
-                'Previous.AcceptanceRadius': 1.0,
-                'Previous.CruisingSpeed': 100.0,
-                'Previous.CruisingThrottle': -1.0,
-                'Previous.Valid': 1,
-                'Previous.Type': 1,
-                'Previous.PositionValid': 1,
-                'Previous.VelocityValid': 1,
-                'Previous.YawValid': 1,
-                'Previous.DisableMcYawControl': 1,
-                'Previous.YawspeedValid': 1,
-                'Previous.LoiterDirection': 1,
-                'Previous.AccelerationValid': 1,
-                'Previous.AccelerationIsForce': 1,
-                'Previous.VelocityFrame': 1,
-                'Current.Lat': 200.0,
-                'Current.Lon': 1.0,
-                'Current.X': 1.0,
-                'Current.Y': 1.0,
-                'Current.Z': 1.0,
-                'Current.VX': 1.0,
-                'Current.VY': 1.0,
-                'Current.VZ': 1.0,
-                'Current.Alt': 1.0,
-                'Current.Yaw': 1.0,
-                'Current.Yawspeed': 1.0,
-                'Current.LoiterRadius': 1.0,
-                'Current.PitchMin': 1.0,
-                'Current.AX': 1.0,
-                'Current.AY': 1.0,
-                'Current.AZ': 1.0,
-                'Current.AcceptanceRadius': 1.0,
-                'Current.CruisingSpeed': 1.0,
-                'Current.CruisingThrottle': 1.0,
-                'Current.Valid': 1,
-                'Current.Type': 1,
-                'Current.PositionValid': 1,
-                'Current.VelocityValid': 1,
-                'Current.YawValid': 1,
-                'Current.DisableMcYawControl': 1,
-                'Current.YawspeedValid': 1,
-                'Current.LoiterDirection': 1,
-                'Current.AccelerationValid': 1,
-                'Current.AccelerationIsForce': 1,
-                'Current.VelocityFrame': 1,
-                'Next.Lat': 1.0,
-                'Next.Lon': 1.0,
-                'Next.X': 1.0,
-                'Next.Y': 1.0,
-                'Next.Z': 30.0,
-                'Next.VX': 1.0,
-                'Next.VY': 1.0,
-                'Next.VZ': 1.0,
-                'Next.Alt': 1.0,
-                'Next.Yaw': 1.0,
-                'Next.Yawspeed': 20.0,
-                'Next.LoiterRadius': 1.0,
-                'Next.PitchMin': 1.0,
-                'Next.AX': 1.0,
-                'Next.AY': 1.0,
-                'Next.AZ': 1.0,
-                'Next.AcceptanceRadius': 1.0,
-                'Next.CruisingSpeed': 120.0,
-                'Next.CruisingThrottle': -1.0,
-                'Next.Valid': 1,
-                '_spare0': 0,
-                'Next.Type': 1,
-                'Next.PositionValid': 1,
-                'Next.VelocityValid': 1,
-                'Next.YawValid': 1,
-                'Next.DisableMcYawControl': 1,
-                'Next.YawspeedValid': 1,
-                'Next.LoiterDirection': 1,
-                'Next.AccelerationValid': 1,
-                'Next.AccelerationIsForce': 1,
-                'Next.VelocityFrame': 1,
-                }
-        for arg in list(args.keys())[:2]:
-            args[arg] = random.uniform(1.1, 20.5) * random.randint(0, 30000)
+        # dt = datetime.today()  # Get timezone naive now
+        # t = int(dt.timestamp())
+        # args = {'Timestamp': 5,
+        #         'Previous.Lat': 150,
+        #         'Previous.Lon': 1.0,
+        #         'Previous.X': 1.0,
+        #         'Previous.Y': 0.0,
+        #         'Previous.Z': 1.0,
+        #         'Previous.VX': 20.0,
+        #         'Previous.VY': 1.0,
+        #         'Previous.VZ': 1.0,
+        #         'Previous.Alt': 1.0,
+        #         'Previous.Yaw': 1.0,
+        #         'Previous.Yawspeed': 10.0,
+        #         'Previous.LoiterRadius': 200.0,
+        #         'Previous.PitchMin': 1.0,
+        #         'Previous.AX': 1.0,
+        #         'Previous.AY': 1.0,
+        #         'Previous.AZ': 1.0,
+        #         'Previous.AcceptanceRadius': 1.0,
+        #         'Previous.CruisingSpeed': 100.0,
+        #         'Previous.CruisingThrottle': -1.0,
+        #         'Previous.Valid': 1,
+        #         'Previous.Type': 1,
+        #         'Previous.PositionValid': 1,
+        #         'Previous.VelocityValid': 1,
+        #         'Previous.YawValid': 1,
+        #         'Previous.DisableMcYawControl': 1,
+        #         'Previous.YawspeedValid': 1,
+        #         'Previous.LoiterDirection': 1,
+        #         'Previous.AccelerationValid': 1,
+        #         'Previous.AccelerationIsForce': 1,
+        #         'Previous.VelocityFrame': 1,
+        #         'Current.Lat': 200.0,
+        #         'Current.Lon': 1.0,
+        #         'Current.X': 1.0,
+        #         'Current.Y': 1.0,
+        #         'Current.Z': 1.0,
+        #         'Current.VX': 1.0,
+        #         'Current.VY': 1.0,
+        #         'Current.VZ': 1.0,
+        #         'Current.Alt': 1.0,
+        #         'Current.Yaw': 1.0,
+        #         'Current.Yawspeed': 1.0,
+        #         'Current.LoiterRadius': 1.0,
+        #         'Current.PitchMin': 1.0,
+        #         'Current.AX': 1.0,
+        #         'Current.AY': 1.0,
+        #         'Current.AZ': 1.0,
+        #         'Current.AcceptanceRadius': 1.0,
+        #         'Current.CruisingSpeed': 1.0,
+        #         'Current.CruisingThrottle': 1.0,
+        #         'Current.Valid': 1,
+        #         'Current.Type': 1,
+        #         'Current.PositionValid': 1,
+        #         'Current.VelocityValid': 1,
+        #         'Current.YawValid': 1,
+        #         'Current.DisableMcYawControl': 1,
+        #         'Current.YawspeedValid': 1,
+        #         'Current.LoiterDirection': 1,
+        #         'Current.AccelerationValid': 1,
+        #         'Current.AccelerationIsForce': 1,
+        #         'Current.VelocityFrame': 1,
+        #         'Next.Lat': 1.0,
+        #         'Next.Lon': 1.0,
+        #         'Next.X': 1.0,
+        #         'Next.Y': 1.0,
+        #         'Next.Z': 30.0,
+        #         'Next.VX': 1.0,
+        #         'Next.VY': 1.0,
+        #         'Next.VZ': 1.0,
+        #         'Next.Alt': 1.0,
+        #         'Next.Yaw': 1.0,
+        #         'Next.Yawspeed': 20.0,
+        #         'Next.LoiterRadius': 1.0,
+        #         'Next.PitchMin': 1.0,
+        #         'Next.AX': 1.0,
+        #         'Next.AY': 1.0,
+        #         'Next.AZ': 1.0,
+        #         'Next.AcceptanceRadius': 1.0,
+        #         'Next.CruisingSpeed': 120.0,
+        #         'Next.CruisingThrottle': -1.0,
+        #         'Next.Valid': 1,
+        #         '_spare0': 0,
+        #         'Next.Type': 1,
+        #         'Next.PositionValid': 1,
+        #         'Next.VelocityValid': 1,
+        #         'Next.YawValid': 1,
+        #         'Next.DisableMcYawControl': 1,
+        #         'Next.YawspeedValid': 1,
+        #         'Next.LoiterDirection': 1,
+        #         'Next.AccelerationValid': 1,
+        #         'Next.AccelerationIsForce': 1,
+        #         'Next.VelocityFrame': 1,
+        #         }
+        # for arg in list(args.keys())[:2]:
+        #     args[arg] = random.uniform(1.1, 20.5) * random.randint(0, 30000)
 
-        return self.parser.craft_tlm_command(path, args)
-
-        # return self.parser.craft_tlm_command("/cfs/cpd/apps/px4lib/PX4_ACTUATOR_ARMED_MID", { })
+        tlm_json = tlm.to_dict()
+        return self.parser.craft_tlm_command(tlm_json['name'], tlm_json['args'])

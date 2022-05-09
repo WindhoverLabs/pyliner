@@ -351,7 +351,7 @@ class XTCE_Communication(App):
     def send_command(self, telemetry):
         to_json_op = getattr(telemetry, "to_json", None)
         if callable(to_json_op):
-            msg = telemetry.to_json() 
+            msg = telemetry.to_dict()
         else:
             msg = telemetry
             
@@ -629,7 +629,7 @@ class XTCE_Communication(App):
         """
         to_json_op = getattr(telemetry, "to_json", None)
         if callable(to_json_op):
-            json = telemetry.to_json()
+            json = telemetry.to_dict()
         else:
             json = telemetry
             

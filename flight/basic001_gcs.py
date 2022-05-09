@@ -28,8 +28,9 @@ ppd = Path('../mdb/ppd.xml').resolve()
 cpd = Path('../mdb/cpd.xml').resolve()
 simlink = Path('../mdb/simlink.xml').resolve()
 ccscds = Path('../mdb/cfs-ccsds.xml').resolve()
+registry = '../mdb/registry.yaml'
 
-parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds))
+parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds), registry)
 
 rky = Vehicle(
     vehicle_id='rocky',
@@ -40,43 +41,43 @@ rky = Vehicle(
 )
 
 with ScriptingWrapper(rky) as rocky:
-    while rocky.nav.altitude == "NULL":
+    while rocky.nav.altitude is None:
         sleep(1)
         print("Waiting for telemetry downlink...")
 
     rocky.ctrl.atp('Arm')
     rocky.ctrl.arm()
-    rocky.ctrl.atp('Takeoff')
-    rocky.ctrl.takeoff()
-    rocky.ctrl.flight_mode(FlightMode.PosCtl)
-
-    rocky.ctrl.atp('Move Up')
-    rocky.nav.vnav(method=proportional(0.25), tolerance=0.5) \
-        .up(10)
-
-    rocky.ctrl.atp('First')
-    lnav = rocky.nav.lnav(method=proportional(0.20), tolerance=0.5)
-    lnav.forward(15)
-    lnav.right(15)
-    lnav.backward(15)
-    lnav.left(15)
-
-    rocky.ctrl.atp('Second')
-    lnav.forward(15)
-    lnav.left(15)
-    lnav.backward(15)
-    lnav.right(15)
-
-    rocky.ctrl.atp('Third')
-    rocky.nav.lnav(method=proportional(0.20), tolerance=0.5) \
-        .backward(15) \
-        .left(15) \
-        .forward(15) \
-        .right(15)
-
-    rocky.ctrl.atp('Fourth')
-    rocky.nav.lnav(method=proportional(0.20), tolerance=0.5) \
-        .backward(15).right(15).forward(15).left(15)
-
-    rocky.ctrl.atp('Return')
-    rocky.ctrl.rtl()
+#     rocky.ctrl.atp('Takeoff')
+#     rocky.ctrl.takeoff()
+#     rocky.ctrl.flight_mode(FlightMode.PosCtl)
+#
+#     rocky.ctrl.atp('Move Up')
+#     rocky.nav.vnav(method=proportional(0.25), tolerance=0.5) \
+#         .up(10)
+#
+#     rocky.ctrl.atp('First')
+#     lnav = rocky.nav.lnav(method=proportional(0.20), tolerance=0.5)
+#     lnav.forward(15)
+#     lnav.right(15)
+#     lnav.backward(15)
+#     lnav.left(15)
+#
+#     rocky.ctrl.atp('Second')
+#     lnav.forward(15)
+#     lnav.left(15)
+#     lnav.backward(15)
+#     lnav.right(15)
+#
+#     rocky.ctrl.atp('Third')
+#     rocky.nav.lnav(method=proportional(0.20), tolerance=0.5) \
+#         .backward(15) \
+#         .left(15) \
+#         .forward(15) \
+#         .right(15)
+#
+#     rocky.ctrl.atp('Fourth')
+#     rocky.nav.lnav(method=proportional(0.20), tolerance=0.5) \
+#         .backward(15).right(15).forward(15).left(15)
+#
+#     rocky.ctrl.atp('Return')
+#     rocky.ctrl.rtl()

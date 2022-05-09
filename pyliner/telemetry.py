@@ -43,7 +43,7 @@ class Telemetry(dict):
     def has_args(self):
         return len(self) is not 0
 
-    def to_json(self):
+    def to_dict(self):
         json = {'name': self.name}
         if len(self):
             json['args'] = [{'name': name,
@@ -55,7 +55,7 @@ class Telemetry(dict):
 class ManualSetpoint(Telemetry):
     def __init__(self, **kwargs):
         super(ManualSetpoint, self).__init__(
-            '/Airliner/PX4/ManualSetpoint',
+            '/cfs/cpd/apps/px4lib/PX4_MANUAL_CONTROL_SETPOINT_MID',
             Timestamp=util.get_time,
             X=0.0,
             Y=0.0,
