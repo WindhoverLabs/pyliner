@@ -7,6 +7,6 @@ protobuf==3.6
 sortedcontainers
 flufl.enum
 yamcs-client==1.8.0
-xtce-generator==1.0.11
+xtce-generator==1.1.0
 lxml==4.6
 bitarray
