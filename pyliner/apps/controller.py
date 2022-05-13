@@ -16,6 +16,7 @@ from enum import Enum
 from pyliner.action import ACTION_RTL, ACTION_SEND_COMMAND, ACTION_ARM, \
     ACTION_DISARM, ACTION_TAKEOFF, ACTION_ATP
 from pyliner.app import App
+from pyliner.command import Arm, Disarm
 from pyliner.intent import Intent, IntentFilter
 from pyliner.pyliner_error import PylinerError
 from pyliner.telemetry import ManualSetpoint
@@ -87,10 +88,7 @@ class Controller(App):
         with self.control_block() as block:
             block.broadcast(Intent(
                 action=ACTION_SEND_COMMAND,
-                data=block.request(ManualSetpoint(ArmSwitch=3)))).first()
-            block.broadcast(Intent(
-                action=ACTION_SEND_COMMAND,
-                data=block.request(ManualSetpoint(ArmSwitch=1)))).first()
+                data=block.request(Arm()))).first()
 
     def atp(self, text, error=True):
         """Collect authorization to proceed (ATP) from the user."""
@@ -114,7 +112,7 @@ class Controller(App):
         with self.control_block() as block:
             block.broadcast(Intent(
                 action=ACTION_SEND_COMMAND,
-                data=block.request(ManualSetpoint(ArmSwitch=3)))).first()
+                data=block.request(Disarm()))).first()
 
     def flight_mode(self, mode):
         if not mode:

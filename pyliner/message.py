@@ -1,18 +1,15 @@
-"""
-The Command module provides a simple process for defining new Command types
-and setting arbitrary Command items.
+from enum import Enum
 
-Classes:
-    Arm  Arm the vehicle.
-    Disarm  A Disarm command.
-    Command  Base class for any Command. A dictionary.
-"""
+
+class MessageType(Enum):
+    COMMAND = 1
+    TELEMETRY = 2
 
 
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
-class Command(dict):
-    """Subclass of dict representing FSW Command objects.
+class Message(dict):
+    """Subclass of dict representing FSW message objects.
 
     Call to_json() to convert this object to a JSON formatted dictionary that
     can be sent to the FSW.
@@ -22,8 +19,10 @@ class Command(dict):
     will be invoked when to_json is called.
     """
 
+    msg_type: MessageType
+
     def __init__(self, name, **kwargs):
-        super(Command, self).__init__(**kwargs)
+        super(Message, self).__init__(**kwargs)
         self.name = name
 
     def __repr__(self):
@@ -33,9 +32,13 @@ class Command(dict):
 
     def __setitem__(self, key, value):
         if key not in self:
-            raise KeyError('Cannot add additional attributes to Command. '
+            raise KeyError('Cannot add additional attributes to telemetry. '
                            'Failed to add {}'.format(key))
-        super(Command, self).__setitem__(key, value)
+        super(Message, self).__setitem__(key, value)
+
+    @property
+    def message_type(self):
+        return self.msg_type
 
     @property
     def has_args(self):
@@ -48,21 +51,3 @@ class Command(dict):
                              'value': value() if callable(value) else value}
                             for name, value in self.items()]
         return json
-
-
-class Arm(Command):
-    def __init__(self, **kwargs):
-        super(Arm, self).__init__(
-            '/cfs/cpd/apps/vm/Arm',
-        )
-        for key, value in kwargs.items():
-            self[key] = value
-
-
-class Disarm(Command):
-    def __init__(self, **kwargs):
-        super(Disarm, self).__init__(
-            '/cfs/cpd/apps/vm/Disarm',
-        )
-        for key, value in kwargs.items():
-            self[key] = value

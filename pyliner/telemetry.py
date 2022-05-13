@@ -13,7 +13,10 @@ from pyliner import util
 
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
-class Telemetry(dict):
+from pyliner.message import Message
+
+
+class Telemetry(Message):
     """Subclass of dict representing FSW telemetry objects.
 
     Call to_json() to convert this object to a JSON formatted dictionary that
