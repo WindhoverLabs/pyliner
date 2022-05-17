@@ -93,7 +93,7 @@ class ManualSetpoint(Telemetry):
 class SetpointTriplet(Telemetry):
     def __init__(self, **kwargs):
         super(SetpointTriplet, self).__init__(
-            '/Airliner/PX4/SetpointTriplet',
+            '/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID',
             Timestamp=util.get_time,
             Prev_Lat=0.0,
             Prev_Lon=0.0,

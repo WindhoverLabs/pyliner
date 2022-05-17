@@ -228,9 +228,6 @@ class Communication(App):
         self.listener_thread.start()
         self.parse_mode = parse_mode
         self.parser = parser
-        # for i in range(2048):
-        #     time.sleep(.004)
-        #     self.send_command("/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID")
 
     def attach(self, vehicle):
         super(Communication, self).attach(vehicle)
@@ -518,16 +515,17 @@ class Communication(App):
                 # FIXME:Add pre-processor/post-processor here
                 tlm_value = self.parser.validate_packet(tlm[0], subscribed_tlm['op_path'])
 
-                telemItem.update(
-                    value=tlm_value, time=None)
+                if tlm_value is not None:
+                    telemItem.update(
+                        value=tlm_value, time=None)
 
-                # Update telemetry dictionary with fresh data
-                # FIXME:Set time correctly
-                self._telemetry[op_path].update(
-                    value=tlm_value, time=None)
+                    # Update telemetry dictionary with fresh data
+                    # FIXME:Set time correctly
+                    self._telemetry[op_path].update(
+                        value=tlm_value, time=None)
 
-                if callable(callback):
-                    callback(self._telemetry[op_path])
+                    if callable(callback):
+                        callback(self._telemetry[op_path])
 
     def subscribe(self, tlm_path: str, callback=0):
         """
