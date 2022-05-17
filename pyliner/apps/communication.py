@@ -32,7 +32,7 @@ import socketserver
 
 from pyliner.action import ACTION_SEND_COMMAND, ACTION_SEND_BYTES, ACTION_TELEM, \
     ACTION_CONTROL_REQUEST, ACTION_CONTROL_GRANT, ACTION_CONTROL_REVOKE, \
-    ACTION_CONTROL_RELEASE
+    ACTION_CONTROL_RELEASE, ACTION_SEND_TELEMETRY
 from pyliner.arte_ccsds import CCSDS_TlmPkt_t, CCSDS_CmdPkt_t
 from pyliner.conversions import hertz
 from pyliner.intent import IntentFilter, Intent, FutureTimeoutError, \
@@ -248,7 +248,7 @@ class Communication(App):
                 return call(data.data)
 
         self.vehicle.add_filter(
-            IntentFilter(actions=[ACTION_SEND_COMMAND]),
+            IntentFilter(actions=[ACTION_SEND_COMMAND, ACTION_SEND_TELEMETRY]),
             lambda i: filter_control(i.data, self.send_command))
         self.vehicle.add_filter(
             IntentFilter(actions=[ACTION_SEND_BYTES]),
@@ -367,8 +367,8 @@ class Communication(App):
         self.ci_socket.sendto(message, (self.address, self.ci_port))
         return True
 
-    def send_command(self, telemetry_path: Telemetry):
-        buffer = self._serialize(telemetry_path)
+    def send_command(self, msg: Message):
+        buffer = self._serialize(msg)
 
         # self.vehicle.debug(
         #     'Sending telemetry to airliner: %s', msg)
@@ -533,7 +533,7 @@ class Communication(App):
         to, as well as an optional callback function.
 
         Args:
-            tlm_item (dict[str, list[str]]): Dictionary specifying the telemetry
+            tlm_path (dict[str, list[str]]): Dictionary specifying the telemetry
                 items to subscribe to, using the telemetry item's operational
                 names.
                 E.g. {'tlm': ['/Airliner/ES/HK/CmdCounter']}
