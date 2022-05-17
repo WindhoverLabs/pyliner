@@ -511,23 +511,23 @@ class Communication(App):
         # Iterate over subscribed telemetry to check if we care
         for subscribed_tlm in self.subscribers:
             if self.parse_mode == ParseMode.XTCE:
-                        # Get pb msg for this msg
-                        op_path = subscribed_tlm['op_path']
-                        callback = subscribed_tlm['callback']
-                        telemItem = subscribed_tlm['telemItem']
-                        # FIXME:Add pre-processor/post-processor here
-                        tlm_value = self.parser.validate_packet(tlm[0], subscribed_tlm['op_path'])
+                # Get pb msg for this msg
+                op_path = subscribed_tlm['op_path']
+                callback = subscribed_tlm['callback']
+                telemItem = subscribed_tlm['telemItem']
+                # FIXME:Add pre-processor/post-processor here
+                tlm_value = self.parser.validate_packet(tlm[0], subscribed_tlm['op_path'])
 
-                        telemItem.update(
-                            value=tlm_value, time=None)
+                telemItem.update(
+                    value=tlm_value, time=None)
 
-                        # Update telemetry dictionary with fresh data
-                        # FIXME:Set time correctly
-                        self._telemetry[op_path].update(
-                            value=tlm_value, time=None)
+                # Update telemetry dictionary with fresh data
+                # FIXME:Set time correctly
+                self._telemetry[op_path].update(
+                    value=tlm_value, time=None)
 
-                        if callable(callback):
-                            callback(self._telemetry[op_path])
+                if callable(callback):
+                    callback(self._telemetry[op_path])
 
     def subscribe(self, tlm_path: str, callback=0):
         """
@@ -551,7 +551,7 @@ class Communication(App):
             tlm_item = tlm_path.split('.')[0]
 
         tlm_path_namesapce = xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR \
-                   + xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR.join(
+                             + xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR.join(
             tlm_item.split(xtce.xtce_generator.XTCEManager.NAMESPACE_SEPARATOR)[1:-1])
         mids = self.parser.get_msg_ids_at(tlm_path_namesapce)
 
@@ -589,4 +589,8 @@ class Communication(App):
         if msg.msg_type == MessageType.TELEMETRY:
             return self.parser.craft_tlm_command(msg_json['name'], msg_json['args'])
         elif msg.msg_type == MessageType.COMMAND:
-            return self.parser.craft_command(msg_json['name'], msg_json['args'])
+            if not msg.has_args:
+                args = {}
+            else:
+                args = msg_json['args']
+            return self.parser.craft_command(msg_json['name'], args)

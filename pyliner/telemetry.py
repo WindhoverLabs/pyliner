@@ -28,9 +28,9 @@ class Telemetry(Message):
     """
 
     def __init__(self, name, **kwargs):
-        super(Telemetry, self).__init__(**kwargs)
+        super(Telemetry, self).__init__(name, **kwargs)
         self.name = name
-        super(Telemetry, self).msg_type = MessageType.TELEMETRY
+        self.msg_type = MessageType.TELEMETRY
 
     def __repr__(self):
         return '{}({}, {})'.format(

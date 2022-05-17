@@ -11,10 +11,10 @@ Classes:
 
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
-from pyliner.message import MessageType
+from pyliner.message import MessageType, Message
 
 
-class Command(dict):
+class Command(Message):
     """Subclass of dict representing FSW Command objects.
 
     Call to_json() to convert this object to a JSON formatted dictionary that
@@ -26,8 +26,8 @@ class Command(dict):
     """
 
     def __init__(self, name, **kwargs):
-        super(Command, self).__init__(**kwargs)
-        super(Command, self).msg_type = MessageType.COMMAND
+        super(Command, self).__init__(name, **kwargs)
+        self.msg_type = MessageType.COMMAND
         self.name = name
 
     def __repr__(self):
