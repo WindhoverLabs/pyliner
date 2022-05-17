@@ -19,6 +19,8 @@ from xtce.xtce_msg_parser import XTCEParser
 from pyliner import util
 from datetime import datetime
 
+from pyliner.command import Command
+from pyliner.message import Message, MessageType
 from pyliner.telemetry import Telemetry
 
 try:
@@ -582,6 +584,9 @@ class Communication(App):
         # in user scripts and set default values.
         return newTelemetry
 
-    def _serialize(self, tlm: Telemetry) -> bytes:
-        tlm_json = tlm.to_dict()
-        return self.parser.craft_tlm_command(tlm_json['name'], tlm_json['args'])
+    def _serialize(self, msg: Message) -> bytes:
+        msg_json = msg.to_dict()
+        if msg.msg_type == MessageType.TELEMETRY:
+            return self.parser.craft_tlm_command(msg_json['name'], msg_json['args'])
+        elif msg.msg_type == MessageType.COMMAND:
+            return self.parser.craft_command(msg_json['name'], msg_json['args'])

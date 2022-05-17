@@ -13,7 +13,7 @@ from pyliner import util
 
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
-from pyliner.message import Message
+from pyliner.message import Message, MessageType
 
 
 class Telemetry(Message):
@@ -30,6 +30,7 @@ class Telemetry(Message):
     def __init__(self, name, **kwargs):
         super(Telemetry, self).__init__(**kwargs)
         self.name = name
+        super(Telemetry, self).msg_type = MessageType.TELEMETRY
 
     def __repr__(self):
         return '{}({}, {})'.format(

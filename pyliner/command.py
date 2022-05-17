@@ -11,6 +11,9 @@ Classes:
 
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
+from pyliner.message import MessageType
+
+
 class Command(dict):
     """Subclass of dict representing FSW Command objects.
 
@@ -24,6 +27,7 @@ class Command(dict):
 
     def __init__(self, name, **kwargs):
         super(Command, self).__init__(**kwargs)
+        super(Command, self).msg_type = MessageType.COMMAND
         self.name = name
 
     def __repr__(self):
