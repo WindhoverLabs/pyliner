@@ -8,7 +8,6 @@ Classes:
     Command  Base class for any Command. A dictionary.
 """
 
-
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
 from pyliner.message import MessageType, Message
@@ -67,6 +66,24 @@ class Disarm(Command):
     def __init__(self, **kwargs):
         super(Disarm, self).__init__(
             '/cfs/cpd/apps/vm/Disarm',
+        )
+        for key, value in kwargs.items():
+            self[key] = value
+
+
+class Takeoff(Command):
+    def __init__(self, **kwargs):
+        super(Takeoff, self).__init__(
+            '/cfs/cpd/apps/vm/AutoTakeOff',
+        )
+        for key, value in kwargs.items():
+            self[key] = value
+
+
+class AutoRtl(Command):
+    def __init__(self, **kwargs):
+        super(AutoRtl, self).__init__(
+            '/cfs/cpd/apps/vm/AutoTakeOff',
         )
         for key, value in kwargs.items():
             self[key] = value

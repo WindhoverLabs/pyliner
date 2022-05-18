@@ -19,7 +19,6 @@ class Message(dict):
     will be invoked when to_json is called.
     """
 
-
     def __init__(self, name, **kwargs):
         super(Message, self).__init__(**kwargs)
         self.msg_type: MessageType
