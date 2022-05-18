@@ -8,7 +8,7 @@ Apps:
 
 from pyliner.app import App
 from pyliner.action import ACTION_AXIS_SET, ACTION_SEND_COMMAND, \
-    ACTION_AXIS_ZERO
+    ACTION_AXIS_ZERO, ACTION_SEND_TELEMETRY
 from pyliner.intent import Intent, IntentFilter
 from pyliner.telemetry import ManualSetpoint
 
@@ -59,7 +59,7 @@ class FlightDirector(App):
         #     self.x, self.y, mod_z, self.r))
         with self.control_block() as block:
             block.broadcast(Intent(
-                action=ACTION_SEND_COMMAND,
+                action=ACTION_SEND_TELEMETRY,
                 data=block.request(ManualSetpoint(
                     X=self._x, Y=self._y, Z=mod_z, R=self._r,
                     PosctlSwitch=1, GearSwitch=1, ArmSwitch=1)))).first()
