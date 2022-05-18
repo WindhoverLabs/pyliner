@@ -83,7 +83,16 @@ class Takeoff(Command):
 class AutoRtl(Command):
     def __init__(self, **kwargs):
         super(AutoRtl, self).__init__(
-            '/cfs/cpd/apps/vm/AutoTakeOff',
+            '/cfs/cpd/apps/vm/AutoRtl',
+        )
+        for key, value in kwargs.items():
+            self[key] = value
+
+
+class PosCtl(Command):
+    def __init__(self, **kwargs):
+        super(PosCtl, self).__init__(
+            '/cfs/cpd/apps/vm/PosCtl',
         )
         for key, value in kwargs.items():
             self[key] = value

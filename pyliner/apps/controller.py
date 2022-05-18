@@ -16,7 +16,7 @@ from enum import Enum
 from pyliner.action import ACTION_RTL, ACTION_SEND_COMMAND, ACTION_ARM, \
     ACTION_DISARM, ACTION_TAKEOFF, ACTION_ATP, ACTION_SEND_TELEMETRY
 from pyliner.app import App
-from pyliner.command import Arm, Disarm, Takeoff, AutoRtl
+from pyliner.command import Arm, Disarm, Takeoff, AutoRtl, PosCtl
 from pyliner.intent import Intent, IntentFilter
 from pyliner.pyliner_error import PylinerError
 from pyliner.telemetry import ManualSetpoint
@@ -129,9 +129,9 @@ class Controller(App):
         self.vehicle.info("Position control")
         with self.control_block() as block:
             block.broadcast(Intent(
-                action=ACTION_SEND_TELEMETRY,
+                action=ACTION_SEND_COMMAND,
                 data=block.request(
-                    ManualSetpoint(Z=0.5, PosctlSwitch=1, GearSwitch=1))
+                    PosCtl())
             )).first()
 
     @property
@@ -152,6 +152,18 @@ class Controller(App):
                 data=block.request(
                     AutoRtl())
             )).first()
+
+    def takeoff(self):
+        """Takeoff"""
+        print("Auto takeoff")
+        self.vehicle.info("Auto takeoff")
+        with self.control_block() as block:
+            block.broadcast(Intent(
+                action=ACTION_SEND_COMMAND,
+                data=block.request(
+                    Takeoff())
+            )).first()
+        time.sleep(5)
 
     def takeoff(self):
         """Takeoff"""
