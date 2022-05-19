@@ -56,6 +56,7 @@ class Lnav(NavigationFactory):
             delta = self.broadcast(Intent(
                 action=ACTION_CALC_DISTANCE, data=(original, self.nav.position)
             )).first().result
+            print(f'delta-->{delta}, tolerance-->{tolerance}')
             if (distance - delta) < tolerance:
                 self.info('lnav expected %s actual %s (%s < %s m)',
                           distance, delta, distance - delta, tolerance)

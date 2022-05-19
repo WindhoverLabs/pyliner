@@ -59,9 +59,9 @@ class Vehicle(BaseVehicle):
         self.attach_app(time)
         self.attach_app(geofence)
         self.attach_app(controller)
-        # self.attach_app(flight_director)
+        self.attach_app(flight_director)
         self.attach_app(navigation)
-        #
-        # # Add helpful default settings
-        # geofence.add_layer(0, 'base', LayerKind.ADDITIVE)
-        # navigation.defaults.update({'timeout': None, 'underflow': 5.0})
+
+        # Add helpful default settings
+        geofence.add_layer(0, 'base', LayerKind.ADDITIVE)
+        navigation.defaults.update({'timeout': None, 'underflow': 5.0})

@@ -52,6 +52,7 @@ class Vnav(NavigationFactory):
         target_altitude = (self.nav.altitude + by) if by else to
 
         while datetime.now() < timeout:
+            print(f"target_altitude-->{target_altitude}")
             difference = abs(target_altitude - self.nav.altitude)
             if difference <= tolerance:
                 self.info('vnav expected %s actual %s (%s < %s m)',

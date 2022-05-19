@@ -370,6 +370,8 @@ class Communication(App):
     def send_command(self, msg: Message):
         buffer = self._serialize(msg)
 
+        print(f'send_command****************-->{[hex(c)for c in buffer]}')
+
         # self.vehicle.debug(
         #     'Sending telemetry to airliner: %s', msg)
         self.send_bytes(buffer)
@@ -585,6 +587,7 @@ class Communication(App):
     def _serialize(self, msg: Message) -> bytes:
         msg_json = msg.to_dict()
         if msg.msg_type == MessageType.TELEMETRY:
+            print("Sending tlm**************")
             return self.parser.craft_tlm_command(msg_json['name'], msg_json['args'])
         elif msg.msg_type == MessageType.COMMAND:
             if not msg.has_args:
