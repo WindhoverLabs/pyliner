@@ -4750,7 +4750,10 @@
                         </EnumerationList>
                     </EnumeratedParameterType>
                     <EnumeratedParameterType name="PX4_ModeSlot_t">
-                        <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
+                        <IntegerDataEncoding
+                        	bitOrder="leastSignificantBitFirst"
+                        	byteOrder="leastSignificantByteFirst"
+                        	sizeInBits="32" encoding="twosComplement" />
                         <EnumerationList>
                             <Enumeration value="0" label="PX4_MODE_SLOT_1"/>
                             <Enumeration value="1" label="PX4_MODE_SLOT_2"/>
