@@ -25,8 +25,8 @@ tlm_cmd_manager = Communication(read_json('airliner.json'),
                                 parser,
                                 to_port=5230)
 
-def Up(comm: Communication):
-    comm.send_command(ManualSetpoint(Z=1))
+def Throttle(comm: Communication):
+    comm.send_command(ManualSetpoint(Z=0.2, X=0.75))
 
 def Down(comm: Communication):
     comm.send_command(ManualSetpoint(X=-1))
@@ -79,13 +79,14 @@ tlm_val_armed = None
 #         if tlm_val_alt.value > 495:
 #             break
 
-# mode = PosCtl()
+mode = PosCtl()
 
-# tlm_cmd_manager.send_command(mode)
+tlm_cmd_manager.send_command(mode)
 
 # Up
 # Up()
-Down(tlm_cmd_manager)
+for i in range(512):
+    Throttle(tlm_cmd_manager)
 #
 #
 # while True:
