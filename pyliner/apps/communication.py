@@ -12,6 +12,7 @@ import json
 import enum
 import time
 from datetime import datetime
+from pathlib import Path
 
 import xtce.xtce_generator
 from xtce.xtce_msg_parser import XTCEParser
@@ -368,12 +369,18 @@ class Communication(App):
         return True
 
     def send_command(self, msg: Message):
-        buffer = self._serialize(msg)
+        # buffer = self._serialize(msg)
 
-        print(f'send_command****************-->{[hex(c)for c in buffer]}')
+        # print(f'send_command****************-->{[hex(c)for c in buffer]}')
 
         # self.vehicle.debug(
         #     'Sending telemetry to airliner: %s', msg)
+        file_buffer = open(Path('../mdb/manual_set_point.raw').resolve(), mode='rb').read()
+        buffer = self.parser.slip_encode(file_buffer, 12)
+
+        # for b in range(2,12):
+        #     if b != 4 or b != 5:
+        #         buffer_array[b] = 0
         self.send_bytes(buffer)
         return True
 
@@ -544,7 +551,7 @@ class Communication(App):
                               '/Airliner/ES/HK/ErrCounter']}
         """
 
-        self.vehicle.info('Subscribing to: {}'.format(tlm_path))
+        # self.vehicle.info('Subscribing to: {}'.format(tlm_path))
         # Get operation for specified telemetry
         tlm_item = tlm_path
         if '.' in tlm_path:
@@ -564,7 +571,7 @@ class Communication(App):
 
         if msg_name not in mids:
             err_msg = f"{msg_name} message does not exist."
-            self.vehicle.error(err_msg)
+            # self.vehicle.error(err_msg)
             raise InvalidOperationException(err_msg)
 
         mid = mids[msg_name]
