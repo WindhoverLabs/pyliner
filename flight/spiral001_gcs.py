@@ -14,26 +14,35 @@ Requirements Fulfilled:
     PYLINER016
 """
 import time
+from pathlib import Path
 
-from pyliner import Vehicle
-from pyliner.apps.communication import Communication
+from xtce.xtce_msg_parser import XTCEParser
+
+from pyliner.apps.communication import Communication, ParseMode
 from pyliner.apps.controller import FlightMode
 from pyliner.scripting_wrapper import ScriptingWrapper
 from pyliner.util import read_json
+from pyliner.vehicle import Vehicle
+
+ppd = Path('../mdb/ppd.xml').resolve()
+cpd = Path('../mdb/cpd.xml').resolve()
+simlink = Path('../mdb/simlink.xml').resolve()
+ccscds = Path('../mdb/cfs-ccsds.xml').resolve()
+registry = '../mdb/registry.yaml'
+
+parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds), registry)
 
 rky = Vehicle(
     vehicle_id='rocky',
     communication=Communication(
-        airliner_map=read_json("airliner.json"),
-        address="192.168.1.2",
-        ci_port=5009,
-        to_port=5012)
+    read_json("airliner.json"),
+        ParseMode.XTCE,
+        parser)
 )
-
 with ScriptingWrapper(rky) as rocky:
-    while rocky.nav.altitude == "NULL":
+    while rocky.nav.altitude is None:
         time.sleep(1)
-        print "Waiting for telemetry downlink..."
+        print("Waiting for telemetry downlink...")
     
     rocky.ctrl.atp('Arm')
     rocky.ctrl.arm()
