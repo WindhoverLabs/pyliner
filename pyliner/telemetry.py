@@ -7,9 +7,9 @@ Classes:
     SetpointTriplet  A SetpointTriplet command.
     Telemetry  Base class for any Telemetry. A dictionary.
 """
+import enum
 
 from pyliner import util
-
 
 # TODO Put into Communication (package)
 # TODO Remove all of this, change to wrapper of python_pb protobuf objects.
@@ -56,11 +56,36 @@ class Telemetry(Message):
         return json
 
 
+class ModeSwitch(enum.IntEnum):
+    PX4_SWITCH_POS_NONE = 0
+    PX4_SWITCH_POS_ON = 1
+    PX4_SWITCH_POS_MIDDLE = 2
+    PX4_SWITCH_POS_OFF = 3
+
+
+class DataSource(enum.IntEnum):
+    PX4_MANUAL_CONTROL_SOURCE_RC = 1
+    PX4_MANUAL_CONTROL_SOURCE_MAVLINK_0 = 2
+    PX4_MANUAL_CONTROL_SOURCE_MAVLINK_1 = 3
+    PX4_MANUAL_CONTROL_SOURCE_MAVLINK_2 = 4
+    PX4_MANUAL_CONTROL_SOURCE_MAVLINK_3 = 5
+
+class ModeSlot(enum.IntEnum):
+    PX4_MODE_SLOT_NONE = -1
+    PX4_MODE_SLOT_1 = 0
+    PX4_MODE_SLOT_2 = 1
+    PX4_MODE_SLOT_3 = 2
+    PX4_MODE_SLOT_4 = 3
+    PX4_MODE_SLOT_5 = 4
+    PX4_MODE_SLOT_6 = 5
+    PX4_MODE_SLOT_MAX = 6
+
+
 class ManualSetpoint(Telemetry):
     def __init__(self, **kwargs):
         super(ManualSetpoint, self).__init__(
             '/cfs/cpd/apps/px4lib/PX4_MANUAL_CONTROL_SETPOINT_MID',
-            Timestamp=util.get_time,
+            Timestamp=util.get_time(),
             X=0.0,
             Y=0.0,
             Z=0.0,
@@ -71,21 +96,22 @@ class ManualSetpoint(Telemetry):
             Aux3=0.0,
             Aux4=0.0,
             Aux5=0.0,
-            ModeSwitch=0,
-            ReturnSwitch=0,
-            RattitudeSwitch=0,
-            PosctlSwitch=0,
-            LoiterSwitch=0,
-            AcroSwitch=0,
-            OffboardSwitch=0,
-            KillSwitch=0,
-            TransitionSwitch=0,
-            GearSwitch=0,
-            ArmSwitch=0,
-            StabSwitch=0,
-            ManSwitch=0,
-            ModeSlot=0,
-            DataSource=0)
+            ModeSwitch=ModeSwitch.PX4_SWITCH_POS_MIDDLE,
+            ReturnSwitch=ModeSwitch.PX4_SWITCH_POS_OFF,
+            RattitudeSwitch=ModeSwitch.PX4_SWITCH_POS_OFF,
+            PosctlSwitch=ModeSwitch.PX4_SWITCH_POS_OFF,
+            LoiterSwitch=ModeSwitch.PX4_SWITCH_POS_NONE,
+            AcroSwitch=ModeSwitch.PX4_SWITCH_POS_NONE,
+            OffboardSwitch=ModeSwitch.PX4_SWITCH_POS_NONE,
+            KillSwitch=ModeSwitch.PX4_SWITCH_POS_OFF,
+            TransitionSwitch=ModeSwitch.PX4_SWITCH_POS_OFF,
+            GearSwitch=ModeSwitch.PX4_SWITCH_POS_OFF,
+            ArmSwitch=ModeSwitch.PX4_SWITCH_POS_ON,
+            StabSwitch=ModeSwitch.PX4_SWITCH_POS_NONE,
+            ManSwitch=ModeSwitch.PX4_SWITCH_POS_NONE,
+            ModeSlot=ModeSlot.PX4_MODE_SLOT_NONE,
+            DataSource=DataSource.PX4_MANUAL_CONTROL_SOURCE_RC,
+            AltctlSwitch=ModeSwitch.PX4_SWITCH_POS_OFF)
         for key, value in kwargs.items():
             self[key] = value
 
