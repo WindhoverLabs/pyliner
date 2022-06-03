@@ -13,9 +13,9 @@ cmd_count = 0
 def cmd_count_callback1(data):
     print("1 %s = %d   " % (data.name, data.value))
     
-    v.com.send_command({'name':'/Airliner/CFE/ES_Noop'})
+    v.com.send_message({'name': '/Airliner/CFE/ES_Noop'})
 
-    v.com.send_command({'name':'/Airliner/CFE/StartApp', 'args':[
+    v.com.send_message({'name': '/Airliner/CFE/StartApp', 'args':[
         {'name':'AppEntryPoint', 'value':'CF_AppMain'},
         {'name':'Priority', 'value':100},
         {'name':'Application', 'value':'CF'},
@@ -24,7 +24,7 @@ def cmd_count_callback1(data):
         {'name':'ExceptionAction', 'value':1}]});
   
 
-    v.com.send_command({'name':'/Airliner/CFE/SetMaxPRCount', 'args':[
+    v.com.send_message({'name': '/Airliner/CFE/SetMaxPRCount', 'args':[
                              {'name':'MaxPRCount', 'value':5}]})
     
     #global cmd_count
@@ -57,14 +57,14 @@ with ScriptingWrapper(vehicle) as v:
     
     cmdCounter4 = v.com.subscribe('/Airliner/CFE/ES_HK/CmdCounter', cmd_count_callback1)
     
-    v.com.send_command({'name':'/Airliner/CFE/ES_Noop'})
+    v.com.send_message({'name': '/Airliner/CFE/ES_Noop'})
     
-    v.com.send_command(Telemetry('/Airliner/CFE/ES_Noop'))
+    v.com.send_message(Telemetry('/Airliner/CFE/ES_Noop'))
     
-    v.com.send_command({'name':'/Airliner/CFE/SetMaxPRCount', 'args':[
+    v.com.send_message({'name': '/Airliner/CFE/SetMaxPRCount', 'args':[
                              {'name':'MaxPRCount', 'value':2}]})
 
-    v.com.send_command({'name':'/Airliner/CFE/StartApp', 'args':[
+    v.com.send_message({'name': '/Airliner/CFE/StartApp', 'args':[
                              {'name':'AppFileName', 'value':"testfile"},
                              {'name':'StackSize', 'value':1},
                              {'name':'ExceptionAction', 'value':2},
@@ -74,7 +74,7 @@ with ScriptingWrapper(vehicle) as v:
     
     time.sleep( 2 )
     
-    v.com.send_command({'name':'/Airliner/CFE/SetMaxPRCount', 'args':[
+    v.com.send_message({'name': '/Airliner/CFE/SetMaxPRCount', 'args':[
                              {'name':'MaxPRCount', 'value':2}]})
     
     cmdCounter2 = v.com.telemetry('/Airliner/CFE/ES_HK/CmdCounter')

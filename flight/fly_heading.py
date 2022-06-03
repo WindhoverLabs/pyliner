@@ -51,7 +51,7 @@ with ScriptingWrapper(vehicle) as rocky:
         
     # Goto
     
-    rocky.com.send_command(triplet)
+    rocky.com.send_message(triplet)
     sleep(20)
     rocky.ctrl.rtl()
 

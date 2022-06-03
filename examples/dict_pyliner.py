@@ -40,22 +40,22 @@ for i in range(15):
     print "Log entries: " + str(log_entries)
 
     # Send NoOp command
-    airliner.send_command({'name':'/Airliner/ES/Noop'})
+    airliner.send_message({'name': '/Airliner/ES/Noop'})
     
     # Set max cpu resets equal to loop iteration
-    airliner.send_command({'name':'/Airliner/ES/SetMaxPRCount', 'args':[
+    airliner.send_message({'name': '/Airliner/ES/SetMaxPRCount', 'args':[
                                  {'name':'MaxProcResets', 'value':i}]})
     # At 10 iterations clear logs
     if i == 10:
-        airliner.send_command({'name':'/Airliner/ES/ClearSysLog'})
-        airliner.send_command({'name':'/Airliner/ES/ClearERLog'})
+        airliner.send_message({'name': '/Airliner/ES/ClearSysLog'})
+        airliner.send_message({'name': '/Airliner/ES/ClearERLog'})
     
     # Toggle log mode on even/odd iterations
     if i % 2 == 0:
-        airliner.send_command({'name':'/Airliner/ES/OverwriteSysLog', 'args':[
+        airliner.send_message({'name': '/Airliner/ES/OverwriteSysLog', 'args':[
                              {'name':'OverwriteMode', 'value':1}]})
     else:
-        airliner.send_command({'name':'/Airliner/ES/OverwriteSysLog', 'args':[
+        airliner.send_message({'name': '/Airliner/ES/OverwriteSysLog', 'args':[
                              {'name':'OverwriteMode', 'value':0}]})
                              
     # Sleep for duration of a major frame

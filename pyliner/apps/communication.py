@@ -20,6 +20,7 @@ from xtce.xtce_msg_parser import XTCEParser
 from pyliner import util
 from datetime import datetime
 
+from pyliner.CfsRFC1055PostProcessor import CfsRFC1055PostProcessor
 from pyliner.command import Command
 from pyliner.message import Message, MessageType
 from pyliner.telemetry import Telemetry
@@ -185,20 +186,17 @@ class Communication(App):
     CONTROL_ACK_WAIT = 1.0 / 16.0
     CONTROL_ROTATE_EVERY = hertz(4)
 
-    def __init__(self, airliner_map, parse_mode: ParseMode, parser: XTCEParser, address='localhost',
+    def __init__(self, parse_mode: ParseMode, parser: XTCEParser, address='localhost',
                  ci_port=5110, to_port=5012):
         """
         Args:
-            airliner_map (dict): Airliner Mapping, typically read from a JSON.
+            parse_mode(ParseMode): This is for growth in case we decide to add support for anything else other than XTCE.
+            parser(XTCEParser): This is engine that has all of the mission definitions(command/telemetry).
             address (str): Address to connect to the vehicle.
             ci_port (int): Command-Ingest port
             to_port (int): Telemetry-Output port
         """
         super(Communication, self).__init__()
-
-        # if not isinstance(airliner_map, dict):
-        #     raise TypeError('airliner_map is expecting a dict but got {}'
-        #                     .format(type(airliner_map)))
 
         # Telemetry variables
         self.address = address
@@ -250,7 +248,7 @@ class Communication(App):
 
         self.vehicle.add_filter(
             IntentFilter(actions=[ACTION_SEND_COMMAND, ACTION_SEND_TELEMETRY]),
-            lambda i: filter_control(i.data, self.send_command))
+            lambda i: filter_control(i.data, self.send_message))
         self.vehicle.add_filter(
             IntentFilter(actions=[ACTION_SEND_BYTES]),
             lambda i: filter_control(i.data, self.send_bytes))
@@ -368,20 +366,13 @@ class Communication(App):
         self.ci_socket.sendto(message, (self.address, self.ci_port))
         return True
 
-    def send_command(self, msg: Message):
-        # buffer = self._serialize(msg)
+    def send_message(self, msg: Message):
+        buffer = self._serialize(msg)
 
-        # print(f'send_command****************-->{[hex(c)for c in buffer]}')
+        self.vehicle.debug(f'Sending telemetry to airliner: {msg}')
 
-        # self.vehicle.debug(
-        #     'Sending telemetry to airliner: %s', msg)
-        file_buffer = open(Path('../mdb/manual_set_point.raw').resolve(), mode='rb').read()
-        buffer = self.parser.slip_encode(file_buffer, 12)
-
-        # for b in range(2,12):
-        #     if b != 4 or b != 5:
-        #         buffer_array[b] = 0
         self.send_bytes(buffer)
+
         return True
 
     def telemetry(self, args):
@@ -593,12 +584,12 @@ class Communication(App):
 
     def _serialize(self, msg: Message) -> bytes:
         msg_json = msg.to_dict()
+        post_processor = CfsRFC1055PostProcessor(msg.msg_type)
         if msg.msg_type == MessageType.TELEMETRY:
-            print("Sending tlm**************")
-            return self.parser.craft_tlm_command(msg_json['name'], msg_json['args'])
+            return self.parser.craft_tlm_command(msg_json['name'], msg_json['args'], post_processor)
         elif msg.msg_type == MessageType.COMMAND:
             if not msg.has_args:
                 args = {}
             else:
                 args = msg_json['args']
-            return self.parser.craft_command(msg_json['name'], args)
+            return self.parser.craft_command(msg_json['name'], args, post_processor)

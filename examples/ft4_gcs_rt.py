@@ -437,7 +437,7 @@ vehicle_fly_square_cw()
 vehicle_land()
 
 # Send one NoOp command
-airliner.send_command({'name':'/Airliner/ES/Noop'})
+airliner.send_message({'name': '/Airliner/ES/Noop'})
 time.sleep(15)
 
 # print received telemetry

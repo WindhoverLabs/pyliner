@@ -9,7 +9,6 @@ from pyliner.util import read_json
 vehicle = Vehicle(
     vehicle_id='rocky',
     communication=Communication(
-        airliner_map=read_json('airliner.json'),
         ci_port=5009, to_port=5012
     )
 )

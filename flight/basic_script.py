@@ -3,7 +3,7 @@ from time import sleep
 
 from xtce.xtce_msg_parser import XTCEParser
 
-from pyliner.command import Arm, Disarm, Takeoff, PosCtl
+from pyliner.command import Arm, Disarm, Takeoff, PosCtl, AutoRtl
 from pyliner.telemetry import ManualSetpoint
 from pyliner.vehicle import Vehicle
 from pyliner.apps.communication import Communication, ParseMode
@@ -20,16 +20,15 @@ registry = '../mdb/registry.yaml'
 
 parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds), registry)
 
-tlm_cmd_manager = Communication(read_json('airliner.json'),
-                                ParseMode.XTCE,
+tlm_cmd_manager = Communication(ParseMode.XTCE,
                                 parser,
                                 to_port=5230)
 
 def Throttle(comm: Communication):
-    comm.send_command(ManualSetpoint(Z=0.2, X=0.75))
+    comm.send_message(ManualSetpoint(Z=0.0, X=0.1))
 
 def Down(comm: Communication):
-    comm.send_command(ManualSetpoint(X=-1))
+    comm.send_message(ManualSetpoint(X=-1))
 
 tlm_val_alt = None
 tlm_val_armed = None
@@ -80,13 +79,11 @@ tlm_val_armed = None
 #             break
 
 mode = PosCtl()
+# for i in range(512):
+Throttle(tlm_cmd_manager)
+# tlm_cmd_manager.send_command(AutoRtl())
 
-tlm_cmd_manager.send_command(mode)
 
-# Up
-# Up()
-for i in range(512):
-    Throttle(tlm_cmd_manager)
 #
 #
 # while True:

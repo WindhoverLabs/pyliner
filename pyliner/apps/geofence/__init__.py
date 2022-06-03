@@ -116,8 +116,8 @@ class Geofence(App):
             action=ACTION_TELEM,
             data={
                 'latitude': '/cfs/cpd/apps/px4lib/PX4_VEHICLE_GLOBAL_POSITION_MID.Lat',
-                'longitude': '/cfs/cpd/apps/px4lib/PX4_VEHICLE_GLOBAL_POSITION_MID.Lat',
-                'altitude': '/cfs/cpd/apps/px4lib/PX4_VEHICLE_GLOBAL_POSITION_MID.Lat'})
+                'longitude': '/cfs/cpd/apps/px4lib/PX4_VEHICLE_GLOBAL_POSITION_MID.Lon',
+                'altitude': '/cfs/cpd/apps/px4lib/PX4_VEHICLE_GLOBAL_POSITION_MID.Alt'})
         ).first().result
 
         self._check_thread = RealTimeThread(

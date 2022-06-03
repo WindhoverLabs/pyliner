@@ -34,11 +34,11 @@ parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds), registry)
 
 rky = Vehicle(
     vehicle_id='rocky',
-    communication=Communication(read_json('airliner.json'),
-                                ParseMode.XTCE,
+    communication=Communication(ParseMode.XTCE,
                                 parser,
                                 to_port=5111)
 )
+rky.logger.setLevel(40)
 
 with ScriptingWrapper(rky) as rocky:
     while rocky.nav.altitude is None:

@@ -28,7 +28,7 @@ while run_flag:
     
     if client.sequence % 200 == 0:
         print"sending no-op"
-        airliner.send_command({'name':'/Airliner/ES/Noop'})
+        airliner.send_message({'name': '/Airliner/ES/Noop'})
         sent_frame = client.sequence
     
     if cmd_count == 400:

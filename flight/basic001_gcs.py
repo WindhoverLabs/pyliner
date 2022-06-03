@@ -12,6 +12,7 @@ Requirements Fulfilled:
     PYLINER014
     PYLINER016
 """
+import logging
 from pathlib import Path
 from time import sleep
 
@@ -32,13 +33,14 @@ registry = '../mdb/registry.yaml'
 
 parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds), registry)
 
+
 rky = Vehicle(
     vehicle_id='rocky',
-    communication=Communication(read_json('airliner.json'),
-                                ParseMode.XTCE,
+    communication=Communication(ParseMode.XTCE,
                                 parser,
                                 to_port=5111)
 )
+rky.logger.setLevel(40)
 
 with ScriptingWrapper(rky) as rocky:
     while rocky.nav.altitude is None:
@@ -56,7 +58,7 @@ with ScriptingWrapper(rky) as rocky:
         .up(10)
 
     rocky.ctrl.atp('First')
-    lnav = rocky.nav.lnav(method=proportional(0.20), tolerance=0.5)
+    lnav = rocky.nav.lnav(method=proportional(0.20), tolerance=2)
     lnav.forward(15)
     lnav.right(15)
     lnav.backward(15)
@@ -69,14 +71,14 @@ with ScriptingWrapper(rky) as rocky:
     lnav.right(15)
 
     rocky.ctrl.atp('Third')
-    rocky.nav.lnav(method=proportional(0.20), tolerance=0.5) \
+    rocky.nav.lnav(method=proportional(0.20), tolerance=2) \
         .backward(15) \
         .left(15) \
         .forward(15) \
         .right(15)
 
     rocky.ctrl.atp('Fourth')
-    rocky.nav.lnav(method=proportional(0.20), tolerance=0.5) \
+    rocky.nav.lnav(method=proportional(0.20), tolerance=2) \
         .backward(15).right(15).forward(15).left(15)
 
     rocky.ctrl.atp('Return')
