@@ -25,7 +25,7 @@ make run
 
 5. make quad-sitl-workspace
 
-6.  cd build/multirotor/quad/
+6. cd build/multirotor/quad/
 
 7. terminator -g term-sitl.cfg
 
@@ -40,4 +40,6 @@ make run
 12. make virtual-env
 
 13. source venv/bin/activate
+
+14. PYTHONPATH=PYTHONPATH:..:. python spiral001.py 
 
