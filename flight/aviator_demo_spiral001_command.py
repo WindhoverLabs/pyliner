@@ -28,6 +28,23 @@ rky = Vehicle(
     communication=comms
 )
 
-rky.logger.setLevel(40)
+with ScriptingWrapper(rky) as rocky:
+    while rocky.nav.altitude is None:
+        time.sleep(1)
+        print ("Waiting for telemetry downlink...")
 
-comms.send_message(Command("/cfs/cpd/apps/vm/Arm"))
+    rocky.ctrl.atp('Arm')
+    # rocky.ctrl.arm()
+    rky.logger.setLevel(40)
+
+    # rky.ctrl.atp('Arm')
+
+    # comms.send_message(Command("/cfs/cpd/apps/vm/Arm"))
+
+
+    def watch_gpio_status(tlm):
+        print("Watch GPIO:", tlm) 
+
+    comms.subscribe('/cfs/cpd/apps/gpio/GPIO_STATUS_TLM_MID.Status', callback=watch_gpio_status)
+
+# comms.send_message(Command("/cfs/cpd/apps/vm/Arm"))
