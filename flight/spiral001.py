@@ -36,14 +36,19 @@ rky = Vehicle(
     vehicle_id='rocky',
     communication=Communication(ParseMode.XTCE,
                                 parser,
-                                to_port=5111)
+                                to_port=6011)
 )
 rky.logger.setLevel(40)
 
 with ScriptingWrapper(rky) as rocky:
     while rocky.nav.altitude is None:
         time.sleep(1)
+        # print("rocky.nav:" + str(rocky.nav.__dir__()))
         print("Waiting for telemetry downlink...")
+
+    # while True:
+    #     print("current alt:" + str(rocky.nav.altitude))
+    #     time.sleep(1)
     
     rocky.ctrl.atp('Arm')
     rocky.ctrl.arm()

@@ -123,6 +123,7 @@ class _ControlBlock(Broadcaster):
         )
 
         # Send control request.
+        print("Control block enter") + str(self.app.qualified_name)
         enqueue = self.app.vehicle.broadcast(Intent(
             action=ACTION_CONTROL_REQUEST,
             data=self.app.qualified_name

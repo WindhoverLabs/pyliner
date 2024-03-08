@@ -37,7 +37,8 @@ rky = Vehicle(
     communication=Communication(
     read_json("airliner.json"),
         ParseMode.XTCE,
-        parser)
+        parser,
+    to_port=5411)
 )
 with ScriptingWrapper(rky) as rocky:
     while rocky.nav.altitude is None:

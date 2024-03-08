@@ -19,6 +19,7 @@ from xtce.xtce_msg_parser import XTCEParser
 
 from pyliner import util
 from datetime import datetime
+from pyliner.CfsPostProcessor import CfsPostProcessor
 
 from pyliner.CfsRFC1055PostProcessor import CfsRFC1055PostProcessor
 from pyliner.command import Command
@@ -187,7 +188,7 @@ class Communication(App):
     CONTROL_ROTATE_EVERY = hertz(4)
 
     def __init__(self, parse_mode: ParseMode, parser: XTCEParser, address='localhost',
-                 ci_port=5110, to_port=5012):
+                 ci_port=5010, to_port=5012):
         """
         Args:
             parse_mode(ParseMode): This is for growth in case we decide to add support for anything else other than XTCE.
@@ -217,6 +218,7 @@ class Communication(App):
             default_factory=lambda k: self.subscribe(k))
         """:type: dict[str, _Telemetry]"""
 
+        print("self.to_port:", self.to_port)
         # Receive Telemetry
         self.tlm_listener = socketserver.UDPServer(
             ("0.0.0.0", self.to_port), handler_factory(self._on_recv_telemetry))
@@ -505,6 +507,8 @@ class Communication(App):
         # self.all_telemetry.append(tlm_value)
         # self.vehicle.debug("Recvd tlm: %s", tlm)
 
+        # print("_on_recv_telemetry")
+
         # Iterate over subscribed telemetry to check if we care
         for subscribed_tlm in self.subscribers:
             if self.parse_mode == ParseMode.XTCE:
@@ -582,9 +586,12 @@ class Communication(App):
         # in user scripts and set default values.
         return newTelemetry
 
-    def _serialize(self, msg: Message) -> bytes:
+    def     _serialize(self, msg: Message) -> bytes:
         msg_json = msg.to_dict()
-        post_processor = CfsRFC1055PostProcessor(msg.msg_type)
+        # post_processor = CfsRFC1055PostProcessor(msg.msg_type)
+        # post_processor should be a field of this class
+        post_processor = CfsPostProcessor(msg.msg_type)
+        # post_processor = None
         if msg.msg_type == MessageType.TELEMETRY:
             return self.parser.craft_tlm_command(msg_json['name'], msg_json['args'], post_processor)
         elif msg.msg_type == MessageType.COMMAND:
