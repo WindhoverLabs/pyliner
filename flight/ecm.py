@@ -88,7 +88,7 @@ class ECM_HkTlm_t():
 
 def PX4LIB_GetPX4TimeUs():
     nanos = time.monotonic_ns() 
-    return nanos * 1000
+    return nanos / 1000
 
 
 class ECM():
@@ -111,11 +111,20 @@ class ECM():
     
     def ECM_ArmGpioPins(self):
         for pin in self.Config.ArmPins:
-            self.comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber:": pin}) )
+            self.comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber": pin}) )
+            # If I go any faster than this, SB starts dropping messages. See cfe _sb_api.c, Line 1291
+            time.sleep(0.02)
+
+
+    def ECM_SendNavAtp(self):
+        # pass
+        # TODO: Internal command as part of Pyliner NAV Mission sequence
+        self.comms.send_message(Command("/cfs/cpd/apps/nav/ATP", args={}) )
 
     
     def ECM_RunController(self):
-        self.HkTlm.Released = False
+        Released = False
+        # print(f"self.Config.ArmPins:{self.Config.ArmPins}")
     # /* Check if actuator armed. */
         self.HkTlm.Armed = self.IsActuatorArmed()
         if self.HkTlm.Armed:
@@ -126,7 +135,8 @@ class ECM():
                     # /* Latch. */
                     self.HkTlm.Released = True
                     self.HkTlm.StartTime = PX4LIB_GetPX4TimeUs()
-                    # ECM_SendNavAtp() Internal Pyliner's NAV sequence ATP
+                    # Internal Pyliner's NAV sequence ATP
+                    self.ECM_SendNavAtp() 
                     self.ECM_ArmGpioPins()
                     # (void) CFE_EVS_SendEvent(ECM_SEQUENCE_START_INF_EID, CFE_EVS_INFORMATION,
                     #                 "Sequence started %llu", ECM_AppData.HkTlm.StartTime);
@@ -143,7 +153,7 @@ class ECM():
                 Delta = TimeNow - self.HkTlm.StartTime
 
                 # /* Loop through all possible commands. */
-                for i in  range(self.Config.CommandPinCount):
+                for i in range(self.Config.CommandPinCount):
                 
                     # /* 
                     # * If delta time is greater than the delay and the command 
@@ -166,10 +176,9 @@ class ECM():
                 #                 "Sequence ended %llu", ECM_AppData.HkTlm.EndTime);
 
     def ECM_EngageGpioPin(self, number: int):
-            # iStatus = 0
-
-            # self.EngageCommand.gpioNumber = number
-            self.comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber:": number} ) )
+            self.comms.send_message(Command("/cfs/cpd/apps/gpio/Engage", args={"gpioNumber": number} ) )
+            # If I go any faster than this, SB starts dropping messages. See cfe _sb_api.c, Line 1291
+            time.sleep(0.02)
         
             
 
@@ -179,22 +188,12 @@ config.ReleasePin  = G_PIN_GPIO_0
 config.ArmPins = [1,2,4]
 config.ArmPinCount = 3
 config.CommandPinCount = 3
+config.CommandPins = [1,2,4]
 config.CommandDelayUs = [5966000, 5966000, 7966000]
     
 
 ecm_app: ECM = ECM(config, comms)
 
-
-
-def ECM_SendNavAtp():
-    pass
-    # TODO: Internal command as part of Pyliner NAV Mission sequence
-    # comms.send_message(Command("/cfs/cpd/apps/nav/ATP"))
-
-def ECM_ArmGpioPins():  
-    comms.send_message(Command("/cfs/cpd/apps/gpio"), {"gpioNumber:": 1})
-    comms.send_message(Command("/cfs/cpd/apps/gpio"), {"gpioNumber:": 2})
-    comms.send_message(Command("/cfs/cpd/apps/gpio"), {"gpioNumber:": 4})
 
 # /* ArmPins (arming is completed at the start of the sequence). */
 # {
@@ -217,11 +216,16 @@ comms.subscribe('/cfs/cpd/apps/gpio/GPIO_STATUS_TLM_MID.Status', callback=watch_
 comms.subscribe('/cfs/cpd/apps/px4lib/PX4_ACTUATOR_ARMED_MID.Armed', callback=watch_actuator_status)
 
 
-# comms.send_message(Command("/cfs/cpd/apps/vm/Arm"))
+comms.send_message(Command("/cfs/cpd/apps/vm/Arm", args={}))
+
+while True:
+    ecm_app.ECM_RunController()
+    time.sleep(0.01) # 100HZ
 
 
-comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber": 0}) )
-# while True:
-#     ecm_app.ECM_RunController()
-#     time.sleep(0.01) # 100HZ
+# comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber": 1}) )
+# time.sleep(0.02)
+# comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber": 2}) )
+# time.sleep(0.02)
+# comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber": 4}) )
 
