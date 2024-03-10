@@ -220,7 +220,7 @@ comms.subscribe('/cfs/cpd/apps/px4lib/PX4_ACTUATOR_ARMED_MID.Armed', callback=wa
 # comms.send_message(Command("/cfs/cpd/apps/vm/Arm"))
 
 
-comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber:": 0}) )
+comms.send_message(Command("/cfs/cpd/apps/gpio/Arm", args={"gpioNumber": 0}) )
 # while True:
 #     ecm_app.ECM_RunController()
 #     time.sleep(0.01) # 100HZ

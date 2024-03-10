@@ -15,7 +15,7 @@ class CfsPostProcessor(MsgPostProcessor):
 
 
     def preprocess_command(self, binary):
-        print("preprocess_command")
+        # print("preprocess_command")
         if len(binary) < MIN_CMD_LENGTH:
             msg = f"Short command received, length: {len(binary)}, expected minimum length: {MIN_CMD_LENGTH}"
             print(msg)  # Assuming log.warn() is replaced with print() for simplicity
@@ -27,8 +27,8 @@ class CfsPostProcessor(MsgPostProcessor):
             return None
 
         # set packet length
-        # binary_length = len(binary) - 7
-        # binary[4:6] = (binary_length >> 8 & 0xFF, binary_length & 0xFF)
+        binary_length = len(binary) - 7
+        binary[4:6] = (binary_length >> 8 & 0xFF, binary_length & 0xFF)
 
         # fill sequence
         # seq_count = seq_filler(binary)

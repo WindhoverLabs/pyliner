@@ -586,7 +586,7 @@ class Communication(App):
         # in user scripts and set default values.
         return newTelemetry
 
-    def     _serialize(self, msg: Message) -> bytes:
+    def  _serialize(self, msg: Message) -> bytes:
         msg_json = msg.to_dict()
         # post_processor = CfsRFC1055PostProcessor(msg.msg_type)
         # post_processor should be a field of this class
@@ -598,5 +598,7 @@ class Communication(App):
             if not msg.has_args:
                 args = {}
             else:
+                # Unlike telemetry, don't have the concept of "name"
+                print(f"msg_json:{msg_json}")
                 args = msg_json['args']
             return self.parser.craft_command(msg_json['name'], args, post_processor)
