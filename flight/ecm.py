@@ -56,6 +56,10 @@ rky = Vehicle(
 #     rky.logger.setLevel(40)
 
 
+class MissionItem():
+    pass
+
+
 class ECMConfig():
     def __init__(self) -> None:
         self.ECM_MAX_OUTPUT_COMMANDS = 8
@@ -122,6 +126,9 @@ class ECM():
         self.comms.send_message(Command("/cfs/cpd/apps/nav/ATP", args={}) )
 
     
+    def ECM_RunMissonController():
+        pass
+    
     def ECM_RunController(self):
         Released = False
         # print(f"self.Config.ArmPins:{self.Config.ArmPins}")
@@ -136,7 +143,8 @@ class ECM():
                     self.HkTlm.Released = True
                     self.HkTlm.StartTime = PX4LIB_GetPX4TimeUs()
                     # Internal Pyliner's NAV sequence ATP
-                    self.ECM_SendNavAtp() 
+                    # self.ECM_SendNavAtp() 
+                    self.ECM_RunMissonController()
                     self.ECM_ArmGpioPins()
                     # (void) CFE_EVS_SendEvent(ECM_SEQUENCE_START_INF_EID, CFE_EVS_INFORMATION,
                     #                 "Sequence started %llu", ECM_AppData.HkTlm.StartTime);
