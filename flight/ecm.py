@@ -2,6 +2,7 @@
 ECM - Engine Control Management
 """
 
+from flight.nav import Nav
 from pyliner.apps.communication import Communication, ParseMode
 from pyliner.apps.controller import FlightMode
 from pyliner.scripting_wrapper import ScriptingWrapper
@@ -56,9 +57,6 @@ rky = Vehicle(
 #     rky.logger.setLevel(40)
 
 
-class MissionItem():
-    pass
-
 
 class ECMConfig():
     def __init__(self) -> None:
@@ -104,6 +102,8 @@ class ECM():
         self.comms: Communication = new_comms
         self.gpio_status = 0
         self.actuator_armed = False
+        self.nav = Nav()
+        
         # ATP will be Pyliner's own internal command, as opposed to NAV
         # self.AtpCommand = Command("/cfs/cpd/apps/gpio/Engage")
 
@@ -147,7 +147,7 @@ class ECM():
                     self.ECM_RunMissonController()
                     self.ECM_ArmGpioPins()
                     # (void) CFE_EVS_SendEvent(ECM_SEQUENCE_START_INF_EID, CFE_EVS_INFORMATION,
-                    #                 "Sequence started %llu", ECM_AppData.HkTlm.StartTime);
+                    #                 "Sequence started %llu", ECM_AppData.HkTlm.StartTime)
                 
 
             if self.HkTlm.Released:
@@ -181,7 +181,7 @@ class ECM():
                 if 0 == self.HkTlm.EndTime and  self.HkTlm.SequenceStep >= (self.Config.CommandPinCount - 1):
                     self.HkTlm.EndTime = PX4LIB_GetPX4TimeUs()
                 #     (void) CFE_EVS_SendEvent(ECM_SEQUENCE_END_INF_EID, CFE_EVS_INFORMATION,
-                #                 "Sequence ended %llu", ECM_AppData.HkTlm.EndTime);
+                #                 "Sequence ended %llu", ECM_AppData.HkTlm.EndTime)
 
     def ECM_EngageGpioPin(self, number: int):
             self.comms.send_message(Command("/cfs/cpd/apps/gpio/Engage", args={"gpioNumber": number} ) )
