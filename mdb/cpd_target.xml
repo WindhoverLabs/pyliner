@@ -1468,6 +1468,18 @@
                         </Dimension>
                     </DimensionList>
                 </ArrayParameterType>
+                <ArrayParameterType name="Array_49Dim_BaseType_uint32_LE" arrayTypeRef="BaseType/uint32_LE">
+                    <DimensionList>
+                        <Dimension>
+                            <StartingIndex>
+                                <FixedValue>0</FixedValue>
+                            </StartingIndex>
+                            <EndingIndex>
+                                <FixedValue>49</FixedValue>
+                            </EndingIndex>
+                        </Dimension>
+                    </DimensionList>
+                </ArrayParameterType>
                 <ArrayParameterType name="Array_7Dim__cpd_apps_adc_ADC_Measurement_t" arrayTypeRef="cpd/apps/adc/ADC_Measurement_t">
                     <DimensionList>
                         <Dimension>
@@ -2952,7 +2964,7 @@
             <xtce:SpaceSystem name="cfe_sb">
                 <TelemetryMetaData>
                     <ParameterTypeSet>
-                        <EnumeratedParameterType name="DSOMR">
+                        <EnumeratedParameterType name="XHUOC">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                             <EnumerationList>
                                 <Enumeration value="0" label="SUBSCRIPTION"/>
@@ -3047,7 +3059,7 @@
                         </AggregateParameterType>
                         <AggregateParameterType name="CFE_SB_SubRprtMsg_Payload_t">
                             <MemberList>
-                                <Member name="SubType" typeRef="DSOMR"/>
+                                <Member name="SubType" typeRef="XHUOC"/>
                                 <Member name="_spare0" typeRef="BaseType/_padding8_LE"/>
                                 <Member name="MsgId" typeRef="BaseType/uint16_LE"/>
                                 <Member name="Qos" typeRef="CFE_SB_Qos_t"/>
@@ -3339,14 +3351,14 @@
             <xtce:SpaceSystem name="cfe_evs">
                 <TelemetryMetaData>
                     <ParameterTypeSet>
-                        <EnumeratedParameterType name="OHTXH">
+                        <EnumeratedParameterType name="RGGEX">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="LONG"/>
                                 <Enumeration value="0" label="SHORT"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="SQKMC">
+                        <EnumeratedParameterType name="YQVBG">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="DISCARD"/>
@@ -3365,12 +3377,12 @@
                             <MemberList>
                                 <Member name="CommandCounter" typeRef="BaseType/uint8_LE"/>
                                 <Member name="CommandErrCounter" typeRef="BaseType/uint8_LE"/>
-                                <Member name="MessageFormatMode" typeRef="OHTXH"/>
+                                <Member name="MessageFormatMode" typeRef="RGGEX"/>
                                 <Member name="MessageTruncCounter" typeRef="BaseType/uint8_LE"/>
                                 <Member name="UnregisteredAppCounter" typeRef="BaseType/uint8_LE"/>
                                 <Member name="OutputPort" typeRef="BaseType/uint8_LE"/>
                                 <Member name="LogFullFlag" typeRef="BaseType/uint8_LE"/>
-                                <Member name="LogMode" typeRef="SQKMC"/>
+                                <Member name="LogMode" typeRef="YQVBG"/>
                                 <Member name="MessageSendCounter" typeRef="BaseType/uint16_LE"/>
                                 <Member name="LogOverflowCounter" typeRef="BaseType/uint16_LE"/>
                                 <Member name="LogEnabled" typeRef="BaseType/uint8_LE"/>
@@ -3408,14 +3420,14 @@
                 </TelemetryMetaData>
                 <CommandMetaData>
                     <ArgumentTypeSet>
-                        <EnumeratedArgumentType name="MWQGI">
+                        <EnumeratedArgumentType name="AFLUS">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="LONG"/>
                                 <Enumeration value="0" label="SHORT"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="PZOBD">
+                        <EnumeratedArgumentType name="PHZDP">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="DISCARD"/>
@@ -3435,7 +3447,7 @@
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_EVS_FormatCmd_Payload_t">
                             <MemberList>
-                                <Member name="Mode" typeRef="MWQGI"/>
+                                <Member name="Mode" typeRef="AFLUS"/>
                                 <Member name="Spare" typeRef="BaseType/uint8_LE"/>
                             </MemberList>
                         </AggregateArgumentType>
@@ -3511,7 +3523,7 @@
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_EVS_ModeCmd_Payload_t">
                             <MemberList>
-                                <Member name="Mode" typeRef="PZOBD"/>
+                                <Member name="Mode" typeRef="PHZDP"/>
                                 <Member name="Spare" typeRef="BaseType/uint8_LE"/>
                             </MemberList>
                         </AggregateArgumentType>
@@ -3595,7 +3607,7 @@
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.Mode" argumentTypeRef="MWQGI"/>
+                                <Argument name="Payload.Mode" argumentTypeRef="AFLUS"/>
                                 <Argument name="Payload.Spare" argumentTypeRef="BaseType/uint8_LE"/>
                             </ArgumentList>
                             <CommandContainer name="SetEventFormatMode-container">
@@ -3876,7 +3888,7 @@
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.Mode" argumentTypeRef="PZOBD"/>
+                                <Argument name="Payload.Mode" argumentTypeRef="PHZDP"/>
                                 <Argument name="Payload.Spare" argumentTypeRef="BaseType/uint8_LE"/>
                             </ArgumentList>
                             <CommandContainer name="SetLogMode-container">
@@ -3918,7 +3930,7 @@
             <xtce:SpaceSystem name="cfe_time">
                 <TelemetryMetaData>
                     <ParameterTypeSet>
-                        <EnumeratedParameterType name="XLLFD">
+                        <EnumeratedParameterType name="PAPBY">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="FLYWHEEL"/>
@@ -3926,63 +3938,63 @@
                                 <Enumeration value="0" label="VALID"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="PGFLR">
+                        <EnumeratedParameterType name="LRNSI">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="0" label="NOT_SET"/>
                                 <Enumeration value="1" label="WAS_SET"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="QBXDW">
+                        <EnumeratedParameterType name="JIWFR">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="IS_FLY"/>
                                 <Enumeration value="0" label="NO_FLY"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="RWZGZ">
+                        <EnumeratedParameterType name="CVWOX">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="2" label="EXTERN"/>
                                 <Enumeration value="1" label="INTERN"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="JHLVT">
+                        <EnumeratedParameterType name="XROCE">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="PRIMARY"/>
                                 <Enumeration value="2" label="REDUNDANT"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="XQLDQ">
+                        <EnumeratedParameterType name="JQRQR">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="IS_FLY"/>
                                 <Enumeration value="0" label="NO_FLY"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="YZCZD">
+                        <EnumeratedParameterType name="PGFKN">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="ADD"/>
                                 <Enumeration value="2" label="SUB"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="VWYXK">
+                        <EnumeratedParameterType name="GGKNB">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="ADD"/>
                                 <Enumeration value="2" label="SUB"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="SVRID">
+                        <EnumeratedParameterType name="KSEMC">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="ADD"/>
                                 <Enumeration value="2" label="SUB"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="OKPRG">
+                        <EnumeratedParameterType name="KFYXA">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="2" label="BAD"/>
@@ -4004,22 +4016,22 @@
                                 <Member name="AtToneDelay" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="AtToneLatch" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="AtToneLeaps" typeRef="BaseType/int16_LE"/>
-                                <Member name="ClockStateAPI" typeRef="XLLFD"/>
+                                <Member name="ClockStateAPI" typeRef="PAPBY"/>
                                 <Member name="TimeSinceTone" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="CurrentLatch" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="CurrentMET" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="CurrentTAI" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="CurrentUTC" typeRef="CFE_TIME_SysTime_t"/>
-                                <Member name="ClockSetState" typeRef="PGFLR"/>
-                                <Member name="ClockFlyState" typeRef="QBXDW"/>
-                                <Member name="ClockSource" typeRef="RWZGZ"/>
-                                <Member name="ClockSignal" typeRef="JHLVT"/>
-                                <Member name="ServerFlyState" typeRef="XQLDQ"/>
+                                <Member name="ClockSetState" typeRef="LRNSI"/>
+                                <Member name="ClockFlyState" typeRef="JIWFR"/>
+                                <Member name="ClockSource" typeRef="CVWOX"/>
+                                <Member name="ClockSignal" typeRef="XROCE"/>
+                                <Member name="ServerFlyState" typeRef="JQRQR"/>
                                 <Member name="Forced2Fly" typeRef="BaseType/int16_LE"/>
                                 <Member name="ClockStateFlags" typeRef="BaseType/uint16_LE"/>
-                                <Member name="OneTimeDirection" typeRef="YZCZD"/>
-                                <Member name="OneHzDirection" typeRef="VWYXK"/>
-                                <Member name="DelayDirection" typeRef="SVRID"/>
+                                <Member name="OneTimeDirection" typeRef="PGFKN"/>
+                                <Member name="OneHzDirection" typeRef="GGKNB"/>
+                                <Member name="DelayDirection" typeRef="KSEMC"/>
                                 <Member name="OneTimeAdjust" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="OneHzAdjust" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="ToneSignalLatch" typeRef="CFE_TIME_SysTime_t"/>
@@ -4040,7 +4052,7 @@
                                 <Member name="MaxLocalClock" typeRef="CFE_TIME_SysTime_t"/>
                                 <Member name="ToneOverLimit" typeRef="BaseType/uint32_LE"/>
                                 <Member name="ToneUnderLimit" typeRef="BaseType/uint32_LE"/>
-                                <Member name="DataStoreStatus" typeRef="OKPRG"/>
+                                <Member name="DataStoreStatus" typeRef="KFYXA"/>
                             </MemberList>
                         </AggregateParameterType>
                         <AggregateParameterType name="CFE_TIME_DiagPacket_t">
@@ -4174,14 +4186,14 @@ CFE_UTC_Time.value = newTime;
                 </TelemetryMetaData>
                 <CommandMetaData>
                     <ArgumentTypeSet>
-                        <EnumeratedArgumentType name="IQCPA">
+                        <EnumeratedArgumentType name="HEFSO">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="2" label="EXTERN"/>
                                 <Enumeration value="1" label="INTERN"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="UEDUM">
+                        <EnumeratedArgumentType name="PVOXH">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="FLYWHEEL"/>
@@ -4189,7 +4201,7 @@ CFE_UTC_Time.value = newTime;
                                 <Enumeration value="0" label="VALID"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="OZJLN">
+                        <EnumeratedArgumentType name="DCKQJ">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="PRIMARY"/>
@@ -4198,7 +4210,7 @@ CFE_UTC_Time.value = newTime;
                         </EnumeratedArgumentType>
                         <AggregateArgumentType name="CFE_TIME_SourceCmd_Payload_t">
                             <MemberList>
-                                <Member name="TimeSource" typeRef="IQCPA"/>
+                                <Member name="TimeSource" typeRef="HEFSO"/>
                             </MemberList>
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TIME_SourceCmd_t">
@@ -4208,7 +4220,7 @@ CFE_UTC_Time.value = newTime;
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TIME_StateCmd_Payload_t">
                             <MemberList>
-                                <Member name="ClockState" typeRef="UEDUM"/>
+                                <Member name="ClockState" typeRef="PVOXH"/>
                             </MemberList>
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TIME_StateCmd_t">
@@ -4240,7 +4252,7 @@ CFE_UTC_Time.value = newTime;
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TIME_SignalCmd_Payload_t">
                             <MemberList>
-                                <Member name="ToneSource" typeRef="OZJLN"/>
+                                <Member name="ToneSource" typeRef="DCKQJ"/>
                             </MemberList>
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TIME_SignalCmd_t">
@@ -4317,7 +4329,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.TimeSource" argumentTypeRef="IQCPA"/>
+                                <Argument name="Payload.TimeSource" argumentTypeRef="HEFSO"/>
                             </ArgumentList>
                             <CommandContainer name="SetSource-container">
                                 <EntryList>
@@ -4334,7 +4346,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.ClockState" argumentTypeRef="UEDUM"/>
+                                <Argument name="Payload.ClockState" argumentTypeRef="PVOXH"/>
                             </ArgumentList>
                             <CommandContainer name="SetState-container">
                                 <EntryList>
@@ -4541,7 +4553,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.ToneSource" argumentTypeRef="OZJLN"/>
+                                <Argument name="Payload.ToneSource" argumentTypeRef="DCKQJ"/>
                             </ArgumentList>
                             <CommandContainer name="SetSignal-container">
                                 <EntryList>
@@ -4634,21 +4646,21 @@ CFE_UTC_Time.value = newTime;
             <xtce:SpaceSystem name="cfe_es">
                 <TelemetryMetaData>
                     <ParameterTypeSet>
-                        <EnumeratedParameterType name="UTCYA">
+                        <EnumeratedParameterType name="XDCRK">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="DROP"/>
                                 <Enumeration value="0" label="OVERWRITE"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="GFZIM">
+                        <EnumeratedParameterType name="JBGOL">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="2" label="POWERUP"/>
                                 <Enumeration value="1" label="PROCESSOR"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="XPNYN">
+                        <EnumeratedParameterType name="NUCPA">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="9" label="BANKSWITCH_RESET"/>
@@ -4662,7 +4674,7 @@ CFE_UTC_Time.value = newTime;
                                 <Enumeration value="7" label="UNDEFINED_RESET"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="DUCCC">
+                        <EnumeratedParameterType name="PARBP">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="0" label="IDLE"/>
@@ -4670,7 +4682,7 @@ CFE_UTC_Time.value = newTime;
                                 <Enumeration value="1" label="WAITING_FOR_TRIGGER"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="LZOCT">
+                        <EnumeratedParameterType name="ICBFQ">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="TRIGGER_CENTER"/>
@@ -4678,14 +4690,14 @@ CFE_UTC_Time.value = newTime;
                                 <Enumeration value="0" label="TRIGGER_START"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="PGRII">
+                        <EnumeratedParameterType name="JPYIN">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="CORE"/>
                                 <Enumeration value="2" label="EXTERNAL"/>
                             </EnumerationList>
                         </EnumeratedParameterType>
-                        <EnumeratedParameterType name="GAXBT">
+                        <EnumeratedParameterType name="SENHU">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="PROC_RESTART"/>
@@ -4708,20 +4720,20 @@ CFE_UTC_Time.value = newTime;
                                 <Member name="SysLogBytesUsed" typeRef="BaseType/uint32_LE"/>
                                 <Member name="SysLogSize" typeRef="BaseType/uint32_LE"/>
                                 <Member name="SysLogEntries" typeRef="BaseType/uint32_LE"/>
-                                <Member name="SysLogMode" typeRef="UTCYA"/>
+                                <Member name="SysLogMode" typeRef="XDCRK"/>
                                 <Member name="ERLogIndex" typeRef="BaseType/uint32_LE"/>
                                 <Member name="ERLogEntries" typeRef="BaseType/uint32_LE"/>
                                 <Member name="RegisteredCoreApps" typeRef="BaseType/uint32_LE"/>
                                 <Member name="RegisteredExternalApps" typeRef="BaseType/uint32_LE"/>
                                 <Member name="RegisteredTasks" typeRef="BaseType/uint32_LE"/>
                                 <Member name="RegisteredLibs" typeRef="BaseType/uint32_LE"/>
-                                <Member name="ResetType" typeRef="GFZIM"/>
-                                <Member name="ResetSubtype" typeRef="XPNYN"/>
+                                <Member name="ResetType" typeRef="JBGOL"/>
+                                <Member name="ResetSubtype" typeRef="NUCPA"/>
                                 <Member name="ProcessorResets" typeRef="BaseType/uint32_LE"/>
                                 <Member name="MaxProcessorResets" typeRef="BaseType/uint32_LE"/>
                                 <Member name="BootSource" typeRef="BaseType/uint32_LE"/>
-                                <Member name="PerfState" typeRef="DUCCC"/>
-                                <Member name="PerfMode" typeRef="LZOCT"/>
+                                <Member name="PerfState" typeRef="PARBP"/>
+                                <Member name="PerfMode" typeRef="ICBFQ"/>
                                 <Member name="PerfTriggerCount" typeRef="BaseType/uint32_LE"/>
                                 <Member name="PerfFilterMask" typeRef="BaseType/Array_7Dim_BaseType_uint32_LE"/>
                                 <Member name="PerfTriggerMask" typeRef="BaseType/Array_7Dim_BaseType_uint32_LE"/>
@@ -4742,7 +4754,7 @@ CFE_UTC_Time.value = newTime;
                         <AggregateParameterType name="CFE_ES_AppInfo_t">
                             <MemberList>
                                 <Member name="AppId" typeRef="BaseType/uint32_LE"/>
-                                <Member name="Type" typeRef="PGRII"/>
+                                <Member name="Type" typeRef="JPYIN"/>
                                 <Member name="Name" typeRef="BaseType/string320_LE"/>
                                 <Member name="EntryPoint" typeRef="BaseType/string320_LE"/>
                                 <Member name="FileName" typeRef="BaseType/string512_LE"/>
@@ -4756,7 +4768,7 @@ CFE_UTC_Time.value = newTime;
                                 <Member name="BSSAddress" typeRef="BaseType/uint32_LE"/>
                                 <Member name="BSSSize" typeRef="BaseType/uint32_LE"/>
                                 <Member name="StartAddress" typeRef="BaseType/uint32_LE"/>
-                                <Member name="ExceptionAction" typeRef="GAXBT"/>
+                                <Member name="ExceptionAction" typeRef="SENHU"/>
                                 <Member name="Priority" typeRef="BaseType/uint16_LE"/>
                                 <Member name="MainTaskId" typeRef="BaseType/uint32_LE"/>
                                 <Member name="ExecutionCounter" typeRef="BaseType/uint32_LE"/>
@@ -4876,21 +4888,21 @@ CFE_UTC_Time.value = newTime;
                 </TelemetryMetaData>
                 <CommandMetaData>
                     <ArgumentTypeSet>
-                        <EnumeratedArgumentType name="KSFJH">
+                        <EnumeratedArgumentType name="EUCAD">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="2" label="POWERON_RESET"/>
                                 <Enumeration value="1" label="PROCESSOR_RESET"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="UGOJT">
+                        <EnumeratedArgumentType name="ADKNB">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="PROC_RESTART"/>
                                 <Enumeration value="0" label="RESTART_APP"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="WFHDN">
+                        <EnumeratedArgumentType name="XTVRD">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="CENTER"/>
@@ -4898,7 +4910,7 @@ CFE_UTC_Time.value = newTime;
                                 <Enumeration value="0" label="START"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="ZCINJ">
+                        <EnumeratedArgumentType name="CZVRX">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="DISCARD"/>
@@ -4907,7 +4919,7 @@ CFE_UTC_Time.value = newTime;
                         </EnumeratedArgumentType>
                         <AggregateArgumentType name="CFE_ES_RestartCmd_Payload_t">
                             <MemberList>
-                                <Member name="RestartType" typeRef="KSFJH"/>
+                                <Member name="RestartType" typeRef="EUCAD"/>
                             </MemberList>
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_ES_RestartCmd_t">
@@ -4932,7 +4944,7 @@ CFE_UTC_Time.value = newTime;
                                 <Member name="AppEntryPoint" typeRef="BaseType/string320_LE"/>
                                 <Member name="AppFileName" typeRef="BaseType/string512_LE"/>
                                 <Member name="StackSize" typeRef="BaseType/uint32_LE"/>
-                                <Member name="ExceptionAction" typeRef="UGOJT"/>
+                                <Member name="ExceptionAction" typeRef="ADKNB"/>
                                 <Member name="Priority" typeRef="BaseType/uint16_LE"/>
                             </MemberList>
                         </AggregateArgumentType>
@@ -4994,7 +5006,7 @@ CFE_UTC_Time.value = newTime;
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_ES_PerfStartCmd_Payload_t">
                             <MemberList>
-                                <Member name="TriggerMode" typeRef="WFHDN"/>
+                                <Member name="TriggerMode" typeRef="XTVRD"/>
                             </MemberList>
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_ES_PerfStartCmd_t">
@@ -5036,7 +5048,7 @@ CFE_UTC_Time.value = newTime;
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_ES_OverWriteSysLogCmd_Payload_t">
                             <MemberList>
-                                <Member name="Mode" typeRef="ZCINJ"/>
+                                <Member name="Mode" typeRef="CZVRX"/>
                             </MemberList>
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_ES_OverWriteSysLogCmd_t">
@@ -5132,7 +5144,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.RestartType" argumentTypeRef="KSFJH"/>
+                                <Argument name="Payload.RestartType" argumentTypeRef="EUCAD"/>
                             </ArgumentList>
                             <CommandContainer name="Restart-container">
                                 <EntryList>
@@ -5172,7 +5184,7 @@ CFE_UTC_Time.value = newTime;
                                 <Argument name="Payload.AppEntryPoint" argumentTypeRef="BaseType/string320_LE"/>
                                 <Argument name="Payload.AppFileName" argumentTypeRef="BaseType/string512_LE"/>
                                 <Argument name="Payload.StackSize" argumentTypeRef="BaseType/uint32_LE"/>
-                                <Argument name="Payload.ExceptionAction" argumentTypeRef="UGOJT"/>
+                                <Argument name="Payload.ExceptionAction" argumentTypeRef="ADKNB"/>
                                 <Argument name="Payload.Priority" argumentTypeRef="BaseType/uint16_LE"/>
                             </ArgumentList>
                             <CommandContainer name="StartApp-container">
@@ -5342,7 +5354,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.TriggerMode" argumentTypeRef="WFHDN"/>
+                                <Argument name="Payload.TriggerMode" argumentTypeRef="XTVRD"/>
                             </ArgumentList>
                             <CommandContainer name="PerfStart-container">
                                 <EntryList>
@@ -5414,7 +5426,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.Mode" argumentTypeRef="ZCINJ"/>
+                                <Argument name="Payload.Mode" argumentTypeRef="CZVRX"/>
                             </ArgumentList>
                             <CommandContainer name="SetSysLogMode-container">
                                 <EntryList>
@@ -5641,14 +5653,14 @@ CFE_UTC_Time.value = newTime;
                 </TelemetryMetaData>
                 <CommandMetaData>
                     <ArgumentTypeSet>
-                        <EnumeratedArgumentType name="RDMNI">
+                        <EnumeratedArgumentType name="OTZAR">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="ACTIVE_BUFFER"/>
                                 <Enumeration value="0" label="INACTIVE_BUFFER"/>
                             </EnumerationList>
                         </EnumeratedArgumentType>
-                        <EnumeratedArgumentType name="HQROA">
+                        <EnumeratedArgumentType name="OQVWJ">
                             <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                             <EnumerationList>
                                 <Enumeration value="1" label="ACTIVE_BUFFER"/>
@@ -5667,7 +5679,7 @@ CFE_UTC_Time.value = newTime;
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TBL_DumpCmd_Payload_t">
                             <MemberList>
-                                <Member name="ActiveTblFlag" typeRef="RDMNI"/>
+                                <Member name="ActiveTblFlag" typeRef="OTZAR"/>
                                 <Member name="TableName" typeRef="BaseType/string480_LE"/>
                                 <Member name="DumpFilename" typeRef="BaseType/string512_LE"/>
                             </MemberList>
@@ -5679,7 +5691,7 @@ CFE_UTC_Time.value = newTime;
                         </AggregateArgumentType>
                         <AggregateArgumentType name="CFE_TBL_ValidateCmd_Payload_t">
                             <MemberList>
-                                <Member name="ActiveTblFlag" typeRef="HQROA"/>
+                                <Member name="ActiveTblFlag" typeRef="OQVWJ"/>
                                 <Member name="TableName" typeRef="BaseType/string480_LE"/>
                             </MemberList>
                         </AggregateArgumentType>
@@ -5792,7 +5804,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.ActiveTblFlag" argumentTypeRef="RDMNI"/>
+                                <Argument name="Payload.ActiveTblFlag" argumentTypeRef="OTZAR"/>
                                 <Argument name="Payload.TableName" argumentTypeRef="BaseType/string480_LE"/>
                                 <Argument name="Payload.DumpFilename" argumentTypeRef="BaseType/string512_LE"/>
                             </ArgumentList>
@@ -5813,7 +5825,7 @@ CFE_UTC_Time.value = newTime;
                                 </ArgumentAssignmentList>
                             </BaseMetaCommand>
                             <ArgumentList>
-                                <Argument name="Payload.ActiveTblFlag" argumentTypeRef="HQROA"/>
+                                <Argument name="Payload.ActiveTblFlag" argumentTypeRef="OQVWJ"/>
                                 <Argument name="Payload.TableName" argumentTypeRef="BaseType/string480_LE"/>
                             </ArgumentList>
                             <CommandContainer name="Validate-container">
@@ -5946,7 +5958,7 @@ CFE_UTC_Time.value = newTime;
         <xtce:SpaceSystem name="lc">
             <TelemetryMetaData>
                 <ParameterTypeSet>
-                    <EnumeratedParameterType name="TMGFG">
+                    <EnumeratedParameterType name="QDKZV">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="ACTIVE"/>
@@ -5959,7 +5971,7 @@ CFE_UTC_Time.value = newTime;
                         <MemberList>
                             <Member name="CmdCount" typeRef="BaseType/uint8_LE"/>
                             <Member name="CmdErrCount" typeRef="BaseType/uint8_LE"/>
-                            <Member name="CurrentLCState" typeRef="TMGFG"/>
+                            <Member name="CurrentLCState" typeRef="QDKZV"/>
                             <Member name="Pad8" typeRef="BaseType/uint8_LE"/>
                             <Member name="WPResults" typeRef="BaseType/Array_43Dim_BaseType_uint8_LE"/>
                             <Member name="APResults" typeRef="BaseType/Array_87Dim_BaseType_uint8_LE"/>
@@ -5995,7 +6007,7 @@ CFE_UTC_Time.value = newTime;
             </TelemetryMetaData>
             <CommandMetaData>
                 <ArgumentTypeSet>
-                    <EnumeratedArgumentType name="QIRZJ">
+                    <EnumeratedArgumentType name="HVGRH">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                         <EnumerationList>
                             <Enumeration value="1" label="ACTIVE"/>
@@ -6004,7 +6016,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="2" label="PASSIVE"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="HEPVG">
+                    <EnumeratedArgumentType name="QYIMY">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="16"/>
                         <EnumerationList>
                             <Enumeration value="1" label="ACTIVE"/>
@@ -6015,14 +6027,14 @@ CFE_UTC_Time.value = newTime;
                     </EnumeratedArgumentType>
                     <AggregateArgumentType name="LC_SetLCState_t">
                         <MemberList>
-                            <Member name="NewLCState" typeRef="QIRZJ"/>
+                            <Member name="NewLCState" typeRef="HVGRH"/>
                             <Member name="Padding" typeRef="BaseType/uint16_LE"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="LC_SetAPState_t">
                         <MemberList>
                             <Member name="APNumber" typeRef="BaseType/uint16_LE"/>
-                            <Member name="NewAPState" typeRef="HEPVG"/>
+                            <Member name="NewAPState" typeRef="QYIMY"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="LC_SetAPPermOff_t">
@@ -6087,7 +6099,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="NewLCState" argumentTypeRef="QIRZJ"/>
+                            <Argument name="NewLCState" argumentTypeRef="HVGRH"/>
                             <Argument name="Padding" argumentTypeRef="BaseType/uint16_LE"/>
                         </ArgumentList>
                         <CommandContainer name="SetLCState-container">
@@ -6107,7 +6119,7 @@ CFE_UTC_Time.value = newTime;
                         </BaseMetaCommand>
                         <ArgumentList>
                             <Argument name="APNumber" argumentTypeRef="BaseType/uint16_LE"/>
-                            <Argument name="NewAPState" argumentTypeRef="HEPVG"/>
+                            <Argument name="NewAPState" argumentTypeRef="QYIMY"/>
                         </ArgumentList>
                         <CommandContainer name="SetAPState-container">
                             <EntryList>
@@ -6213,7 +6225,7 @@ CFE_UTC_Time.value = newTime;
         <xtce:SpaceSystem name="fm">
             <TelemetryMetaData>
                 <ParameterTypeSet>
-                    <EnumeratedParameterType name="MTHRW">
+                    <EnumeratedParameterType name="LWRAU">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="9" label="CONCAT"/>
@@ -6237,7 +6249,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="17" label="SET_TABLE_STATE"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="ROQXZ">
+                    <EnumeratedParameterType name="XXIBF">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="9" label="CONCAT"/>
@@ -6312,8 +6324,8 @@ CFE_UTC_Time.value = newTime;
                             <Member name="ChildCmdErrCounter" typeRef="BaseType/uint8_LE"/>
                             <Member name="ChildCmdWarnCounter" typeRef="BaseType/uint8_LE"/>
                             <Member name="ChildQueueCount" typeRef="BaseType/uint8_LE"/>
-                            <Member name="ChildCurrentCC" typeRef="MTHRW"/>
-                            <Member name="ChildPreviousCC" typeRef="ROQXZ"/>
+                            <Member name="ChildCurrentCC" typeRef="LWRAU"/>
+                            <Member name="ChildPreviousCC" typeRef="XXIBF"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="FM_OpenFilesEntry_t">
@@ -6407,7 +6419,7 @@ CFE_UTC_Time.value = newTime;
             </TelemetryMetaData>
             <CommandMetaData>
                 <ArgumentTypeSet>
-                    <EnumeratedArgumentType name="JGNOE">
+                    <EnumeratedArgumentType name="LGPGF">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="0" label="DISABLED"/>
@@ -6497,7 +6509,7 @@ CFE_UTC_Time.value = newTime;
                     <AggregateArgumentType name="FM_SetTableStateCmd_t">
                         <MemberList>
                             <Member name="TableEntryIndex" typeRef="BaseType/uint32_LE"/>
-                            <Member name="TableEntryState" typeRef="JGNOE"/>
+                            <Member name="TableEntryState" typeRef="LGPGF"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="FM_SetPermCmd_t">
@@ -6812,7 +6824,7 @@ CFE_UTC_Time.value = newTime;
                         </BaseMetaCommand>
                         <ArgumentList>
                             <Argument name="TableEntryIndex" argumentTypeRef="BaseType/uint32_LE"/>
-                            <Argument name="TableEntryState" argumentTypeRef="JGNOE"/>
+                            <Argument name="TableEntryState" argumentTypeRef="LGPGF"/>
                         </ArgumentList>
                         <CommandContainer name="SetTableState-container">
                             <EntryList>
@@ -6859,7 +6871,7 @@ CFE_UTC_Time.value = newTime;
         <xtce:SpaceSystem name="sc">
             <TelemetryMetaData>
                 <ParameterTypeSet>
-                    <EnumeratedParameterType name="OPPAE">
+                    <EnumeratedParameterType name="CMBII">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="ATS_A"/>
@@ -6867,7 +6879,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="0" label="NO_ATS"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="NUDQT">
+                    <EnumeratedParameterType name="MTYDL">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="EMPTY"/>
@@ -6883,8 +6895,8 @@ CFE_UTC_Time.value = newTime;
                     </EnumeratedParameterType>
                     <AggregateParameterType name="SC_HkTlm_t">
                         <MemberList>
-                            <Member name="AtsNumber" typeRef="OPPAE"/>
-                            <Member name="AtpState" typeRef="NUDQT"/>
+                            <Member name="AtsNumber" typeRef="CMBII"/>
+                            <Member name="AtpState" typeRef="MTYDL"/>
                             <Member name="ContinueAtsOnFailureFlag" typeRef="BaseType/uint8_LE"/>
                             <Member name="CmdErrCtr" typeRef="BaseType/uint8_LE"/>
                             <Member name="CmdCtr" typeRef="BaseType/uint8_LE"/>
@@ -7610,6 +7622,326 @@ CFE_UTC_Time.value = newTime;
                 </MetaCommandSet>
             </CommandMetaData>
         </xtce:SpaceSystem>
+        <xtce:SpaceSystem name="zusup">
+            <TelemetryMetaData>
+                <ParameterTypeSet>
+                    <EnumeratedParameterType name="ZUSUP_TempState_t">
+                        <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
+                        <EnumerationList>
+                            <Enumeration value="3" label="CRITICAL_HIGH"/>
+                            <Enumeration value="5" label="CRITICAL_LOW"/>
+                            <Enumeration value="1" label="NOMINAL"/>
+                            <Enumeration value="0" label="UNKNOWN"/>
+                            <Enumeration value="2" label="WARNING_HIGH"/>
+                            <Enumeration value="4" label="WARNING_LOW"/>
+                        </EnumerationList>
+                    </EnumeratedParameterType>
+                    <AggregateParameterType name="ZUSUP_HkTlm_t">
+                        <MemberList>
+                            <Member name="CmdCnt" typeRef="BaseType/uint8_LE"/>
+                            <Member name="CmdErrCnt" typeRef="BaseType/uint8_LE"/>
+                            <Member name="_spare0" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="Temperature" typeRef="BaseType/float32_LE"/>
+                            <Member name="Voltage" typeRef="BaseType/float32_LE"/>
+                            <Member name="TempState" typeRef="ZUSUP_TempState_t"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                    <AggregateParameterType name="ZUSUP_ADC_MinMaxSample_t">
+                        <MemberList>
+                            <Member name="Current" typeRef="BaseType/float32_LE"/>
+                            <Member name="Minimum" typeRef="BaseType/float32_LE"/>
+                            <Member name="Maximum" typeRef="BaseType/float32_LE"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                    <AggregateParameterType name="ZUSUP_ADC_Sample_t">
+                        <MemberList>
+                            <Member name="Current" typeRef="BaseType/float32_LE"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                    <AggregateParameterType name="ZUSUP_ADC_PS_Block_t">
+                        <MemberList>
+                            <Member name="TEMP" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="TEMP_REMTE" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY1" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY2" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY3" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY4" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY5" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY6" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY7" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY8" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY9" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY10" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="VPVN" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="VREFP" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="VREFN" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX0" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX1" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX2" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX3" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX4" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX5" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX6" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX7" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX8" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX9" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX10" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX11" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX12" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX13" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX14" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX15" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="VCCAMS" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                    <AggregateParameterType name="ZUSUP_ADC_PL_Block_t">
+                        <MemberList>
+                            <Member name="TEMP" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="TEMP_REMTE" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY1" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY2" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY3" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY4" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY5" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY6" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY7" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY8" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY9" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="SUPPLY10" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                            <Member name="VPVN" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="VREFP" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="VREFN" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX0" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX1" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX2" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX3" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX4" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX5" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX6" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX7" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX8" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX9" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX10" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX11" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX12" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX13" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX14" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="AUX15" typeRef="ZUSUP_ADC_Sample_t"/>
+                            <Member name="VCCAMS" typeRef="ZUSUP_ADC_MinMaxSample_t"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                    <AggregateParameterType name="ZUSUP_DiagTlm_t">
+                        <MemberList>
+                            <Member name="PsAdcBlock" typeRef="ZUSUP_ADC_PS_Block_t"/>
+                            <Member name="PlAdcBlock" typeRef="ZUSUP_ADC_PL_Block_t"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                </ParameterTypeSet>
+                <ParameterSet>
+                    <Parameter name="ZUSUP_HK_TLM_MID" parameterTypeRef="ZUSUP_HkTlm_t"/>
+                    <Parameter name="ZUSUP_DIAG_TLM_MID" parameterTypeRef="ZUSUP_DiagTlm_t"/>
+                </ParameterSet>
+                <ContainerSet>
+                    <SequenceContainer name="ZUSUP_HK_TLM_MID">
+                        <DefaultRateInStream minimumValue="1.000000e+00"/>
+                        <EntryList>
+                            <ParameterRefEntry parameterRef="ZUSUP_HK_TLM_MID"/>
+                        </EntryList>
+                        <BaseContainer containerRef="cfs/cfs-tlm-hdr">
+                            <RestrictionCriteria>
+                                <ComparisonList>
+                                    <Comparison parameterRef="cfs/ccsds-apid" value="822"/>
+                                </ComparisonList>
+                            </RestrictionCriteria>
+                        </BaseContainer>
+                    </SequenceContainer>
+                    <SequenceContainer name="ZUSUP_DIAG_TLM_MID">
+                        <DefaultRateInStream minimumValue="1.000000e+00"/>
+                        <EntryList>
+                            <ParameterRefEntry parameterRef="ZUSUP_DIAG_TLM_MID"/>
+                        </EntryList>
+                        <BaseContainer containerRef="cfs/cfs-tlm-hdr">
+                            <RestrictionCriteria>
+                                <ComparisonList>
+                                    <Comparison parameterRef="cfs/ccsds-apid" value="821"/>
+                                </ComparisonList>
+                            </RestrictionCriteria>
+                        </BaseContainer>
+                    </SequenceContainer>
+                </ContainerSet>
+                <AlgorithmSet/>
+            </TelemetryMetaData>
+            <CommandMetaData>
+                <ArgumentTypeSet>
+                    <AggregateArgumentType name="ZUSUP_SetThesholdCmd_t">
+                        <MemberList>
+                            <Member name="Threshold" typeRef="BaseType/float32_LE"/>
+                        </MemberList>
+                    </AggregateArgumentType>
+                    <AggregateArgumentType name="ZUSUP_SetShutdownOnCritCmd_t">
+                        <MemberList>
+                            <Member name="Shutdown" typeRef="BaseType/boolean8_LE"/>
+                        </MemberList>
+                    </AggregateArgumentType>
+                </ArgumentTypeSet>
+                <MetaCommandSet>
+                    <MetaCommand name="Noop">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="Noop-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="Reset">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="1"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="Reset-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetWarningLow">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="2"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="4"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Threshold" argumentTypeRef="BaseType/float32_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetWarningLow-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Threshold"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetCriticalLow">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="3"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="4"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Threshold" argumentTypeRef="BaseType/float32_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetCriticalLow-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Threshold"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetWarningHigh">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="4"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="4"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Threshold" argumentTypeRef="BaseType/float32_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetWarningHigh-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Threshold"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetCriticalHigh">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="5"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="4"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Threshold" argumentTypeRef="BaseType/float32_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetCriticalHigh-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Threshold"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetShutdownOnCritLow">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="6"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Shutdown" argumentTypeRef="BaseType/boolean8_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetShutdownOnCritLow-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Shutdown"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetShutdownOnCritHigh">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="823"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="7"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Shutdown" argumentTypeRef="BaseType/boolean8_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetShutdownOnCritHigh-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Shutdown"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SendHK">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="824"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="SendHK-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="WakeUp">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="825"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="WakeUp-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                </MetaCommandSet>
+            </CommandMetaData>
+        </xtce:SpaceSystem>
         <xtce:SpaceSystem name="sbnd">
             <TelemetryMetaData>
                 <ParameterTypeSet>
@@ -8114,6 +8446,7 @@ CFE_UTC_Time.value = newTime;
                             <Member name="StartTime" typeRef="BaseType/uint64_LE"/>
                             <Member name="EndTime" typeRef="BaseType/uint64_LE"/>
                             <Member name="SequenceStep" typeRef="BaseType/uint32_LE"/>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="ExecutionTimes" typeRef="BaseType/Array_7Dim_BaseType_uint64_LE"/>
                         </MemberList>
                     </AggregateParameterType>
@@ -8199,14 +8532,14 @@ CFE_UTC_Time.value = newTime;
         <xtce:SpaceSystem name="cf">
             <TelemetryMetaData>
                 <ParameterTypeSet>
-                    <EnumeratedParameterType name="LYINM">
+                    <EnumeratedParameterType name="MUKNB">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="0" label="DISABLE"/>
                             <Enumeration value="1" label="ENABLE"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="NFCHL">
+                    <EnumeratedParameterType name="GRVAC">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="2" label="DATA_COMPLETE"/>
@@ -8215,7 +8548,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="1" label="DONT_CARE_1"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="QQNKL">
+                    <EnumeratedParameterType name="YWRPI">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="3" label="ABANDONED"/>
@@ -8224,7 +8557,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="0" label="UNKNOWN"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="VCIFC">
+                    <EnumeratedParameterType name="ADVEV">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="2" label="CLASS_1_RECEIVER"/>
@@ -8233,7 +8566,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="3" label="CLASS_2_SENDER"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="BKFIO">
+                    <EnumeratedParameterType name="RFCYX">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="7" label="FINISHED"/>
@@ -8246,7 +8579,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="0" label="UNINITIALIZED"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="RAWRB">
+                    <EnumeratedParameterType name="MQEOH">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="3" label="ABANDON"/>
@@ -8261,7 +8594,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="0" label="UNKNOWN"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="TZHPH">
+                    <EnumeratedParameterType name="ZXBCV">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="15" label="CANCEL_REQUEST_RECEIVED"/>
@@ -8282,14 +8615,14 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="14" label="SUSPEND_REQUEST_RECEIVED"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="FEGJK">
+                    <EnumeratedParameterType name="UOBVY">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="1" label="CLASS_1"/>
                             <Enumeration value="2" label="CLASS_2"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="DLCWN">
+                    <EnumeratedParameterType name="NOFBR">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="2" label="PLAYBACK_DIR_CMD"/>
@@ -8297,7 +8630,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="3" label="POLL_DIRECTORY"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="UOIRS">
+                    <EnumeratedParameterType name="HFBOO">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="0" label="ALL"/>
@@ -8355,7 +8688,7 @@ CFE_UTC_Time.value = newTime;
                     </AggregateParameterType>
                     <AggregateParameterType name="AutoSuspend_Telemetry_t">
                         <MemberList>
-                            <Member name="EnFlag" typeRef="LYINM"/>
+                            <Member name="EnFlag" typeRef="MUKNB"/>
                             <Member name="LowFreeMark" typeRef="BaseType/uint32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
@@ -8441,15 +8774,15 @@ CFE_UTC_Time.value = newTime;
                             <Member name="TransNum" typeRef="BaseType/uint32_LE"/>
                             <Member name="Attempts" typeRef="BaseType/uint32_LE"/>
                             <Member name="CondCode" typeRef="BaseType/uint32_LE"/>
-                            <Member name="DeliCode" typeRef="NFCHL"/>
+                            <Member name="DeliCode" typeRef="GRVAC"/>
                             <Member name="FdOffset" typeRef="BaseType/uint32_LE"/>
                             <Member name="FdLength" typeRef="BaseType/uint32_LE"/>
                             <Member name="Checksum" typeRef="BaseType/uint32_LE"/>
-                            <Member name="FinalStat" typeRef="QQNKL"/>
+                            <Member name="FinalStat" typeRef="YWRPI"/>
                             <Member name="FileSize" typeRef="BaseType/uint32_LE"/>
                             <Member name="RcvdFileSize" typeRef="BaseType/uint32_LE"/>
-                            <Member name="Role" typeRef="VCIFC"/>
-                            <Member name="State" typeRef="BKFIO"/>
+                            <Member name="Role" typeRef="ADVEV"/>
+                            <Member name="State" typeRef="RFCYX"/>
                             <Member name="StartTime" typeRef="BaseType/uint32_LE"/>
                             <Member name="SrcFile" typeRef="BaseType/string512_LE"/>
                             <Member name="DstFile" typeRef="BaseType/string512_LE"/>
@@ -8458,13 +8791,13 @@ CFE_UTC_Time.value = newTime;
                     </AggregateParameterType>
                     <AggregateParameterType name="CF_AppTransStat_t">
                         <MemberList>
-                            <Member name="Status" typeRef="RAWRB"/>
-                            <Member name="CondCode" typeRef="TZHPH"/>
+                            <Member name="Status" typeRef="MQEOH"/>
+                            <Member name="CondCode" typeRef="ZXBCV"/>
                             <Member name="Priority" typeRef="BaseType/uint32_LE"/>
-                            <Member name="Class" typeRef="FEGJK"/>
+                            <Member name="Class" typeRef="UOBVY"/>
                             <Member name="ChanNum" typeRef="BaseType/uint32_LE"/>
-                            <Member name="Source" typeRef="DLCWN"/>
-                            <Member name="NodeType" typeRef="UOIRS"/>
+                            <Member name="Source" typeRef="NOFBR"/>
+                            <Member name="NodeType" typeRef="HFBOO"/>
                             <Member name="TransNum" typeRef="BaseType/uint32_LE"/>
                             <Member name="SrcEntityId" typeRef="BaseType/string128_LE"/>
                             <Member name="SrcFile" typeRef="BaseType/string512_LE"/>
@@ -8527,7 +8860,7 @@ CFE_UTC_Time.value = newTime;
             </TelemetryMetaData>
             <CommandMetaData>
                 <ArgumentTypeSet>
-                    <EnumeratedArgumentType name="JRPWW">
+                    <EnumeratedArgumentType name="OZCMN">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="ALL"/>
@@ -8537,56 +8870,56 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="3" label="UP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="NXPNB">
+                    <EnumeratedArgumentType name="AAVLM">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="CLASS_1"/>
                             <Enumeration value="2" label="CLASS_2"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="SGPVT">
+                    <EnumeratedArgumentType name="AACQN">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="DELETE"/>
                             <Enumeration value="1" label="KEEP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="JDQIN">
+                    <EnumeratedArgumentType name="KXWEV">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="CLASS_1"/>
                             <Enumeration value="2" label="CLASS_2"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="HEHCK">
+                    <EnumeratedArgumentType name="MNUPK">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="DELETE"/>
                             <Enumeration value="1" label="KEEP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="DIVJB">
+                    <EnumeratedArgumentType name="UFITT">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="CLASS_1"/>
                             <Enumeration value="2" label="CLASS_2"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="PNNVI">
+                    <EnumeratedArgumentType name="UNFHH">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="DELETE"/>
                             <Enumeration value="1" label="KEEP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="PWRAY">
+                    <EnumeratedArgumentType name="MZSQO">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="DOWN"/>
                             <Enumeration value="1" label="UP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="KVBAA">
+                    <EnumeratedArgumentType name="DAHNH">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="ACTIVE"/>
@@ -8594,14 +8927,14 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="0" label="PENDING"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="KXXZJ">
+                    <EnumeratedArgumentType name="QRNPF">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="DOWN"/>
                             <Enumeration value="1" label="UP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="OTAXV">
+                    <EnumeratedArgumentType name="OWJGT">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="ACTIVE"/>
@@ -8609,7 +8942,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="0" label="PENDING"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="TCRFW">
+                    <EnumeratedArgumentType name="MCFAY">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="ALL"/>
@@ -8617,14 +8950,14 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="1" label="UP"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="TZQWR">
+                    <EnumeratedArgumentType name="VIESK">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="0" label="GIVE"/>
                             <Enumeration value="1" label="TAKE"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="LFTYR">
+                    <EnumeratedArgumentType name="PTUZU">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="0" label="DISABLE"/>
@@ -8633,7 +8966,7 @@ CFE_UTC_Time.value = newTime;
                     </EnumeratedArgumentType>
                     <AggregateArgumentType name="CF_ResetCtrsCmd_t">
                         <MemberList>
-                            <Member name="Value" typeRef="JRPWW"/>
+                            <Member name="Value" typeRef="OZCMN"/>
                             <Member name="Spare_0_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Spare_1_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Spare_2_" typeRef="BaseType/uint8_LE"/>
@@ -8641,10 +8974,10 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_PlaybackFileCmd_t">
                         <MemberList>
-                            <Member name="Class" typeRef="NXPNB"/>
+                            <Member name="Class" typeRef="AAVLM"/>
                             <Member name="Channel" typeRef="BaseType/uint8_LE"/>
                             <Member name="Priority" typeRef="BaseType/uint8_LE"/>
-                            <Member name="Preserve" typeRef="SGPVT"/>
+                            <Member name="Preserve" typeRef="AACQN"/>
                             <Member name="PeerEntityId" typeRef="BaseType/string128_LE"/>
                             <Member name="SrcFilename" typeRef="BaseType/string512_LE"/>
                             <Member name="DstFilename" typeRef="BaseType/string512_LE"/>
@@ -8652,10 +8985,10 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_PlaybackDirCmd_t">
                         <MemberList>
-                            <Member name="Class" typeRef="JDQIN"/>
+                            <Member name="Class" typeRef="KXWEV"/>
                             <Member name="Chan" typeRef="BaseType/uint8_LE"/>
                             <Member name="Priority" typeRef="BaseType/uint8_LE"/>
-                            <Member name="Preserve" typeRef="HEHCK"/>
+                            <Member name="Preserve" typeRef="MNUPK"/>
                             <Member name="PeerEntityId" typeRef="BaseType/string128_LE"/>
                             <Member name="SrcPath" typeRef="BaseType/string512_LE"/>
                             <Member name="DstPath" typeRef="BaseType/string512_LE"/>
@@ -8686,9 +9019,9 @@ CFE_UTC_Time.value = newTime;
                         <MemberList>
                             <Member name="Chan" typeRef="BaseType/uint8_LE"/>
                             <Member name="Dir" typeRef="BaseType/uint8_LE"/>
-                            <Member name="Class" typeRef="DIVJB"/>
+                            <Member name="Class" typeRef="UFITT"/>
                             <Member name="Priority" typeRef="BaseType/uint8_LE"/>
-                            <Member name="Preserve" typeRef="PNNVI"/>
+                            <Member name="Preserve" typeRef="UNFHH"/>
                             <Member name="Spare_0_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Spare_1_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Spare_2_" typeRef="BaseType/uint8_LE"/>
@@ -8699,9 +9032,9 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_WriteQueueCmd_t">
                         <MemberList>
-                            <Member name="Type" typeRef="PWRAY"/>
+                            <Member name="Type" typeRef="MZSQO"/>
                             <Member name="Chan" typeRef="BaseType/uint8_LE"/>
-                            <Member name="Queue" typeRef="KVBAA"/>
+                            <Member name="Queue" typeRef="DAHNH"/>
                             <Member name="Spare" typeRef="BaseType/uint8_LE"/>
                             <Member name="Filename" typeRef="BaseType/string512_LE"/>
                         </MemberList>
@@ -8729,15 +9062,15 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_PurgeQueueCmd_t">
                         <MemberList>
-                            <Member name="Type" typeRef="KXXZJ"/>
+                            <Member name="Type" typeRef="QRNPF"/>
                             <Member name="Chan" typeRef="BaseType/uint8_LE"/>
-                            <Member name="Queue" typeRef="OTAXV"/>
+                            <Member name="Queue" typeRef="OWJGT"/>
                             <Member name="Spare" typeRef="BaseType/uint8_LE"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_WriteActiveTransCmd_t">
                         <MemberList>
-                            <Member name="Type" typeRef="TCRFW"/>
+                            <Member name="Type" typeRef="MCFAY"/>
                             <Member name="Spare" typeRef="BaseType/uint8_LE"/>
                             <Member name="Filename" typeRef="BaseType/string512_LE"/>
                         </MemberList>
@@ -8758,12 +9091,12 @@ CFE_UTC_Time.value = newTime;
                     <AggregateArgumentType name="CF_GiveTakeCmd_t">
                         <MemberList>
                             <Member name="Chan" typeRef="BaseType/uint8_LE"/>
-                            <Member name="GiveOrTakeSemaphore" typeRef="TZQWR"/>
+                            <Member name="GiveOrTakeSemaphore" typeRef="VIESK"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_AutoSuspendEnCmd_t">
                         <MemberList>
-                            <Member name="EnableDisable" typeRef="LFTYR"/>
+                            <Member name="EnableDisable" typeRef="PTUZU"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="CF_CyclesPerWakeupCmd_t">
@@ -8795,7 +9128,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Value" argumentTypeRef="JRPWW"/>
+                            <Argument name="Value" argumentTypeRef="OZCMN"/>
                             <Argument name="Spare_0_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Spare_1_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Spare_2_" argumentTypeRef="BaseType/uint8_LE"/>
@@ -8818,10 +9151,10 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Class" argumentTypeRef="NXPNB"/>
+                            <Argument name="Class" argumentTypeRef="AAVLM"/>
                             <Argument name="Channel" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Priority" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="Preserve" argumentTypeRef="SGPVT"/>
+                            <Argument name="Preserve" argumentTypeRef="AACQN"/>
                             <Argument name="PeerEntityId" argumentTypeRef="BaseType/string128_LE"/>
                             <Argument name="SrcFilename" argumentTypeRef="BaseType/string512_LE"/>
                             <Argument name="DstFilename" argumentTypeRef="BaseType/string512_LE"/>
@@ -8847,10 +9180,10 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Class" argumentTypeRef="JDQIN"/>
+                            <Argument name="Class" argumentTypeRef="KXWEV"/>
                             <Argument name="Chan" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Priority" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="Preserve" argumentTypeRef="HEHCK"/>
+                            <Argument name="Preserve" argumentTypeRef="MNUPK"/>
                             <Argument name="PeerEntityId" argumentTypeRef="BaseType/string128_LE"/>
                             <Argument name="SrcPath" argumentTypeRef="BaseType/string512_LE"/>
                             <Argument name="DstPath" argumentTypeRef="BaseType/string512_LE"/>
@@ -9025,9 +9358,9 @@ CFE_UTC_Time.value = newTime;
                         <ArgumentList>
                             <Argument name="Chan" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Dir" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="Class" argumentTypeRef="DIVJB"/>
+                            <Argument name="Class" argumentTypeRef="UFITT"/>
                             <Argument name="Priority" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="Preserve" argumentTypeRef="PNNVI"/>
+                            <Argument name="Preserve" argumentTypeRef="UNFHH"/>
                             <Argument name="Spare_0_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Spare_1_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Spare_2_" argumentTypeRef="BaseType/uint8_LE"/>
@@ -9073,9 +9406,9 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Type" argumentTypeRef="PWRAY"/>
+                            <Argument name="Type" argumentTypeRef="MZSQO"/>
                             <Argument name="Chan" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="Queue" argumentTypeRef="KVBAA"/>
+                            <Argument name="Queue" argumentTypeRef="DAHNH"/>
                             <Argument name="Spare" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Filename" argumentTypeRef="BaseType/string512_LE"/>
                         </ArgumentList>
@@ -9207,9 +9540,9 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Type" argumentTypeRef="KXXZJ"/>
+                            <Argument name="Type" argumentTypeRef="QRNPF"/>
                             <Argument name="Chan" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="Queue" argumentTypeRef="OTAXV"/>
+                            <Argument name="Queue" argumentTypeRef="OWJGT"/>
                             <Argument name="Spare" argumentTypeRef="BaseType/uint8_LE"/>
                         </ArgumentList>
                         <CommandContainer name="PurgeQueue-container">
@@ -9230,7 +9563,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Type" argumentTypeRef="TCRFW"/>
+                            <Argument name="Type" argumentTypeRef="MCFAY"/>
                             <Argument name="Spare" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Filename" argumentTypeRef="BaseType/string512_LE"/>
                         </ArgumentList>
@@ -9292,7 +9625,7 @@ CFE_UTC_Time.value = newTime;
                         </BaseMetaCommand>
                         <ArgumentList>
                             <Argument name="Chan" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="GiveOrTakeSemaphore" argumentTypeRef="TZQWR"/>
+                            <Argument name="GiveOrTakeSemaphore" argumentTypeRef="VIESK"/>
                         </ArgumentList>
                         <CommandContainer name="GiveTake-container">
                             <EntryList>
@@ -9310,7 +9643,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="EnableDisable" argumentTypeRef="LFTYR"/>
+                            <Argument name="EnableDisable" argumentTypeRef="PTUZU"/>
                         </ArgumentList>
                         <CommandContainer name="AutoSuspendEn-container">
                             <EntryList>
@@ -10652,7 +10985,7 @@ CFE_UTC_Time.value = newTime;
         <xtce:SpaceSystem name="mm">
             <TelemetryMetaData>
                 <ParameterTypeSet>
-                    <EnumeratedParameterType name="MQHBW">
+                    <EnumeratedParameterType name="NTWNR">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="6" label="DUMP_INEVENT"/>
@@ -10671,7 +11004,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="8" label="SYM_LOOKUP"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="ENQEN">
+                    <EnumeratedParameterType name="EYITF">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="EEPROM"/>
@@ -10686,8 +11019,8 @@ CFE_UTC_Time.value = newTime;
                         <MemberList>
                             <Member name="CmdCounter" typeRef="BaseType/uint8_LE"/>
                             <Member name="ErrCounter" typeRef="BaseType/uint8_LE"/>
-                            <Member name="LastAction" typeRef="MQHBW"/>
-                            <Member name="MemType" typeRef="ENQEN"/>
+                            <Member name="LastAction" typeRef="NTWNR"/>
+                            <Member name="MemType" typeRef="EYITF"/>
                             <Member name="Address" typeRef="BaseType/uint32_LE"/>
                             <Member name="DataValue" typeRef="BaseType/uint32_LE"/>
                             <Member name="BytesProcessed" typeRef="BaseType/uint32_LE"/>
@@ -10717,7 +11050,7 @@ CFE_UTC_Time.value = newTime;
             </TelemetryMetaData>
             <CommandMetaData>
                 <ArgumentTypeSet>
-                    <EnumeratedArgumentType name="LIFOY">
+                    <EnumeratedArgumentType name="VOQUF">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="EEPROM"/>
@@ -10728,7 +11061,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="1" label="RAM"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="HTHKE">
+                    <EnumeratedArgumentType name="NJQQH">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="EEPROM"/>
@@ -10739,7 +11072,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="1" label="RAM"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="CTUHG">
+                    <EnumeratedArgumentType name="YXGFG">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="EEPROM"/>
@@ -10750,7 +11083,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="1" label="RAM"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="FLVXH">
+                    <EnumeratedArgumentType name="MTCRD">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="EEPROM"/>
@@ -10761,7 +11094,7 @@ CFE_UTC_Time.value = newTime;
                             <Enumeration value="1" label="RAM"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="UWXDZ">
+                    <EnumeratedArgumentType name="BYNEJ">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="2" label="EEPROM"/>
@@ -10781,7 +11114,7 @@ CFE_UTC_Time.value = newTime;
                     <AggregateArgumentType name="MM_PeekCmd_t">
                         <MemberList>
                             <Member name="DataSize" typeRef="BaseType/uint8_LE"/>
-                            <Member name="MemType" typeRef="LIFOY"/>
+                            <Member name="MemType" typeRef="VOQUF"/>
                             <Member name="Padding_0_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding_1_" typeRef="BaseType/uint8_LE"/>
                             <Member name="SrcSymAddress" typeRef="CFS_SymAddr_t"/>
@@ -10790,7 +11123,7 @@ CFE_UTC_Time.value = newTime;
                     <AggregateArgumentType name="MM_PokeCmd_t">
                         <MemberList>
                             <Member name="DataSize" typeRef="BaseType/uint8_LE"/>
-                            <Member name="MemType" typeRef="HTHKE"/>
+                            <Member name="MemType" typeRef="NJQQH"/>
                             <Member name="Padding_0_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding_1_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Data" typeRef="BaseType/uint32_LE"/>
@@ -11014,7 +11347,7 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="MM_DumpMemToFileCmd_t">
                         <MemberList>
-                            <Member name="MemType" typeRef="CTUHG"/>
+                            <Member name="MemType" typeRef="YXGFG"/>
                             <Member name="Padding_0_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding_1_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding_2_" typeRef="BaseType/uint8_LE"/>
@@ -11025,7 +11358,7 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="MM_DumpInEventCmd_t">
                         <MemberList>
-                            <Member name="MemType" typeRef="FLVXH"/>
+                            <Member name="MemType" typeRef="MTCRD"/>
                             <Member name="NumOfBytes" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding" typeRef="BaseType/uint16_LE"/>
                             <Member name="SrcSymAddress" typeRef="CFS_SymAddr_t"/>
@@ -11033,7 +11366,7 @@ CFE_UTC_Time.value = newTime;
                     </AggregateArgumentType>
                     <AggregateArgumentType name="MM_FillMemCmd_t">
                         <MemberList>
-                            <Member name="MemType" typeRef="UWXDZ"/>
+                            <Member name="MemType" typeRef="BYNEJ"/>
                             <Member name="Padding_0_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding_1_" typeRef="BaseType/uint8_LE"/>
                             <Member name="Padding_2_" typeRef="BaseType/uint8_LE"/>
@@ -11100,7 +11433,7 @@ CFE_UTC_Time.value = newTime;
                         </BaseMetaCommand>
                         <ArgumentList>
                             <Argument name="DataSize" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="MemType" argumentTypeRef="LIFOY"/>
+                            <Argument name="MemType" argumentTypeRef="VOQUF"/>
                             <Argument name="Padding_0_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding_1_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="SrcSymAddress.Offset" argumentTypeRef="BaseType/uint32_LE"/>
@@ -11127,7 +11460,7 @@ CFE_UTC_Time.value = newTime;
                         </BaseMetaCommand>
                         <ArgumentList>
                             <Argument name="DataSize" argumentTypeRef="BaseType/uint8_LE"/>
-                            <Argument name="MemType" argumentTypeRef="HTHKE"/>
+                            <Argument name="MemType" argumentTypeRef="NJQQH"/>
                             <Argument name="Padding_0_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding_1_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Data" argumentTypeRef="BaseType/uint32_LE"/>
@@ -11601,7 +11934,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="MemType" argumentTypeRef="CTUHG"/>
+                            <Argument name="MemType" argumentTypeRef="YXGFG"/>
                             <Argument name="Padding_0_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding_1_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding_2_" argumentTypeRef="BaseType/uint8_LE"/>
@@ -11632,7 +11965,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="MemType" argumentTypeRef="FLVXH"/>
+                            <Argument name="MemType" argumentTypeRef="MTCRD"/>
                             <Argument name="NumOfBytes" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding" argumentTypeRef="BaseType/uint16_LE"/>
                             <Argument name="SrcSymAddress.Offset" argumentTypeRef="BaseType/uint32_LE"/>
@@ -11657,7 +11990,7 @@ CFE_UTC_Time.value = newTime;
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="MemType" argumentTypeRef="UWXDZ"/>
+                            <Argument name="MemType" argumentTypeRef="BYNEJ"/>
                             <Argument name="Padding_0_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding_1_" argumentTypeRef="BaseType/uint8_LE"/>
                             <Argument name="Padding_2_" argumentTypeRef="BaseType/uint8_LE"/>
@@ -11757,6 +12090,312 @@ CFE_UTC_Time.value = newTime;
                         </BaseMetaCommand>
                         <ArgumentList/>
                         <CommandContainer name="SendHK-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                </MetaCommandSet>
+            </CommandMetaData>
+        </xtce:SpaceSystem>
+        <xtce:SpaceSystem name="hs">
+            <TelemetryMetaData>
+                <ParameterTypeSet>
+                    <AggregateParameterType name="HS_HkPacket_t">
+                        <MemberList>
+                            <Member name="CmdCount" typeRef="BaseType/uint8_LE"/>
+                            <Member name="CmdErrCount" typeRef="BaseType/uint8_LE"/>
+                            <Member name="CurrentAppMonState" typeRef="BaseType/uint8_LE"/>
+                            <Member name="CurrentEventMonState" typeRef="BaseType/uint8_LE"/>
+                            <Member name="CurrentAlivenessState" typeRef="BaseType/uint8_LE"/>
+                            <Member name="CurrentCPUHogState" typeRef="BaseType/uint8_LE"/>
+                            <Member name="StatusFlags" typeRef="BaseType/uint8_LE"/>
+                            <Member name="SpareBytes" typeRef="BaseType/uint8_LE"/>
+                            <Member name="ResetsPerformed" typeRef="BaseType/uint16_LE"/>
+                            <Member name="MaxResets" typeRef="BaseType/uint16_LE"/>
+                            <Member name="EventsMonitoredCount" typeRef="BaseType/uint32_LE"/>
+                            <Member name="InvalidEventMonCount" typeRef="BaseType/uint32_LE"/>
+                            <Member name="AppMonEnables" typeRef="BaseType/Array_1Dim_BaseType_uint32_LE"/>
+                            <Member name="MsgActExec" typeRef="BaseType/uint32_LE"/>
+                            <Member name="UtilCpuAvg" typeRef="BaseType/uint32_LE"/>
+                            <Member name="UtilCpuPeak" typeRef="BaseType/uint32_LE"/>
+                            <Member name="ExeCounts" typeRef="BaseType/Array_49Dim_BaseType_uint32_LE"/>
+                        </MemberList>
+                    </AggregateParameterType>
+                </ParameterTypeSet>
+                <ParameterSet>
+                    <Parameter name="HS_HK_TLM_MID" parameterTypeRef="HS_HkPacket_t"/>
+                </ParameterSet>
+                <ContainerSet>
+                    <SequenceContainer name="HS_HK_TLM_MID">
+                        <DefaultRateInStream minimumValue="1.000000e+00"/>
+                        <EntryList>
+                            <ParameterRefEntry parameterRef="HS_HK_TLM_MID"/>
+                        </EntryList>
+                        <BaseContainer containerRef="cfs/cfs-tlm-hdr">
+                            <RestrictionCriteria>
+                                <ComparisonList>
+                                    <Comparison parameterRef="cfs/ccsds-apid" value="584"/>
+                                </ComparisonList>
+                            </RestrictionCriteria>
+                        </BaseContainer>
+                    </SequenceContainer>
+                </ContainerSet>
+                <AlgorithmSet/>
+            </TelemetryMetaData>
+            <CommandMetaData>
+                <ArgumentTypeSet>
+                    <AggregateArgumentType name="HS_SetMaxResetsCmd_t">
+                        <MemberList>
+                            <Member name="MaxResets" typeRef="BaseType/uint16_LE"/>
+                        </MemberList>
+                    </AggregateArgumentType>
+                    <AggregateArgumentType name="HS_SetUtilParamsCmd_t">
+                        <MemberList>
+                            <Member name="Mult1" typeRef="BaseType/int32_LE"/>
+                            <Member name="Div" typeRef="BaseType/int32_LE"/>
+                            <Member name="Mult2" typeRef="BaseType/int32_LE"/>
+                        </MemberList>
+                    </AggregateArgumentType>
+                    <AggregateArgumentType name="HS_SetUtilDiagCmd_t">
+                        <MemberList>
+                            <Member name="Mask" typeRef="BaseType/uint32_LE"/>
+                        </MemberList>
+                    </AggregateArgumentType>
+                </ArgumentTypeSet>
+                <MetaCommandSet>
+                    <MetaCommand name="Noop">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="Noop-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="Reset">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="1"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="Reset-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="EnableAppMon">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="2"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="EnableAppMon-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="DisableAppMon">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="3"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="DisableAppMon-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="EnableEventMon">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="4"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="EnableEventMon-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="DisableEventMon">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="5"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="DisableEventMon-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="EnableAliveness">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="6"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="EnableAliveness-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="DisableAliveness">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="7"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="DisableAliveness-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="ResetResetsPerformed">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="8"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="ResetResetsPerformed-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetMaxResets">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="9"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="2"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="MaxResets" argumentTypeRef="BaseType/uint16_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetMaxResets-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="MaxResets"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="EnableCpuHog">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="10"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="EnableCpuHog-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="DisableCpuHog">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="11"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="DisableCpuHog-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="ReportDiag">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="12"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="ReportDiag-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetUtilParams">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="13"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="12"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Mult1" argumentTypeRef="BaseType/int32_LE"/>
+                            <Argument name="Div" argumentTypeRef="BaseType/int32_LE"/>
+                            <Argument name="Mult2" argumentTypeRef="BaseType/int32_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetUtilParams-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Mult1"/>
+                                <ArgumentRefEntry argumentRef="Div"/>
+                                <ArgumentRefEntry argumentRef="Mult2"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SetUtilDiag">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="14"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="4"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList>
+                            <Argument name="Mask" argumentTypeRef="BaseType/uint32_LE"/>
+                        </ArgumentList>
+                        <CommandContainer name="SetUtilDiag-container">
+                            <EntryList>
+                                <ArgumentRefEntry argumentRef="Mask"/>
+                            </EntryList>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="SendHK">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="586"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="SendHK-container">
+                            <EntryList/>
+                        </CommandContainer>
+                    </MetaCommand>
+                    <MetaCommand name="WakeUp">
+                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
+                            <ArgumentAssignmentList>
+                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="587"/>
+                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
+                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
+                            </ArgumentAssignmentList>
+                        </BaseMetaCommand>
+                        <ArgumentList/>
+                        <CommandContainer name="WakeUp-container">
                             <EntryList/>
                         </CommandContainer>
                     </MetaCommand>
@@ -12222,7 +12861,7 @@ Beta.value = linearFitBeta(Beta_Voltage.value);
                             <Member name="LowBatteryVoltageActionsDone" typeRef="BaseType/boolean8_LE"/>
                             <Member name="CriticalBatteryVoltageActionsDone" typeRef="BaseType/boolean8_LE"/>
                             <Member name="EmergencyBatteryVoltageActionsDone" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare3" typeRef="BaseType/_padding8_LE"/>
+                            <Member name="_spare3" typeRef="BaseType/_padding40_LE"/>
                             <Member name="RCSignalLostTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="ArmingStateChanged" typeRef="BaseType/boolean8_LE"/>
                             <Member name="PreviousModes" typeRef="VM_Modes"/>
@@ -12679,7 +13318,7 @@ else{
                             <Enumeration value="2" label="SEDMON_CAPTURE_UART"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
-                    <EnumeratedArgumentType name="BMEKU">
+                    <EnumeratedArgumentType name="VWTKN">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst" byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                         <EnumerationList>
                             <Enumeration value="1" label="CENTER"/>
@@ -12701,7 +13340,7 @@ else{
                     </AggregateArgumentType>
                     <AggregateArgumentType name="SEDMON_PerfStartCmd_Payload_t">
                         <MemberList>
-                            <Member name="TriggerMode" typeRef="BMEKU"/>
+                            <Member name="TriggerMode" typeRef="VWTKN"/>
                         </MemberList>
                     </AggregateArgumentType>
                     <AggregateArgumentType name="SEDMON_PerfStartCmd_t">
@@ -12829,7 +13468,7 @@ else{
                             </ArgumentAssignmentList>
                         </BaseMetaCommand>
                         <ArgumentList>
-                            <Argument name="Payload.TriggerMode" argumentTypeRef="BMEKU"/>
+                            <Argument name="Payload.TriggerMode" argumentTypeRef="VWTKN"/>
                         </ArgumentList>
                         <CommandContainer name="PerfStart-container">
                             <EntryList>
@@ -13922,6 +14561,7 @@ else{
                     </EnumeratedParameterType>
                     <AggregateParameterType name="PX4_ActuatorArmedMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="Armed" typeRef="BaseType/boolean8_LE"/>
                             <Member name="Prearmed" typeRef="BaseType/boolean8_LE"/>
@@ -13935,6 +14575,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_ActuatorControlsMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="SampleTime" typeRef="BaseType/uint64_LE"/>
                             <Member name="Control" typeRef="BaseType/Array_7Dim_BaseType_float32_LE"/>
@@ -13942,19 +14583,24 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_ActuatorOutputsMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="Count" typeRef="BaseType/uint32_LE"/>
                             <Member name="Output" typeRef="BaseType/Array_15Dim_BaseType_float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_CommanderStateMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="MainState" typeRef="PX4_CommanderMainState_t"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_ControlStateMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="AccX" typeRef="BaseType/float32_LE"/>
                             <Member name="AccY" typeRef="BaseType/float32_LE"/>
@@ -13984,6 +14630,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_HomePositionMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="Lat" typeRef="BaseType/float64_LE"/>
                             <Member name="Lon" typeRef="BaseType/float64_LE"/>
@@ -13999,6 +14646,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_InputRcMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="LastSignal" typeRef="BaseType/uint64_LE"/>
                             <Member name="ChannelCount" typeRef="BaseType/uint32_LE"/>
@@ -14014,6 +14662,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_ManualControlSetpointMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="X" typeRef="BaseType/float32_LE"/>
                             <Member name="Y" typeRef="BaseType/float32_LE"/>
@@ -14045,14 +14694,17 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_MissionMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="DatamanID" typeRef="BaseType/int32_LE"/>
                             <Member name="Count" typeRef="BaseType/uint32_LE"/>
                             <Member name="CurrentSeq" typeRef="BaseType/int32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_MissionResultMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="InstanceCount" typeRef="BaseType/uint32_LE"/>
                             <Member name="SeqReached" typeRef="BaseType/uint32_LE"/>
@@ -14108,11 +14760,12 @@ else{
                             <Member name="LoiterDirection" typeRef="BaseType/int8_LE"/>
                             <Member name="AccelerationValid" typeRef="BaseType/boolean8_LE"/>
                             <Member name="AccelerationIsForce" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding48_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_PositionSetpointTripletMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="Previous" typeRef="PX4_PositionSetpoint_t"/>
                             <Member name="Current" typeRef="PX4_PositionSetpoint_t"/>
@@ -14121,12 +14774,13 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_RcChannelsMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="TimestampLastValid" typeRef="BaseType/uint64_LE"/>
                             <Member name="Channels" typeRef="BaseType/Array_17Dim_BaseType_float32_LE"/>
                             <Member name="FrameDropCount" typeRef="BaseType/uint32_LE"/>
                             <Member name="ChannelCount" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
                             <Member name="Function" typeRef="BaseType/Array_26Dim__cpd_apps_px4lib_PX4_RcChannelFunction_t"/>
                             <Member name="RSSI" typeRef="BaseType/uint8_LE"/>
                             <Member name="SignalLost" typeRef="BaseType/boolean8_LE"/>
@@ -14135,14 +14789,16 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_SafetyMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="SafetySwitchAvailable" typeRef="BaseType/boolean8_LE"/>
                             <Member name="SafetyOff" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding48_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_SensorAccelMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="IntegralDt" typeRef="BaseType/uint64_LE"/>
                             <Member name="ErrorCount" typeRef="BaseType/uint64_LE"/>
@@ -14164,6 +14820,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_SensorBaroMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="ErrorCount" typeRef="BaseType/uint32_LE"/>
                             <Member name="Pressure" typeRef="BaseType/float32_LE"/>
@@ -14173,17 +14830,19 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_SensorCombinedMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="GyroRad" typeRef="BaseType/Array_2Dim_BaseType_float32_LE"/>
                             <Member name="GyroIntegralDt" typeRef="BaseType/float32_LE"/>
                             <Member name="AccTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="AccInvalid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
                             <Member name="Acc" typeRef="BaseType/Array_2Dim_BaseType_float32_LE"/>
                             <Member name="AccIntegralDt" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding32_LE"/>
                             <Member name="MagTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="MagInvalid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare3" typeRef="BaseType/_padding24_LE"/>
                             <Member name="Mag" typeRef="BaseType/Array_2Dim_BaseType_float32_LE"/>
                             <Member name="BaroTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="BaroAlt" typeRef="BaseType/float32_LE"/>
@@ -14192,6 +14851,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_SensorGyroMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="IntegralDt" typeRef="BaseType/uint64_LE"/>
                             <Member name="ErrorCount" typeRef="BaseType/uint64_LE"/>
@@ -14213,6 +14873,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_SensorMagMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="ErrorCount" typeRef="BaseType/uint64_LE"/>
                             <Member name="X" typeRef="BaseType/float32_LE"/>
@@ -14225,7 +14886,7 @@ else{
                             <Member name="XRaw" typeRef="BaseType/int16_LE"/>
                             <Member name="YRaw" typeRef="BaseType/int16_LE"/>
                             <Member name="ZRaw" typeRef="BaseType/int16_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding48_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_TecsStatusMsg_t">
@@ -14250,6 +14911,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_TelemetryStatusMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="HeartbeatTime" typeRef="BaseType/uint64_LE"/>
                             <Member name="TelemTime" typeRef="BaseType/uint64_LE"/>
@@ -14268,6 +14930,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleAttitudeMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="RollSpeed" typeRef="BaseType/float32_LE"/>
                             <Member name="PitchSpeed" typeRef="BaseType/float32_LE"/>
@@ -14284,6 +14947,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleAttitudeSetpointMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="RollBody" typeRef="BaseType/float32_LE"/>
                             <Member name="PitchBody" typeRef="BaseType/float32_LE"/>
@@ -14291,7 +14955,7 @@ else{
                             <Member name="YawSpMoveRate" typeRef="BaseType/float32_LE"/>
                             <Member name="Q_D" typeRef="BaseType/Array_3Dim_BaseType_float32_LE"/>
                             <Member name="Q_D_Valid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
                             <Member name="Thrust" typeRef="BaseType/float32_LE"/>
                             <Member name="RollResetIntegral" typeRef="BaseType/boolean8_LE"/>
                             <Member name="PitchResetIntegral" typeRef="BaseType/boolean8_LE"/>
@@ -14299,12 +14963,14 @@ else{
                             <Member name="FwControlYaw" typeRef="BaseType/boolean8_LE"/>
                             <Member name="DisableMcYawControl" typeRef="BaseType/boolean8_LE"/>
                             <Member name="ApplyFlaps" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare1" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding16_LE"/>
                             <Member name="LandingGear" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleControlModeMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="Armed" typeRef="BaseType/boolean8_LE"/>
                             <Member name="ExternalManualOverrideOk" typeRef="BaseType/boolean8_LE"/>
@@ -14324,21 +14990,23 @@ else{
                             <Member name="ControlTerminationEnabled" typeRef="BaseType/boolean8_LE"/>
                             <Member name="ControlFixedHdgEnabled" typeRef="BaseType/boolean8_LE"/>
                             <Member name="ControlAutoMissionEnabled" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding48_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleGlobalPositionMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="TimeUtcUsec" typeRef="BaseType/uint64_LE"/>
                             <Member name="Lat" typeRef="BaseType/float64_LE"/>
                             <Member name="Lon" typeRef="BaseType/float64_LE"/>
                             <Member name="Alt" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding32_LE"/>
                             <Member name="DeltaLatLon" typeRef="BaseType/Array_1Dim_BaseType_float64_LE"/>
                             <Member name="DeltaAlt" typeRef="BaseType/float32_LE"/>
                             <Member name="LatLonResetCounter" typeRef="BaseType/uint8_LE"/>
                             <Member name="AltResetCounter" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding16_LE"/>
                             <Member name="VelN" typeRef="BaseType/float32_LE"/>
                             <Member name="VelE" typeRef="BaseType/float32_LE"/>
                             <Member name="VelD" typeRef="BaseType/float32_LE"/>
@@ -14351,13 +15019,15 @@ else{
                             <Member name="PressureAlt" typeRef="BaseType/float32_LE"/>
                             <Member name="TerrainAltValid" typeRef="BaseType/boolean8_LE"/>
                             <Member name="DeadReckoning" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare1" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare3" typeRef="BaseType/_padding16_LE"/>
                             <Member name="HorizontalVel" typeRef="BaseType/float32_LE"/>
                             <Member name="GroundTrack" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleGpsPositionMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="TimeUtcUsec" typeRef="BaseType/uint64_LE"/>
                             <Member name="Lat" typeRef="BaseType/int32_LE"/>
@@ -14381,13 +15051,14 @@ else{
                             <Member name="FixType" typeRef="PX4_GpsFixType_t"/>
                             <Member name="VelNedValid" typeRef="BaseType/boolean8_LE"/>
                             <Member name="SatellitesUsed" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding16_LE"/>
                             <Member name="Status" typeRef="PX4_GpsStatus_t"/>
                             <Member name="UtcClockStatus" typeRef="PX4_UtcClockStatus_t"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleLandDetectedMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="AltMax" typeRef="BaseType/float32_LE"/>
                             <Member name="Landed" typeRef="BaseType/boolean8_LE"/>
@@ -14398,6 +15069,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleLocalPositionMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="RefTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="RefLat" typeRef="BaseType/float64_LE"/>
@@ -14440,6 +15112,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleRatesSetpointMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="Roll" typeRef="BaseType/float32_LE"/>
                             <Member name="Pitch" typeRef="BaseType/float32_LE"/>
@@ -14449,6 +15122,7 @@ else{
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_VehicleStatusMsg_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="SystemID" typeRef="BaseType/uint32_LE"/>
                             <Member name="ComponentID" typeRef="BaseType/uint32_LE"/>
@@ -14459,25 +15133,26 @@ else{
                             <Member name="ArmingState" typeRef="PX4_ArmingState_t"/>
                             <Member name="HilState" typeRef="PX4_HilState_t"/>
                             <Member name="Failsafe" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
                             <Member name="SystemType" typeRef="PX4_SystemType_t"/>
                             <Member name="IsRotaryWing" typeRef="BaseType/boolean8_LE"/>
                             <Member name="IsVtol" typeRef="BaseType/boolean8_LE"/>
                             <Member name="VtolFwPermanentStab" typeRef="BaseType/boolean8_LE"/>
                             <Member name="InTransitionMode" typeRef="BaseType/boolean8_LE"/>
                             <Member name="RcSignalLost" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding24_LE"/>
                             <Member name="RcInputMode" typeRef="PX4_RcInMode_t"/>
                             <Member name="DataLinkLost" typeRef="BaseType/boolean8_LE"/>
                             <Member name="DataLinkLostCounter" typeRef="BaseType/uint8_LE"/>
                             <Member name="EngineFailure" typeRef="BaseType/boolean8_LE"/>
                             <Member name="EngineFailureCmd" typeRef="BaseType/boolean8_LE"/>
                             <Member name="MissionFailure" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding56_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="PX4_Position_Control_Status_t">
                         <MemberList>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="NAV_ROLL" typeRef="BaseType/float32_LE"/>
                             <Member name="NAC_PITCH" typeRef="BaseType/float32_LE"/>
@@ -14490,7 +15165,7 @@ else{
                             <Member name="LANDING_SLOPE_ANGLE_RAD" typeRef="BaseType/float32_LE"/>
                             <Member name="LANDING_FLARE_LENGTH" typeRef="BaseType/float32_LE"/>
                             <Member name="ABORT_LANDING" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding56_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="px4lib_Position_aggregate_t">
@@ -15515,7 +16190,7 @@ Position.values["Altitude"] = Altitude.value;
         <xtce:SpaceSystem name="sch">
             <TelemetryMetaData>
                 <ParameterTypeSet>
-                    <EnumeratedParameterType name="NRRLI">
+                    <EnumeratedParameterType name="XRXME">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="7" label="FULLY_SYNCED"/>
@@ -15528,7 +16203,7 @@ Position.values["Altitude"] = Altitude.value;
                             <Enumeration value="2" label="PENDING"/>
                         </EnumerationList>
                     </EnumeratedParameterType>
-                    <EnumeratedParameterType name="PLDGR">
+                    <EnumeratedParameterType name="QQWTY">
                         <IntegerDataEncoding bitOrder="leastSignificantBitFirst"/>
                         <EnumerationList>
                             <Enumeration value="1" label="CFE_TIME"/>
@@ -15551,8 +16226,8 @@ Position.values["Altitude"] = Altitude.value;
                         <MemberList>
                             <Member name="CmdCounter" typeRef="BaseType/uint8_LE"/>
                             <Member name="ErrCounter" typeRef="BaseType/uint8_LE"/>
-                            <Member name="SyncToMET" typeRef="NRRLI"/>
-                            <Member name="MajorFrameSource" typeRef="PLDGR"/>
+                            <Member name="SyncToMET" typeRef="XRXME"/>
+                            <Member name="MajorFrameSource" typeRef="QQWTY"/>
                             <Member name="ScheduleActivitySuccessCount" typeRef="BaseType/uint32_LE"/>
                             <Member name="ScheduleActivityFailureCount" typeRef="BaseType/uint32_LE"/>
                             <Member name="SlotsProcessedCount" typeRef="BaseType/uint32_LE"/>
@@ -15783,17 +16458,19 @@ Position.values["Altitude"] = Altitude.value;
                     <AggregateParameterType name="PX4_SensorCombinedMsg_t">
                         <MemberList>
                             <Member name="TlmHeader" typeRef="BaseType/Array_11Dim_BaseType_uint8_LE"/>
+                            <Member name="_spare0" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Timestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="GyroRad" typeRef="BaseType/Array_2Dim_BaseType_float32_LE"/>
                             <Member name="GyroIntegralDt" typeRef="BaseType/float32_LE"/>
                             <Member name="AccTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="AccInvalid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
                             <Member name="Acc" typeRef="BaseType/Array_2Dim_BaseType_float32_LE"/>
                             <Member name="AccIntegralDt" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding32_LE"/>
                             <Member name="MagTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="MagInvalid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare1" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare3" typeRef="BaseType/_padding24_LE"/>
                             <Member name="Mag" typeRef="BaseType/Array_2Dim_BaseType_float32_LE"/>
                             <Member name="BaroTimestamp" typeRef="BaseType/uint64_LE"/>
                             <Member name="BaroAlt" typeRef="BaseType/float32_LE"/>
@@ -15927,7 +16604,6 @@ Position.values["Altitude"] = Altitude.value;
                         <EnumerationList>
                             <Enumeration value="1" label="CLAMPED_TO_RUNWAY"/>
                             <Enumeration value="3" label="CLIMBOUT"/>
-                            <Enumeration value="4" label="FLY"/>
                             <Enumeration value="2" label="TAKEOFF"/>
                             <Enumeration value="0" label="THROTTLE_RAMP"/>
                         </EnumerationList>
@@ -15970,7 +16646,7 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="LoiterDirection" typeRef="BaseType/int8_LE"/>
                             <Member name="AccelerationValid" typeRef="BaseType/boolean8_LE"/>
                             <Member name="AccelerationIsForce" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare_end" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding48_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="Runway">
@@ -15994,6 +16670,7 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="_min_airspeed_scaling" typeRef="BaseType/float32_LE"/>
                             <Member name="_airspeed_min" typeRef="BaseType/float32_LE"/>
                             <Member name="_climbout_diff" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="FPC_Vector2F">
@@ -16116,11 +16793,11 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="tecsMode" typeRef="ECL_TECS_MODE"/>
                             <Member name="_time_started_landing" typeRef="BaseType/uint64_LE"/>
                             <Member name="use_tecs_pitch" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare2" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding56_LE"/>
                             <Member name="_hdg_hold_prev_wp" typeRef="PX4_PositionSetpoint_t"/>
                             <Member name="_hdg_hold_curr_wp" typeRef="PX4_PositionSetpoint_t"/>
                             <Member name="_airspeed_valid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare3" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare3" typeRef="BaseType/_padding56_LE"/>
                             <Member name="_airspeed_last_received" typeRef="BaseType/uint64_LE"/>
                             <Member name="_airspeed" typeRef="BaseType/float32_LE"/>
                             <Member name="_eas2tas" typeRef="BaseType/float32_LE"/>
@@ -16143,6 +16820,7 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="l1_state" typeRef="L1_State"/>
                             <Member name="current_nav_speed_2d" typeRef="FPC_Vector2F"/>
                             <Member name="Params" typeRef="FPC_ConfigTbl_t"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                 </ParameterTypeSet>
@@ -17581,7 +18259,7 @@ Position.values["Altitude"] = Altitude.value;
                         <MemberList>
                             <Member name="NumSats" typeRef="BaseType/uint8_LE"/>
                             <Member name="Fix" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare0" typeRef="BaseType/_padding48_LE"/>
                             <Member name="PosLla_Lat" typeRef="BaseType/float64_LE"/>
                             <Member name="PosLla_Lon" typeRef="BaseType/float64_LE"/>
                             <Member name="PosLla_Alt" typeRef="BaseType/float64_LE"/>
@@ -17600,6 +18278,7 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="hDOP" typeRef="BaseType/float32_LE"/>
                             <Member name="nDOP" typeRef="BaseType/float32_LE"/>
                             <Member name="eDOP" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="VN310_Attitude_Data_t">
@@ -17616,7 +18295,7 @@ Position.values["Altitude"] = Altitude.value;
                     <AggregateParameterType name="VN310_INS_Data_t">
                         <MemberList>
                             <Member name="InsStatus" typeRef="BaseType/uint16_LE"/>
-                            <Member name="_spare0" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare0" typeRef="BaseType/_padding48_LE"/>
                             <Member name="PosLla_Lat" typeRef="BaseType/float64_LE"/>
                             <Member name="PosLla_Lon" typeRef="BaseType/float64_LE"/>
                             <Member name="PosLla_Alt" typeRef="BaseType/float64_LE"/>
@@ -17625,6 +18304,7 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="VelNed_D" typeRef="BaseType/float32_LE"/>
                             <Member name="PosU" typeRef="BaseType/float32_LE"/>
                             <Member name="VelU" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="VN310_HkTlm_t">
@@ -17646,20 +18326,21 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="ReadByteCnt" typeRef="BaseType/uint32_LE"/>
                             <Member name="TimeData" typeRef="VN310_Time_Data_t"/>
                             <Member name="ImuData" typeRef="VN310_IMU_Data_t"/>
+                            <Member name="_spare1" typeRef="BaseType/_padding32_LE"/>
                             <Member name="Gnss1Data" typeRef="VN310_GNSS1_Data_t"/>
                             <Member name="AttitudeData" typeRef="VN310_Attitude_Data_t"/>
                             <Member name="InsData" typeRef="VN310_INS_Data_t"/>
                             <Member name="InsStatus" typeRef="BaseType/uint16_LE"/>
-                            <Member name="_spare1" typeRef="BaseType/_padding16_LE"/>
+                            <Member name="_spare2" typeRef="BaseType/_padding16_LE"/>
                             <Member name="InsStatusMode" typeRef="VN310_InsStatusMode_t"/>
                             <Member name="InsStatusGpsFix" typeRef="VN310_InsStatusGpsFix_t"/>
                             <Member name="InsStatusReserved1" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare2" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare3" typeRef="BaseType/_padding24_LE"/>
                             <Member name="InsStatusImuErr" typeRef="VN310_InsStatusImuErr_t"/>
                             <Member name="InsStatusMagPressErr" typeRef="VN310_InsStatusMagPressErr_t"/>
                             <Member name="InsStatusGnssErr" typeRef="VN310_InsStatusGnssErr_t"/>
                             <Member name="InsStatusReserved2" typeRef="BaseType/uint8_LE"/>
-                            <Member name="_spare3" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare4" typeRef="BaseType/_padding24_LE"/>
                             <Member name="InsStatusGpsHeadingIns" typeRef="VN310_InsStatusGpsHeading_t"/>
                             <Member name="InsStatusGpsCompass" typeRef="VN310_InsStatusGpsCompass_t"/>
                             <Member name="InsStatusReserved3" typeRef="BaseType/uint8_LE"/>
@@ -17667,10 +18348,11 @@ Position.values["Altitude"] = Altitude.value;
                             <Member name="TimeOk" typeRef="BaseType/boolean8_LE"/>
                             <Member name="DateOk" typeRef="BaseType/boolean8_LE"/>
                             <Member name="UtcTimeValid" typeRef="BaseType/boolean8_LE"/>
-                            <Member name="_spare4" typeRef="BaseType/_padding24_LE"/>
+                            <Member name="_spare5" typeRef="BaseType/_padding24_LE"/>
                             <Member name="TimeUtcUsec" typeRef="BaseType/uint64_LE"/>
                             <Member name="TimeMonotonic" typeRef="BaseType/uint64_LE"/>
                             <Member name="Yaw" typeRef="BaseType/float32_LE"/>
+                            <Member name="_spare_end" typeRef="BaseType/_padding32_LE"/>
                         </MemberList>
                     </AggregateParameterType>
                     <AggregateParameterType name="VN310_CustomHkTlm_t">
@@ -17913,198 +18595,6 @@ Roll.value = In_Roll.value;
                 </MetaCommandSet>
             </CommandMetaData>
         </xtce:SpaceSystem>
-        <xtce:SpaceSystem name="hs">
-            <TelemetryMetaData>
-                <AlgorithmSet/>
-            </TelemetryMetaData>
-            <CommandMetaData>
-                <ArgumentTypeSet/>
-                <MetaCommandSet>
-                    <MetaCommand name="Noop">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="Noop-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="Reset">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="1"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="Reset-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="EnableAppMon">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="2"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="EnableAppMon-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="DisableAppMon">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="3"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="DisableAppMon-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="EnableEventMon">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="4"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="EnableEventMon-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="DisableEventMon">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="5"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="DisableEventMon-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="EnableAliveness">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="6"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="EnableAliveness-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="DisableAliveness">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="7"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="DisableAliveness-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="ResetResetsPerformed">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="8"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="ResetResetsPerformed-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="EnableCpuHog">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="10"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="EnableCpuHog-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="DisableCpuHog">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="11"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="DisableCpuHog-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="ReportDiag">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="585"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="12"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="ReportDiag-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="SendHK">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="586"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="SendHK-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                    <MetaCommand name="WakeUp">
-                        <BaseMetaCommand metaCommandRef="cfs/cfs-cmd">
-                            <ArgumentAssignmentList>
-                                <ArgumentAssignment argumentName="ccsds-apid" argumentValue="587"/>
-                                <ArgumentAssignment argumentName="cfs-cmd-code" argumentValue="0"/>
-                                <ArgumentAssignment argumentName="ccsds-length" argumentValue="1"/>
-                            </ArgumentAssignmentList>
-                        </BaseMetaCommand>
-                        <ArgumentList/>
-                        <CommandContainer name="WakeUp-container">
-                            <EntryList/>
-                        </CommandContainer>
-                    </MetaCommand>
-                </MetaCommandSet>
-            </CommandMetaData>
-        </xtce:SpaceSystem>
         <xtce:SpaceSystem name="cfs_lib">
             <TelemetryMetaData>
                 <AlgorithmSet/>
@@ -18136,12 +18626,6 @@ Roll.value = In_Roll.value;
             <CommandMetaData/>
         </xtce:SpaceSystem>
         <xtce:SpaceSystem name="to">
-            <TelemetryMetaData>
-                <AlgorithmSet/>
-            </TelemetryMetaData>
-            <CommandMetaData/>
-        </xtce:SpaceSystem>
-        <xtce:SpaceSystem name="zusup">
             <TelemetryMetaData>
                 <AlgorithmSet/>
             </TelemetryMetaData>

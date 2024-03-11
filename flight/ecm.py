@@ -3,6 +3,7 @@ ECM - Engine Control Management
 """
 
 from flight.nav import Nav
+from flight.px4_lib import PX4_HomePositionMsg_t
 from pyliner.apps.communication import Communication, ParseMode
 from pyliner.apps.controller import FlightMode
 from pyliner.scripting_wrapper import ScriptingWrapper
@@ -34,13 +35,19 @@ simlink = Path('../mdb/simlink.xml').resolve()
 ccscds = Path('../mdb/cfs-ccsds.xml').resolve()
 registry = '../mdb/registry.yaml'
 
-print(f"ppd-->{ppd}")
+print(f"Parsing XTCE...")
 
 parser = XTCEParser([str(ppd), str(cpd), str(simlink)], str(ccscds), registry)
 
+# comms = Communication(ParseMode.XTCE,
+#                       parser,
+#                       to_port=6011,
+#                       address="172.16.30.3")
+
 comms = Communication(ParseMode.XTCE,
                       parser,
-                      to_port=6011)
+                      to_port=6011,
+                      address="127.0.0.1")
 rky = Vehicle(
     vehicle_id='rocky',
     communication=comms
@@ -103,12 +110,13 @@ class ECM():
         self.gpio_status = 0
         self.actuator_armed = False
         self.nav = Nav()
+        self.nav.LoadJSON("/home/lgomez/projects/pyliner/pyliner/flight/mission_items.json")
         
         # ATP will be Pyliner's own internal command, as opposed to NAV
         # self.AtpCommand = Command("/cfs/cpd/apps/gpio/Engage")
 
     def IsVehicleReleased(self):
-        return self.gpio_status == ecm_app.Config.ReleasePin
+        return bool(self.gpio_status & ecm_app.Config.ReleasePin)
     
     def IsActuatorArmed(self):
         return self.actuator_armed
@@ -126,10 +134,11 @@ class ECM():
         self.comms.send_message(Command("/cfs/cpd/apps/nav/ATP", args={}) )
 
     
-    def ECM_RunMissonController():
-        pass
+    def ECM_RunMissonController(self):
+        self.nav.Execute()
     
     def ECM_RunController(self):
+        self.ECM_RunMissonController()
         Released = False
         # print(f"self.Config.ArmPins:{self.Config.ArmPins}")
     # /* Check if actuator armed. */
@@ -143,8 +152,7 @@ class ECM():
                     self.HkTlm.Released = True
                     self.HkTlm.StartTime = PX4LIB_GetPX4TimeUs()
                     # Internal Pyliner's NAV sequence ATP
-                    # self.ECM_SendNavAtp() 
-                    self.ECM_RunMissonController()
+                    self.ECM_SendNavAtp() 
                     self.ECM_ArmGpioPins()
                     # (void) CFE_EVS_SendEvent(ECM_SEQUENCE_START_INF_EID, CFE_EVS_INFORMATION,
                     #                 "Sequence started %llu", ECM_AppData.HkTlm.StartTime)
@@ -215,19 +223,95 @@ ecm_app: ECM = ECM(config, comms)
 
 
 def watch_gpio_status(tlm):
+    # print(f"tlm.value************************:{tlm.value}")
+    # print(f"tlm name: {tlm.name}")
     ecm_app.gpio_status = tlm.value
 
 def watch_actuator_status(tlm):
     ecm_app.actuator_armed = tlm.value
 
+def watch_PX4_VEHICLE_STATUS_MID(tlm):
+    field_name = tlm.name.split(".")[1]
+    # print(f"field_name:{field_name}")
+    ecm_app.nav.CVT.VehicleStatusMsg.__setattr__(field_name, tlm.value)
+
+
+
+home: PX4_HomePositionMsg_t = PX4_HomePositionMsg_t()
+print(home)
+
+# getattr(home)
+
 comms.subscribe('/cfs/cpd/apps/gpio/GPIO_STATUS_TLM_MID.Status', callback=watch_gpio_status)
 comms.subscribe('/cfs/cpd/apps/px4lib/PX4_ACTUATOR_ARMED_MID.Armed', callback=watch_actuator_status)
+
+# PX4_VEHICLE_STATUS_MID
+# TODO:Eventually will be a single subscription to the aggregate
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.Timestamp', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.SystemID', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.ComponentID', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.OnboardControlSensorsPresent', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.OnboardControlSensorsEnabled', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.OnboardControlSensorsHealth', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.NavState', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.ArmingState', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.HilState', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.Failsafe', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.SystemType', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.IsRotaryWing', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.IsVtol', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.VtolFwPermanentStab', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.InTransitionMode', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.RcSignalLost', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.RcInputMode', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.DataLinkLost', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.DataLinkLostCounter', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.EngineFailure', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.EngineFailureCmd', callback=watch_PX4_VEHICLE_STATUS_MID)
+comms.subscribe('/cfs/cpd/apps/px4lib/PX4_VEHICLE_STATUS_MID.MissionFailure', callback=watch_PX4_VEHICLE_STATUS_MID)
+
+
+# case PX4_HOME_POSITION_MID:
+#     CFE_PSP_MemCpy(&CVT.HomePositionMsg, MsgPtr, sizeof(CVT.HomePositionMsg));
+#     break;
+
+# case PX4_MISSION_MID:
+#     CFE_PSP_MemCpy(&CVT.MissionMsg, MsgPtr, sizeof(CVT.MissionMsg));
+#     break;
+
+# case PX4_VEHICLE_GLOBAL_POSITION_MID:
+#     CFE_PSP_MemCpy(&CVT.VehicleGlobalPosition, MsgPtr,
+#             sizeof(CVT.VehicleGlobalPosition));
+#     break;
+
+# case PX4_VEHICLE_STATUS_MID:
+#     CFE_PSP_MemCpy(&CVT.VehicleStatusMsg, MsgPtr, sizeof(CVT.VehicleStatusMsg));
+#     break;
+
+# case PX4_VEHICLE_LAND_DETECTED_MID:
+#     CFE_PSP_MemCpy(&CVT.VehicleLandDetectedMsg, MsgPtr,
+#             sizeof(CVT.VehicleLandDetectedMsg));
+#     break;
+
+# case PX4_VEHICLE_LOCAL_POSITION_MID:
+#     CFE_PSP_MemCpy(&CVT.VehicleLocalPositionMsg, MsgPtr,
+#             sizeof(CVT.VehicleLocalPositionMsg));
+#     break;
+
+# case PX4_VEHICLE_COMMAND_MID:
+#     NewCommandArrived = TRUE;
+#     CFE_PSP_MemCpy(&CVT.VehicleCommandMsg, MsgPtr,
+#             sizeof(CVT.VehicleCommandMsg));
+#     break;
+
+
 
 
 comms.send_message(Command("/cfs/cpd/apps/vm/Arm", args={}))
 
 while True:
     ecm_app.ECM_RunController()
+    # ecm_app.nav.Execute()
     time.sleep(0.01) # 100HZ
 
 

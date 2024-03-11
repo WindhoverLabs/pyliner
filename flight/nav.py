@@ -1,6 +1,9 @@
 from enum import Enum
-from flight.px4_lib import PX4_MissionResultMsg_t, PX4_NavigationState_t, PX4_PositionSetpoint_t, PX4_PositionSetpointTripletMsg_t, PX4_SetpointType_t, PX4_VehicleCmd_t, PX4LIB_GetPX4TimeUs, RTLState
+from flight.px4_lib import PX4_ArmingState_t, PX4_HomePositionMsg_t, PX4_MissionMsg_t, PX4_MissionResultMsg_t, PX4_NavigationState_t, PX4_PositionSetpoint_t, PX4_PositionSetpointTripletMsg_t, PX4_SetpointType_t, PX4_VehicleCmd_t, PX4_VehicleCommandMsg_t, PX4_VehicleGlobalPositionMsg_t, PX4_VehicleGpsPositionMsg_t, PX4_VehicleLandDetectedMsg_t, PX4_VehicleLocalPositionMsg_t, PX4_VehicleStatusMsg_t, PX4LIB_GetPX4TimeUs, RTLState
 import sys
+import math 
+
+import json
 
 # /**
 #  * \brief mission origin
@@ -10,6 +13,27 @@ class  Origin(Enum):
     ORIGIN_MAVLINK = 0,
     # /*! Onboard originated mission item */
     ORIGIN_ONBOARD = 1
+
+
+
+class NAV_CurrentValueTable_t():
+    def __init__(self) -> None:
+        # /** \brief The home position message */
+        self.HomePositionMsg: PX4_HomePositionMsg_t = PX4_HomePositionMsg_t()
+        # /** \brief The mission message */
+        self.MissionMsg: PX4_HomePositionMsg_t = PX4_HomePositionMsg_t()
+        # /** \brief The position message from GPS */
+        self.VehicleGpsPositionMsg: PX4_VehicleGpsPositionMsg_t = PX4_VehicleGpsPositionMsg_t()
+        # /** \brief The global position message */
+        self.VehicleGlobalPosition: PX4_VehicleGlobalPositionMsg_t = PX4_VehicleGlobalPositionMsg_t()
+        # /** \brief The vehicle status message */
+        self.VehicleStatusMsg: PX4_VehicleStatusMsg_t = PX4_VehicleStatusMsg_t()
+        # /** \brief The land detection message */
+        self.VehicleLandDetectedMsg: PX4_VehicleLandDetectedMsg_t = PX4_VehicleLandDetectedMsg_t()
+        # /** \brief The vehicle local position message */
+        self.VehicleLocalPositionMsg: PX4_VehicleLocalPositionMsg_t = PX4_VehicleLocalPositionMsg_t()
+        # /** \brief The vehicle command message */
+        self.VehicleCommandMsg: PX4_VehicleCommandMsg_t = PX4_VehicleCommandMsg_t()
 
 
 class MissionItem():
@@ -115,7 +139,6 @@ class NAV_HkTlm_t():
         self.MissionID: str = ""
     
 class Nav():
-
     def __init__(self) -> None:
         self.NAV_NO_JUMP = -1
         self.NAV_MISSION_ITEM_MAX = 512
@@ -133,6 +156,8 @@ class Nav():
         # # \brief The mission result message */
         self.MissionResultMsg: PX4_MissionResultMsg_t = PX4_MissionResultMsg_t()
 
+        self.PreviousState: PX4_VehicleStatusMsg_t = PX4_VehicleStatusMsg_t()
+
         # /** \brief The position set point triplet message */
         self.PositionSetpointTripletMsg: PX4_PositionSetpointTripletMsg_t = PX4_PositionSetpointTripletMsg_t()
 
@@ -146,6 +171,7 @@ class Nav():
         self.CanLoiterAtSetpoint: bool  = False
         # \brief True if loiter position is set */
         self.LoiterPositionSet: bool = False
+        self.RtlState: RTLState = RTLState(0)
         # \brief Default time first time inside orbit in mission item */
         self.TimeFirstInsideOrbit: int = 0
         # \brief Default time for waypoint reached in mission item */
@@ -163,6 +189,397 @@ class Nav():
         self.ForceDescentTarget: float  = 0
 
         self.JsonLoaded = False # This replaces "MissionTblPtr" check in original NAV code
+        self.CVT: NAV_CurrentValueTable_t  = NAV_CurrentValueTable_t()
+
+        # /** \brief A temporary triplet type message to store reposition triplet  */
+        self.RepositionTripletMsg: PX4_PositionSetpointTripletMsg_t = PX4_PositionSetpointTripletMsg_t()
+    
+    def NewMissionItem(self, JSONItem: dict) -> MissionItem:
+        NewItem: MissionItem = MissionItem()
+                # \brief The latitude in degrees #
+        NewItem.Lat = float(JSONItem["Lat"])
+        # \brief The longitude in degrees #
+        NewItem.Lon = float(JSONItem["Lon"])
+        # \brief The time that the MAV should stay inside the radius before advancing in seconds #
+        NewItem.TimeInside = float(JSONItem["TimeInside"])
+        # \brief The minimal pitch angle for fixed wing takeoff waypoints #
+        NewItem.PitchMin = float(JSONItem["PitchMin"])
+        # \brief The default radius in which the mission is accepted as reached in meters #
+        NewItem.AcceptanceRadius = float(JSONItem["AcceptanceRadius"])
+        # \brief lThe oiter radius in meters, 0 for a VTOL to hover, negative for counter-clockwise #
+        NewItem.LoiterRadius = float(JSONItem["LoiterRadius"])
+        # \brief The in radians NED -PI..+PI, NAN means don't change yaw. By "yaw" we mean heading here. #
+        NewItem.Yaw = float(JSONItem["Yaw"])
+        NewItem.YawBody = float(JSONItem["YawBody"])
+        NewItem.PitchBody = float(JSONItem["PitchBody"]) # Body pitch in Theta mode. Alpha in Alpha Mode. Alpha/Theta mode can be set in FAC table.
+        NewItem.RollBody = float(JSONItem["RollBody"])
+        # \brief The latitude padding #
+        NewItem.LatPadding = float(JSONItem["LatPadding"])
+        # \brief The longitude padding #
+        NewItem.LonPadding = float(JSONItem["LonPadding"])
+        # \brief The altitude in meters    (AMSL) #
+        NewItem.Altitude = float(JSONItem["Altitude"])
+        NewItem.CruisingSpeed = float(JSONItem["CruisingSpeed"])
+        # \brief The array to store mission command values for MAV_FRAME_MISSION #
+        NewItem.Params = JSONItem["Params"]
+        # \brief The navigation command #
+        # PX4_NavigationState_t[self.CVT.VehicleStatusMsg.NavState]
+        NewItem.NavCmd = PX4_VehicleCmd_t[JSONItem["NavCmd"]]
+        # \brief The index where the do jump will go to #
+        NewItem.DoJumpMissionIndex = int(JSONItem["DoJumpMissionIndex"])
+        # \brief The how many times do jump needs to be done #
+        NewItem.DoJumpRepeatCount = float(JSONItem["DoJumpRepeatCount"])
+        # \brief The count how many times the jump has been done #
+        NewItem.DoJumpCurrentCount = float(JSONItem["DoJumpCurrentCount"])
+        # \brief The mission frame #
+        NewItem.Frame = float(JSONItem["Frame"])
+        # \brief How the mission item was generated #
+        NewItem.Origin = JSONItem["Origin"]
+        # \brief The exit xtrack location: 0 for center of loiter wp, 1 for exit location #
+        NewItem.LoiterExitXTrack = float(JSONItem["LoiterExitXTrack"])
+        # \brief The heading needs to be reached #
+        NewItem.ForceHeading = bool(JSONItem["ForceHeading"])
+        # \brief True if altitude is relative from start point #
+        NewItem.AltitudeIsRelative = bool(JSONItem["AltitudeIsRelative"])
+        # \brief True if next waypoint should follow after this one #
+        NewItem.AutoContinue = bool(JSONItem["AutoContinue"])
+        # \brief Disables multi-copter yaw with this flag #
+        NewItem.DisableMcYaw = bool(JSONItem["DisableMcYaw"])
+        # \brief Number of milliseconds to delay until proceeding to the next mission item #
+        NewItem.DelayTime = float(JSONItem["DelayTime"])
+
+        return NewItem
+        
+    
+    def LoadJSON(self, FilePath: str):
+        with open(FilePath, "r") as read_file:
+            self.JSONData = json.load(read_file)
+            # print(f"json data:{self.JSONData}")
+        for item in self.JSONData["items"]:
+            self.MissionItems.append(self.NewMissionItem(item))
+        
+
+        MissionItemsCount = len(self.MissionItems)
+        if self.JSONData and (MissionItemsCount > 0):
+            self.JsonLoaded = True
+            self.HkTlm.MissionID = self.JSONData['MissionName']
+            print(f"Loaded '{self.HkTlm.MissionID}' Mission")
+            print(f"MissionItems Count:{MissionItemsCount}")
+
+
+
+
+    def StateChangeDetect(self):
+    
+        # /* When there is a change in state reset fail safe flag */
+        CurrentState: PX4_VehicleStatusMsg_t = self.CVT.VehicleStatusMsg
+        StateChange: bool = False
+        
+        if self.PreviousState is None:
+            self.MissionResultMsg.StayInFailsafe = False
+            self.PreviousState = CurrentState
+            StateChange = True
+        elif not(self.PreviousState.NavState == CurrentState.NavState):
+            self.MissionResultMsg.StayInFailsafe = False
+            self.PreviousState = CurrentState
+            StateChange = True
+
+        return StateChange
+    
+
+    def Takeoff(self):
+        # TODO:Implement
+        pass
+    def Loiter(self):
+        # TODO:Implement
+        pass
+    def Land(self):
+        # TODO:Implement
+        pass
+    def Rtl(self):
+        # TODO:Implement
+        pass
+
+    def TakeoffActive(self):
+        # TODO:Implement
+        pass
+
+    def LoiterActive(self):
+        # TODO:Implement
+        pass
+
+    def LandActive(self):
+        # TODO:Implement
+        pass
+
+    def RtlActive(self):
+        # TODO:Implement
+        pass
+
+
+    def SendPositionSetpointTripletMsg(self):
+        # TODO:Implement
+        pass
+    
+    def Execute(self):
+        Now: int = 0
+        # print("Main Execute for NAV....")
+        # /* Set vehicle arming state */
+        if self.CVT.VehicleStatusMsg.Timestamp != 0 and not(self.VehicleStatusUpdateOnce):
+            self.CVT.VehicleStatusMsg.ArmingState = PX4_ArmingState_t.PX4_ARMING_STATE_STANDBY
+            self.VehicleStatusUpdateOnce = True
+
+        # # /* Execute only on command event*/
+        # if self.NewCommandArrived:
+        #     # /* Reset new command flag*/
+        #     self.NewCommandArrived = False
+        #     # /* Configure messages on command receipt */
+        #     if self.CVT.VehicleCommandMsg.Command == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_DO_REPOSITION:
+        #         # /* EVENT: DO REPOSITION
+        #         # * store current position as previous and goal as next */
+        #         self.RepositionTripletMsg.Previous.Yaw = self.CVT.VehicleGlobalPosition.Yaw
+        #         self.RepositionTripletMsg.Previous.Lat = self.CVT.VehicleGlobalPosition.Lat
+        #         self.RepositionTripletMsg.Previous.Lon = self.CVT.VehicleGlobalPosition.Lon
+        #         self.RepositionTripletMsg.Previous.Alt = self.CVT.VehicleGlobalPosition.Alt
+
+        #         # /* Store new current position */
+        #         self.RepositionTripletMsg.Current.LoiterRadius = self.ConfigTblPtr["NAV_LOITER_RAD"] 
+        #         # /* Not clear as to what this 1 signifies, but PX4 still has it 
+        #         # * it there as of 1.9 */
+        #         self.RepositionTripletMsg.Current.LoiterDirection = 1
+        #         self.RepositionTripletMsg.Current.Type = PX4_SetpointType_t.PX4_SETPOINT_TYPE_LOITER
+
+        #         # /* Assign yaw to current position set point */
+        #         if math.isfinite(self.CVT.VehicleCommandMsg.Param4):
+        #             self.RepositionTripletMsg.Current.Yaw = self.CVT.VehicleCommandMsg.Param4
+        #         else:
+        #             self.RepositionTripletMsg.Current.Yaw = math.nan
+
+        #         # /* Assign latitude and longitude to current set point */
+        #         if math.isfinite(self.CVT.VehicleCommandMsg.Param5) and math.isfinite(self.CVT.VehicleCommandMsg.Param6):
+        #             if self.CVT.VehicleCommandMsg.Param5 < self.NAV_LAT_SHORT_FORM:
+        #                 self.RepositionTripletMsg.Current.Lat = self.CVT.VehicleCommandMsg.Param5 
+        #             else:
+        #                 self.RepositionTripletMsg.Current.Lat = self.CVT.VehicleCommandMsg.Param5 / self.CONVERT_DECIMAL_DEGREES
+        #             if self.CVT.VehicleCommandMsg.Param6 < self.NAV_LON_SHORT_FORM:
+        #                 self.RepositionTripletMsg.Current.Lon = self.CVT.VehicleCommandMsg.Param6 
+        #             else:
+        #                 self.RepositionTripletMsg.Current.Lon = self.CVT.VehicleCommandMsg.Param6 / self.CONVERT_DECIMAL_DEGREES
+                
+        #         else:
+        #             self.RepositionTripletMsg.Current.Lat = self.CVT.VehicleGlobalPosition.Lat
+        #             self.RepositionTripletMsg.Current.Lon = self.CVT.VehicleGlobalPosition.Lon
+
+        #         # /* Assign altitude to current set point */
+        #         if math.isfinite(self.CVT.VehicleCommandMsg.Param7):
+        #             self.RepositionTripletMsg.Current.Alt = self.CVT.VehicleCommandMsg.Param7
+        #         else:
+        #             self.RepositionTripletMsg.Current.Alt = self.CVT.VehicleGlobalPosition.Alt
+        #         # /* Assign set point triplet validity */
+        #         self.RepositionTripletMsg.Previous.Valid = True
+        #         self.RepositionTripletMsg.Current.Valid = True
+        #         self.RepositionTripletMsg.Next.Valid = False
+
+        #     elif self.CVT.VehicleCommandMsg.Command == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_TAKEOFF:
+        #         # /* EVENT: TAKEOFF
+        #         # * store of command hist */
+        #         CacheCommandEventHist()
+
+        #         /* Store current position as previous and goal as next */
+        #         TakeoffTripletMsg.Previous.Yaw =
+        #                 CVT.VehicleGlobalPosition.Yaw
+        #         TakeoffTripletMsg.Previous.Lat =
+        #                 CVT.VehicleGlobalPosition.Lat
+        #         TakeoffTripletMsg.Previous.Lon =
+        #                 CVT.VehicleGlobalPosition.Lon
+        #         TakeoffTripletMsg.Previous.Alt =
+        #                 CVT.VehicleGlobalPosition.Alt
+
+        #         /* Store new current position */
+        #         TakeoffTripletMsg.Current.LoiterRadius =
+        #                 ConfigTblPtr->NAV_LOITER_RAD
+        #         TakeoffTripletMsg.Current.LoiterDirection = 1
+        #         TakeoffTripletMsg.Current.Type =
+        #                 PX4_SetpointType_t.PX4_SETPOINT_TYPE_TAKEOFF
+
+        #         /* Check if home position is valid, set current yaw and previous valid accordingly */
+        #         if (CVT.HomePositionMsg.Timestamp > 0)
+        #         {
+        #             TakeoffTripletMsg.Current.Yaw =
+        #                     CVT.VehicleCommandMsg.Param4
+        #             TakeoffTripletMsg.Previous.Valid = TRUE
+        #         }
+        #         else
+        #         {
+        #             TakeoffTripletMsg.Current.Yaw =
+        #                     CVT.VehicleLocalPositionMsg.Yaw
+        #             TakeoffTripletMsg.Previous.Valid = FALSE
+        #         }
+
+        #         /*  Check if param5 and param6 is finite, set Latitude, Longitude, Altitude and current and next position set point validity */
+        #         if (math.isfinite(CVT.VehicleCommandMsg.Param5) &&
+        #             math.isfinite(CVT.VehicleCommandMsg.Param6))
+        #         {
+        #             TakeoffTripletMsg.Current.Lat =
+        #                     (CVT.VehicleCommandMsg.Param5 < 1000) ?
+        #                             CVT.VehicleCommandMsg.Param5 :
+        #                             CVT.VehicleCommandMsg.Param5 / (double) 1e7
+        #             TakeoffTripletMsg.Current.Lon =
+        #                     (CVT.VehicleCommandMsg.Param6 < 1000) ?
+        #                             CVT.VehicleCommandMsg.Param6 :
+        #                             CVT.VehicleCommandMsg.Param6 / (double) 1e7
+        #         }
+        #         else
+        #         {
+        #             TakeoffTripletMsg.Current.Lat = NAN
+        #             TakeoffTripletMsg.Current.Lon = NAN
+        #         }
+                
+        #         /* Assign set point triplet validity */
+        #         TakeoffTripletMsg.Current.Alt = CVT.VehicleCommandMsg.Param7
+        #         TakeoffTripletMsg.Current.Valid = TRUE
+        #         TakeoffTripletMsg.Next.Valid = FALSE
+        #     }
+        # }
+
+        # /* Detect events for navigation actions. Find if a state is seen for first
+        # * time or has been active since a while */
+        CurrentState: PX4_NavigationState_t = PX4_NavigationState_t[self.CVT.VehicleStatusMsg.NavState]
+        FirstRun: bool = self.StateChangeDetect()
+        # print(f"CurrentState:{type(CurrentState)}")
+        Active: bool = False
+        if not(FirstRun):
+            Active = True
+
+        # /* If a state is inactive */
+        if CurrentState != PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_LOITER:
+            self.LoiterPositionSet = False
+
+        if CurrentState != PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_RTL:
+            self.RtlState = RTLState.RTL_STATE_NONE
+
+        # /* First run in a navigation mode */
+        if (FirstRun):
+            if (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_TAKEOFF):
+                # (void) CFE_EVS_SendEvent(NAV_ACTION_ST_EID, CFE_EVS_INFORMATION,
+                #         "Commencing %s", "Takeoff")
+                print(f"Commencing Takeoff")
+                self.Takeoff()
+            
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_LOITER):
+            
+                # (void) CFE_EVS_SendEvent(NAV_ACTION_ST_EID, CFE_EVS_INFORMATION,
+                #         "Commencing %s", "Loiter")
+                print("Commencing Loiter")
+                self.Loiter()
+            
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_LAND):
+                # (void) CFE_EVS_SendEvent(NAV_ACTION_ST_EID, CFE_EVS_INFORMATION,
+                #         "Commencing %s", "Land")
+                print("Commencing Land")
+                self.Land()
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_RTL):
+                # (void) CFE_EVS_SendEvent(NAV_ACTION_ST_EID, CFE_EVS_INFORMATION,
+                #         "Commencing %s", "Return to Launch")
+                print("Commencing Return to Launch")
+                self.Rtl()
+
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_MISSION):
+                # (void) CFE_EVS_SendEvent(NAV_ACTION_ST_EID, CFE_EVS_INFORMATION,
+                #         "Commencing %s", "Auto Mission")
+                print("Commencing Auto Mission")
+                self.HkTlm.AutoMissionItemIndex = 0
+                self.MissionResultMsg.InstanceCount = 0
+                self.MissionResultMsg.SeqReached = 0
+                self.MissionResultMsg.SeqCurrent = 0
+                self.MissionResultMsg.SeqTotal = 0
+                self.MissionResultMsg.ItemChangedIndex = 0
+                self.MissionResultMsg.ItemDoJumpRemaining = 0
+                self.MissionResultMsg.Valid = False
+                self.MissionResultMsg.Warning = False
+                self.MissionResultMsg.Reached = False
+                self.MissionResultMsg.Finished = False
+                self.MissionResultMsg.Failure = False
+                self.MissionResultMsg.StayInFailsafe = False
+                self.MissionResultMsg.FlightTermination = False
+                self.MissionResultMsg.ItemDoJumpChanged = False
+                self.MissionResultUpdated = True
+                self.AutoMission()
+            
+            else:
+                self.CanLoiterAtSetpoint = False
+
+                # /* Clear hk values revelant to mission if not in auto mode */
+                self.HkTlm.MissionItemReached = False
+                self.HkTlm.WaypointPositionReached = False
+                self.HkTlm.WaypointYawReached = False
+            # }
+        
+
+        # /* If the mode is active */
+        if Active:
+        
+            if (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_TAKEOFF):
+            
+                self.TakeoffActive()
+            
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_LOITER):
+                self.LoiterActive()
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_LAND):
+                self.LandActive()
+            
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_RTL):
+                self.RtlActive()
+            elif (CurrentState
+                    == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_MISSION):
+                self.AutoMissionActive()
+            
+            else:
+                self.CanLoiterAtSetpoint = False
+        
+
+        # /* If we landed and have not received takeoff setpoint then stay in idle */
+        if (self.CVT.VehicleLandDetectedMsg.Landed \
+                and not((self.CVT.VehicleStatusMsg.NavState \
+                        == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_TAKEOFF) \
+                        or (self.CVT.VehicleStatusMsg.NavState \
+                                == PX4_NavigationState_t.PX4_NAVIGATION_STATE_AUTO_MISSION))):
+            self.PositionSetpointTripletMsg.Current.Type = PX4_SetpointType_t.PX4_SETPOINT_TYPE_IDLE
+            self.PositionSetpointTripletMsg.Current.Valid = True
+            self.PositionSetpointTripletMsg.Previous.Valid = False
+            self.PositionSetpointTripletMsg.Next.Valid = False
+        
+
+        # /* Time stamp out going messages */
+        Now = PX4LIB_GetPX4TimeUs()
+        self.PositionSetpointTripletMsg.Timestamp = Now
+        self.MissionResultMsg.Timestamp = Now
+
+        if self.PositionSetpointTripletUpdated:
+        
+            self.PositionSetpointTripletMsg.Timestamp = Now
+            # TODO:Populate telemetry messae and send it to Airliner
+            self.SendPositionSetpointTripletMsg()
+            self.PositionSetpointTripletUpdated = False
+        
+
+        if self.MissionResultUpdated:
+              # TODO:Populate telemetry messae and send it to Airliner
+            # self.SendMissionResultMsg()
+            self.MissionResultUpdated = False
+
+        return 0
+    
+
     
     def IsMissionItemReached(self) -> bool:
         isMissionItemReached: bool = False
@@ -184,33 +601,39 @@ class Nav():
         InnerAngle: float = 0.0
         
         Now = PX4LIB_GetPX4TimeUs()
-        
+        # print(f"self.MissionItem.NavCmd:{self.MissionItem.NavCmd}")
+        # print(f"IsMissionItemReached**1:{self.HkTlm.RemainingDelay}")
         if self.HkTlm.RemainingDelay > 0:
+            print("IsMissionItemReached**2")
             if self.HkTlm.ReleaseDelayAt <= Now:
                 self.HkTlm.RemainingDelay = 0
                 self.HkTlm.ReleaseDelayAt = 0
             else:
                 self.HkTlm.RemainingDelay =  Now - self.HkTlm.RemainingDelay
+                print("IsMissionItemReached**3")
         
         
         if 0 == self.HkTlm.RemainingDelay:
-            if MissionItem.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_WAIT_FOR_ATP:
+            print(f"IsMissionItemReached**4:{self.MissionItem.NavCmd}")
+            if self.MissionItem.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_WAIT_FOR_ATP:
+                    print("IsMissionItemReached**6")
                     if not(self.HkTlm.WaitingForATP):
+                        print("IsMissionItemReached**5")
                         isMissionItemReached = True
                         # (void) CFE_EVS_SendEvent(NAV_ATP_INF_EID, CFE_EVS_INFORMATION,
                         #                         "ATP")
                     
                     # goto MissionItemReached_Exit_Tag
-            elif PX4_VehicleCmd_t.PX4_VEHICLE_CMD_DO_SET_SERVO:
+            elif self.MissionItem.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_DO_SET_SERVO:
                 isMissionItemReached = True
                 # goto MissionItemReached_Exit_Tag
             # elif PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LAND:
             #     isMissionItemReached = CVT.VehicleLandDetectedMsg.Landed
                 # goto MissionItemReached_Exit_Tag
-            elif PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_UNLIM:
+            elif self.MissionItem.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_UNLIM:
                 isMissionItemReached = False
                 # goto MissionItemReached_Exit_Tag
-            elif PX4_VehicleCmd_t.PX4_VEHICLE_CMD_SET_ATTITUDE:
+            elif self.MissionItem.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_SET_ATTITUDE:
                 isMissionItemReached = True
                 # goto MissionItemReached_Exit_Tag
             else:
@@ -294,7 +717,7 @@ class Nav():
             #             || (MissionItem.NavCmd
             #                     == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_TO_ALT
             #                     && MissionItem.ForceHeading))
-            #             && isfinite(MissionItem.Yaw))
+            #             && math.isfinite(MissionItem.Yaw))
             #     {
             #         # Check course if defined only for rotary wing except takeoff #
             #         Cog = CVT.VehicleStatusMsg.IsRotaryWing ? 
@@ -413,6 +836,7 @@ class Nav():
             #         || !Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_TAKEOFF))
 
             # I THINK this is right....
+            print(f"Item.NavCmd:{Item.NavCmd}")
             if not(not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_WAYPOINT) \
                     or not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_UNLIM) \
                     or not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_TIME) \
@@ -478,31 +902,13 @@ class Nav():
 #                         break
 #                     }
 
-                if self.Item == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_SET_ATTITUDE:
+                if Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_SET_ATTITUDE:
                     PosSetpoint.Type = PX4_SetpointType_t.PX4_SETPOINT_TYPE_ATTITUDE
                     
 
                 else:
                     PosSetpoint.Type = PX4_SetpointType_t.PX4_SETPOINT_TYPE_POSITION
-                    PosSetpoint.Valid = True
-             
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                PosSetpoint.Valid = True
 
 
     def AutoMission(self):
@@ -510,18 +916,20 @@ class Nav():
         # /* Don't do anything unless a json is loaded.  Check that is loaded first. */
         if(self.JsonLoaded):
             # memcpy(&MissionItem, &MissionTblPtr.MissionItem[HkTlm.AutoMissionItemIndex], sizeof(MissionItem))
-
+            # print(f"mission_items:{self.MissionItems}")
+            print(f"new  AutoMissionItemIndex:{self.HkTlm.AutoMissionItemIndex}")
             self.MissionItem = self.MissionItems[self.HkTlm.AutoMissionItemIndex]
             
             self.HkTlm.ActionStart = PX4LIB_GetPX4TimeUs()
             self.HkTlm.RemainingDelay = self.MissionItem.DelayTime
+            print(f"type of delay{type(self.HkTlm.RemainingDelay)}")
             self.HkTlm.ReleaseDelayAt = self.HkTlm.ActionStart + self.HkTlm.RemainingDelay
-
             if self.MissionItem.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_WAIT_FOR_ATP:
                 if not(self.HkTlm.WaitingForATP):
                     self.HkTlm.WaitingForATP = True
                     # (void) CFE_EVS_SendEvent(NAV_ATP_INF_EID, CFE_EVS_INFORMATION,
                     #                         "Auto Mission Item %d. Waiting for ATP", HkTlm.AutoMissionItemIndex)
+                    print(f"Auto Mission Item {self.HkTlm.AutoMissionItemIndex}. Waiting for ATP")
                     
                     
 
@@ -543,23 +951,31 @@ class Nav():
                     self.PositionSetpointTripletMsg.Current, self.MissionItem)
                 self.PositionSetpointTripletMsg.Current.Valid = True
 
-                if MissionItem.DoJumpMissionIndex == self.NAV_NO_JUMP:
+                if self.MissionItem.DoJumpMissionIndex == self.NAV_NO_JUMP:
+                    print("AutoMission1")
                     nextMissionIndex = self.HkTlm.AutoMissionItemIndex + 1
                 else:
-                    nextMissionIndex = MissionItem.DoJumpMissionIndex
+                    nextMissionIndex = self.MissionItem.DoJumpMissionIndex
+                    print("AutoMission2")
+                
+                print(f"nextMissionIndex:{nextMissionIndex}")
 
                 if nextMissionIndex < self.NAV_MISSION_ITEM_MAX:
+                    print("AutoMission3")
                     if self.MissionItems[nextMissionIndex].NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NONE:
                     
                         # memset(&nextMissionItem, 0, sizeof(nextMissionItem))
                         nextMissionItem = None
+                        print("AutoMission4")
                     
                     else:
                         # memcpy(&nextMissionItem, &MissionTblPtr.MissionItem[nextMissionIndex], sizeof(nextMissionItem))
+                        print(f"AutoMission5:{nextMissionIndex}")
                         nextMissionItem = self.MissionItems[nextMissionIndex]
                     
 
                 nextMissionItem.Origin = Origin.ORIGIN_ONBOARD
+                print("AutoMission6")
                 self.ConvertMissionItemToCurrentSetpoint(
                 self.PositionSetpointTripletMsg.Next, nextMissionItem)
                 self.PositionSetpointTripletMsg.Next.Type = PX4_SetpointType_t.PX4_SETPOINT_TYPE_POSITION
@@ -571,21 +987,9 @@ class Nav():
                 #     sizeof(HkTlm.MissionID), sizeof(MissionTblPtr.MissionID))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     def AutoMissionActive(self):
         MissionItemReachedFlag = self.IsMissionItemReached()
+        # print(f"MissionItemReachedFlag:{MissionItemReachedFlag}")
         if MissionItemReachedFlag:
 
             # Set mission result message #
@@ -597,7 +1001,7 @@ class Nav():
             self.MissionResultUpdated = True
 
 
-
+            print(f"self.MissionItem.DoJumpMissionIndex:{self.MissionItem.DoJumpMissionIndex}")
             if self.MissionItem.DoJumpMissionIndex == self.NAV_NO_JUMP:
                 self.HkTlm.AutoMissionItemIndex = self.HkTlm.AutoMissionItemIndex + 1
             
@@ -606,7 +1010,7 @@ class Nav():
 
             if self.HkTlm.AutoMissionItemIndex < self.NAV_MISSION_ITEM_MAX:
                 # MissionTblPtr Should be replaced with Mission List from JSON
-                if MissionTblPtr.MissionItem[HkTlm.AutoMissionItemIndex].NavCmd == PX4_VEHICLE_CMD_NONE:
+                if self.MissionItem[self.HkTlm.AutoMissionItemIndex].NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NONE:
                 
                     # memset(&MissionItem, 0, sizeof(MissionItem))
 
@@ -620,7 +1024,7 @@ class Nav():
                     # Loiter() Implement Loiter
                 
                 else:
-                    AutoMission()
+                    self.AutoMission()
             else:
             
                 # memset(&MissionItem, 0, sizeof(MissionItem))

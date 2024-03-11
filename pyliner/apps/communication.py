@@ -517,8 +517,9 @@ class Communication(App):
                 callback = subscribed_tlm['callback']
                 telemItem = subscribed_tlm['telemItem']
                 # FIXME:Add pre-processor/post-processor here
+                # print(f"telemItem:{op_path}")
                 tlm_value = self.parser.validate_packet(tlm[0], subscribed_tlm['op_path'])
-
+                # print(f"tlm_value{tlm_value}")
                 if tlm_value is not None:
                     telemItem.update(
                         value=tlm_value, time=None)
