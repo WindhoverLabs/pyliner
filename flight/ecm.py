@@ -109,7 +109,7 @@ class ECM():
         self.comms: Communication = new_comms
         self.gpio_status = 0
         self.actuator_armed = False
-        self.nav = Nav()
+        self.nav = Nav(self.comms)
         self.nav.LoadJSON("/home/lgomez/projects/pyliner/pyliner/flight/mission_items.json")
         
         # ATP will be Pyliner's own internal command, as opposed to NAV
@@ -135,6 +135,7 @@ class ECM():
 
     
     def ECM_RunMissonController(self):
+        # if (!CVT.VehicleGlobalPosition.Timestamp == 0):
         self.nav.Execute()
     
     def ECM_RunController(self):
@@ -152,7 +153,8 @@ class ECM():
                     self.HkTlm.Released = True
                     self.HkTlm.StartTime = PX4LIB_GetPX4TimeUs()
                     # Internal Pyliner's NAV sequence ATP
-                    self.ECM_SendNavAtp() 
+                    self.ECM_SendNavAtp()
+                    self.nav.ATP()
                     self.ECM_ArmGpioPins()
                     # (void) CFE_EVS_SendEvent(ECM_SEQUENCE_START_INF_EID, CFE_EVS_INFORMATION,
                     #                 "Sequence started %llu", ECM_AppData.HkTlm.StartTime)
