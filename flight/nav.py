@@ -385,7 +385,43 @@ class Nav():
 
     def SendPositionSetpointTripletMsg(self):
         # TODO:Implement
-        # self.comms.send_message(SetpointTriplet())
+        SetPoint = SetpointTriplet()
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Timestamp
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Lat
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Lon
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.X
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Y
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Z
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VX
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VY
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VZ
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Alt
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Yaw
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Yawspeed
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.YawBody
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.PitchBody
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.RollBody
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.LoiterRadius
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.PitchMin
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AX
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AY
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AZ
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AcceptanceRadius
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.CruisingSpeed
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Valid
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Type
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.PositionValid
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VelocityValid
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VelocityFrame
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AltValid
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.YawValid
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.DisableMcYawControl
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.YawspeedValid
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.LoiterDirection
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AccelerationValid   
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.CruisingThrottle
+        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AccelerationIsForce
+        self.comms.send_message(SetPoint)
         pass
     
     def Execute(self):

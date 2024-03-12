@@ -46,7 +46,7 @@ class Message(dict):
     def to_dict(self):
         json = {'name': self.name}
         if len(self):
-            json['args'] = [{'name': name,
+            json['args'] = [{'name': name.replace("_", "."),
                              'value': value() if callable(value) else value}
                             for name, value in self.items()]
         return json
