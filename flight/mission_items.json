@@ -3,81 +3,82 @@
     "version": "1.0",
 	"MissionName":"Aviator DT02",
     "items": [
-      {
-        "Lat": "0.0",
-        "Lon": "0.0",
-        "TimeInside": "0.0",
-        "PitchMin": "0.0",
-        "AcceptanceRadius": "0.0",
-        "LoiterRadius": "0.0",
-        "Yaw": "280.0",
-        "YawBody": "0.0",
-        "PitchBody": "0.0",
-        "RollBody": "0.0",
-        "LatPadding": "0.0",
-        "LonPadding": "0.0",
-        "Altitude": "0.0",
-        "CruisingSpeed": "0.0",
-        "Params": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "NavCmd": "PX4_VEHICLE_CMD_SET_ATTITUDE",
-        "DoJumpMissionIndex": "-1",
-        "DoJumpRepeatCount": "0.0",
-        "DoJumpCurrentCount": "0.0",
-        "Frame": "0.0",
-        "Origin": "0.0",
-        "LoiterExitXTrack": "0.0",
-        "ForceHeading": "0.0",
-        "AltitudeIsRelative": "FALSE",
-        "AutoContinue": "TRUE",
-        "DisableMcYaw": "0.0",
-        "DelayTime": "0.0"
-      },
 
-      {
-        "Lat": "0.0",
-        "Lon": "0.0",
-        "TimeInside": "0.0",
-        "PitchMin": "0.0",
-        "AcceptanceRadius": "0.0",
-        "LoiterRadius": "0.0",
-        "Yaw": "280.0",
-        "YawBody": "0.0",
-        "PitchBody": "0.0",
+		{
+			"Lat": "0.0",
+			"Lon": "0.0",
+			"TimeInside": "0.0",
+			"PitchMin": "0.0",
+			"AcceptanceRadius": "0.0",
+			"LoiterRadius": "0.0",
+			"Yaw": "280.0",
+			"YawBody": "0.0",
+			"PitchBody": "0.00",
+	"RollBody": "0.0",
+			"LatPadding": "0.0",
+			"LonPadding": "0.0",
+			"Altitude": "0.0",
+			"CruisingSpeed": "0.0",
+			"Params": [
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+			],
+			"NavCmd": "PX4_VEHICLE_CMD_SET_ATTITUDE",
+			"DoJumpMissionIndex": "-1",
+			"DoJumpRepeatCount": "0.0",
+			"DoJumpCurrentCount": "0.0",
+			"Frame": "0.0",
+			"Origin": "0.0",
+			"LoiterExitXTrack": "0.0",
+			"ForceHeading": "0.0",
+			"AltitudeIsRelative": "FALSE",
+			"AutoContinue": "TRUE",
+			"DisableMcYaw": "0.0",
+			"DelayTime": "0"
+		},
+         
+			{
+				"Lat": "0.0",
+				"Lon": "0.0",
+				"TimeInside": "0.0",
+				"PitchMin": "0.0",
+				"AcceptanceRadius": "0.0",
+				"LoiterRadius": "0.0",
+				"Yaw": "280.0",
+				"YawBody": "0.0",
+				"PitchBody": "0.00",
         "RollBody": "0.0",
-        "LatPadding": "0.0",
-        "LonPadding": "0.0",
-        "Altitude": "0.0",
-        "CruisingSpeed": "0.0",
-        "Params": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "NavCmd": "PX4_VEHICLE_CMD_WAIT_FOR_ATP",
-        "DoJumpMissionIndex": "-1",
-        "DoJumpRepeatCount": "0.0",
-        "DoJumpCurrentCount": "0.0",
-        "Frame": "0.0",
-        "Origin": "0.0",
-        "LoiterExitXTrack": "0.0",
-        "ForceHeading": "0.0",
-        "AltitudeIsRelative": "FALSE",
-        "AutoContinue": "TRUE",
-        "DisableMcYaw": "0.0",
-        "DelayTime": "0.0"
-      },
+				"LatPadding": "0.0",
+				"LonPadding": "0.0",
+				"Altitude": "0.0",
+				"CruisingSpeed": "0.0",
+				"Params": [
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0
+				],
+				"NavCmd": "PX4_VEHICLE_CMD_WAIT_FOR_ATP",
+				"DoJumpMissionIndex": "-1",
+				"DoJumpRepeatCount": "0.0",
+				"DoJumpCurrentCount": "0.0",
+				"Frame": "0.0",
+				"Origin": "0.0",
+				"LoiterExitXTrack": "0.0",
+				"ForceHeading": "0.0",
+				"AltitudeIsRelative": "FALSE",
+				"AutoContinue": "TRUE",
+				"DisableMcYaw": "0.0",
+				"DelayTime": "0"
+			},
          
 			{
 				"Lat": "0.0",
@@ -114,7 +115,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "990000"
+				"DelayTime": "1080000"
 			},
          
 			{
@@ -152,7 +153,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "80000"
+				"DelayTime": "100000"
 			},
          
 			{
@@ -190,7 +191,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "100000"
+				"DelayTime": "60000"
 			},
          
 			{
@@ -228,7 +229,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "60000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -266,7 +267,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "110000"
 			},
          
 			{
@@ -304,7 +305,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "110000"
+				"DelayTime": "70000"
 			},
          
 			{
@@ -342,7 +343,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "70000"
+				"DelayTime": "20000"
 			},
          
 			{
@@ -380,7 +381,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "20000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -418,7 +419,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "30000"
 			},
          
 			{
@@ -456,7 +457,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "30000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -494,7 +495,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "130000"
 			},
          
 			{
@@ -532,7 +533,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "130000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -570,7 +571,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "20000"
 			},
          
 			{
@@ -608,7 +609,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "20000"
+				"DelayTime": "130000"
 			},
          
 			{
@@ -646,7 +647,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "130000"
+				"DelayTime": "80000"
 			},
          
 			{
@@ -684,7 +685,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "80000"
+				"DelayTime": "30000"
 			},
          
 			{
@@ -722,7 +723,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "30000"
+				"DelayTime": "50000"
 			},
          
 			{
@@ -760,7 +761,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "50000"
+				"DelayTime": "120000"
 			},
          
 			{
@@ -798,7 +799,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "120000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -836,7 +837,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "100000"
 			},
          
 			{
@@ -874,7 +875,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "100000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -912,7 +913,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "60000"
 			},
          
 			{
@@ -950,7 +951,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "60000"
+				"DelayTime": "70000"
 			},
          
 			{
@@ -988,7 +989,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "70000"
+				"DelayTime": "50000"
 			},
          
 			{
@@ -1026,7 +1027,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "50000"
+				"DelayTime": "100000"
 			},
          
 			{
@@ -1064,7 +1065,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "100000"
+				"DelayTime": "70000"
 			},
          
 			{
@@ -1102,7 +1103,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "70000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -1140,7 +1141,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -1178,7 +1179,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "130000"
 			},
          
 			{
@@ -1216,7 +1217,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "130000"
+				"DelayTime": "120000"
 			},
          
 			{
@@ -1254,7 +1255,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "120000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -1292,7 +1293,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "190000"
 			},
          
 			{
@@ -1330,7 +1331,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "190000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -1406,7 +1407,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "200000"
 			},
          
 			{
@@ -1444,7 +1445,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "200000"
+				"DelayTime": "20000"
 			},
          
 			{
@@ -1482,7 +1483,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "20000"
+				"DelayTime": "70000"
 			},
          
 			{
@@ -1520,7 +1521,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "70000"
+				"DelayTime": "160000"
 			},
          
 			{
@@ -1558,7 +1559,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "160000"
+				"DelayTime": "110000"
 			},
          
 			{
@@ -1596,7 +1597,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "110000"
+				"DelayTime": "120000"
 			},
          
 			{
@@ -1634,7 +1635,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "120000"
+				"DelayTime": "180000"
 			},
          
 			{
@@ -1672,7 +1673,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "180000"
+				"DelayTime": "120000"
 			},
          
 			{
@@ -1748,7 +1749,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "120000"
+				"DelayTime": "80000"
 			},
          
 			{
@@ -1786,7 +1787,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "80000"
+				"DelayTime": "170000"
 			},
          
 			{
@@ -1824,7 +1825,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "170000"
+				"DelayTime": "20000"
 			},
          
 			{
@@ -1862,7 +1863,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "20000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -1900,7 +1901,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "20000"
 			},
          
 			{
@@ -1938,7 +1939,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "20000"
+				"DelayTime": "200000"
 			},
          
 			{
@@ -1976,7 +1977,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "200000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -2014,7 +2015,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "120000"
 			},
          
 			{
@@ -2052,7 +2053,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "120000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -2090,7 +2091,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "30000"
 			},
          
 			{
@@ -2128,7 +2129,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "30000"
+				"DelayTime": "130000"
 			},
          
 			{
@@ -2166,7 +2167,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "130000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -2204,7 +2205,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "100000"
 			},
          
 			{
@@ -2242,7 +2243,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "100000"
+				"DelayTime": "170000"
 			},
          
 			{
@@ -2280,7 +2281,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "170000"
+				"DelayTime": "130000"
 			},
          
 			{
@@ -2318,7 +2319,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "130000"
+				"DelayTime": "50000"
 			},
          
 			{
@@ -2356,7 +2357,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "50000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -2394,7 +2395,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -2432,7 +2433,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "200000"
 			},
          
 			{
@@ -2470,7 +2471,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "200000"
+				"DelayTime": "120000"
 			},
          
 			{
@@ -2508,7 +2509,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "120000"
+				"DelayTime": "2650000"
 			},
          
 			{
@@ -2546,7 +2547,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "2650000"
+				"DelayTime": "330000"
 			},
          
 			{
@@ -2584,7 +2585,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "330000"
+				"DelayTime": "510000"
 			},
          
 			{
@@ -2622,7 +2623,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "510000"
+				"DelayTime": "460000"
 			},
          
 			{
@@ -2660,7 +2661,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "460000"
+				"DelayTime": "50000"
 			},
          
 			{
@@ -2698,7 +2699,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "50000"
+				"DelayTime": "250000"
 			},
          
 			{
@@ -2736,7 +2737,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "250000"
+				"DelayTime": "420000"
 			},
          
 			{
@@ -2774,7 +2775,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "420000"
+				"DelayTime": "190000"
 			},
          
 			{
@@ -2812,7 +2813,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "190000"
+				"DelayTime": "470000"
 			},
          
 			{
@@ -2850,7 +2851,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "470000"
+				"DelayTime": "590000"
 			},
          
 			{
@@ -2888,7 +2889,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "590000"
+				"DelayTime": "290000"
 			},
          
 			{
@@ -2926,7 +2927,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "290000"
+				"DelayTime": "440000"
 			},
          
 			{
@@ -2964,7 +2965,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "440000"
+				"DelayTime": "200000"
 			},
          
 			{
@@ -3002,7 +3003,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "200000"
+				"DelayTime": "30000"
 			},
          
 			{
@@ -3040,7 +3041,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "30000"
+				"DelayTime": "180000"
 			},
          
 			{
@@ -3078,7 +3079,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "180000"
+				"DelayTime": "590000"
 			},
          
 			{
@@ -3116,7 +3117,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "590000"
+				"DelayTime": "480000"
 			},
          
 			{
@@ -3192,7 +3193,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "480000"
+				"DelayTime": "50000"
 			},
          
 			{
@@ -3230,7 +3231,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "50000"
+				"DelayTime": "480000"
 			},
          
 			{
@@ -3268,7 +3269,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "480000"
+				"DelayTime": "180000"
 			},
          
 			{
@@ -3306,7 +3307,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "180000"
+				"DelayTime": "30000"
 			},
          
 			{
@@ -3344,7 +3345,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "30000"
+				"DelayTime": "220000"
 			},
          
 			{
@@ -3382,7 +3383,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "220000"
+				"DelayTime": "110000"
 			},
          
 			{
@@ -3420,7 +3421,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "110000"
+				"DelayTime": "410000"
 			},
          
 			{
@@ -3458,7 +3459,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "410000"
+				"DelayTime": "600000"
 			},
          
 			{
@@ -3496,7 +3497,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "600000"
+				"DelayTime": "170000"
 			},
          
 			{
@@ -3534,7 +3535,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "170000"
+				"DelayTime": "440000"
 			},
          
 			{
@@ -3572,7 +3573,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "440000"
+				"DelayTime": "460000"
 			},
          
 			{
@@ -3610,7 +3611,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "460000"
+				"DelayTime": "440000"
 			},
          
 			{
@@ -3648,7 +3649,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "440000"
+				"DelayTime": "30000"
 			},
          
 			{
@@ -3686,7 +3687,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "30000"
+				"DelayTime": "630000"
 			},
          
 			{
@@ -3724,7 +3725,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "630000"
+				"DelayTime": "80000"
 			},
          
 			{
@@ -3762,7 +3763,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "80000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -3800,7 +3801,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "80000"
 			},
          
 			{
@@ -3838,7 +3839,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "80000"
+				"DelayTime": "600000"
 			},
          
 			{
@@ -3876,7 +3877,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "600000"
+				"DelayTime": "260000"
 			},
          
 			{
@@ -3914,7 +3915,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "260000"
+				"DelayTime": "360000"
 			},
          
 			{
@@ -3952,7 +3953,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "360000"
+				"DelayTime": "370000"
 			},
          
 			{
@@ -3990,7 +3991,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "370000"
+				"DelayTime": "280000"
 			},
          
 			{
@@ -4028,7 +4029,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "280000"
+				"DelayTime": "350000"
 			},
          
 			{
@@ -4066,7 +4067,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "350000"
+				"DelayTime": "270000"
 			},
          
 			{
@@ -4104,7 +4105,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "270000"
+				"DelayTime": "440000"
 			},
          
 			{
@@ -4142,7 +4143,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "440000"
+				"DelayTime": "580000"
 			},
          
 			{
@@ -4180,7 +4181,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "580000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -4218,7 +4219,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -4256,7 +4257,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "630000"
 			},
          
 			{
@@ -4332,7 +4333,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "630000"
+				"DelayTime": "360000"
 			},
          
 			{
@@ -4370,7 +4371,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "360000"
+				"DelayTime": "160000"
 			},
          
 			{
@@ -4408,7 +4409,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "160000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -4446,7 +4447,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "630000"
 			},
          
 			{
@@ -4484,7 +4485,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "630000"
+				"DelayTime": "40000"
 			},
          
 			{
@@ -4522,7 +4523,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "40000"
+				"DelayTime": "220000"
 			},
          
 			{
@@ -4560,7 +4561,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "220000"
+				"DelayTime": "360000"
 			},
          
 			{
@@ -4598,7 +4599,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "360000"
+				"DelayTime": "340000"
 			},
          
 			{
@@ -4636,7 +4637,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "340000"
+				"DelayTime": "470000"
 			},
          
 			{
@@ -4674,7 +4675,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "470000"
+				"DelayTime": "290000"
 			},
          
 			{
@@ -4712,7 +4713,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "290000"
+				"DelayTime": "110000"
 			},
          
 			{
@@ -4750,7 +4751,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "110000"
+				"DelayTime": "140000"
 			},
          
 			{
@@ -4788,7 +4789,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "140000"
+				"DelayTime": "610000"
 			},
          
 			{
@@ -4826,7 +4827,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "610000"
+				"DelayTime": "70000"
 			},
          
 			{
@@ -4864,7 +4865,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "70000"
+				"DelayTime": "450000"
 			},
          
 			{
@@ -4902,7 +4903,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "450000"
+				"DelayTime": "300000"
 			},
          
 			{
@@ -4940,7 +4941,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "300000"
+				"DelayTime": "600000"
 			},
          
 			{
@@ -4978,7 +4979,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "600000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -5016,7 +5017,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "420000"
 			},
          
 			{
@@ -5054,7 +5055,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "420000"
+				"DelayTime": "630000"
 			},
          
 			{
@@ -5092,7 +5093,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "630000"
+				"DelayTime": "280000"
 			},
          
 			{
@@ -5130,7 +5131,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "280000"
+				"DelayTime": "6860000"
 			},
          
 			{
@@ -5168,7 +5169,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "6860000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -7828,7 +7829,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "14990000"
 			},
          
 			{
@@ -7866,7 +7867,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "14990000"
+				"DelayTime": "90000"
 			},
          
 			{
@@ -11666,7 +11667,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "90000"
+				"DelayTime": "190000"
 			},
          
 			{
@@ -12616,7 +12617,7 @@
 				"AltitudeIsRelative": "FALSE",
 				"AutoContinue": "TRUE",
 				"DisableMcYaw": "0.0",
-				"DelayTime": "190000"
+				"DelayTime": "9922990000"
 			}
 
 	]
