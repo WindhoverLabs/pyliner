@@ -6,7 +6,7 @@ import math
 import json
 
 from pyliner.apps.communication import Communication
-from pyliner.telemetry import SetpointTriplet
+from pyliner.telemetry import SetpointTriplet, Telemetry
 
 # /**
 #  * \brief mission origin
@@ -152,7 +152,8 @@ class Nav():
         self.NAV_LON_SHORT_FORM  =    1000
         self.CONVERT_DECIMAL_DEGREES = 1e7
 
-        self.ConfigTblPtr = {} 
+        # Should be move to JSON config
+        self.ConfigTblPtr = {"NAV_LOITER_RAD": 100.0} 
 
         self.comms: Communication = new_comms
 
@@ -384,43 +385,136 @@ class Nav():
 
 
     def SendPositionSetpointTripletMsg(self):
-        # TODO:Implement
-        SetPoint = SetpointTriplet()
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Timestamp
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Lat
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Lon
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.X
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Y
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Z
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VX
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VY
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VZ
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Alt
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Yaw
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Yawspeed
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.YawBody
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.PitchBody
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.RollBody
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.LoiterRadius
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.PitchMin
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AX
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AY
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AZ
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AcceptanceRadius
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.CruisingSpeed
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Valid
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.Type
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.PositionValid
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VelocityValid
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.VelocityFrame
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AltValid
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.YawValid
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.DisableMcYawControl
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.YawspeedValid
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.LoiterDirection
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AccelerationValid   
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.CruisingThrottle
-        SetPoint["Prev_Lat"] = self.PositionSetpointTripletMsg.Previous.AccelerationIsForce
+        # TODO:Add timestamp to prev, curr, next
+        # print(f"self.PositionSetpointTripletMsg.Previous.Type:{type(self.PositionSetpointTripletMsg.Previous.Type)}")
+        SetPoint = Telemetry(
+        # Previous_Timestamp = self.PositionSetpointTripletMsg.Previous.Timestamp,
+        '/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID',
+
+        Timestamp = 108,
+        Previous_Timestamp = 109,
+        Previous_Lat = self.PositionSetpointTripletMsg.Previous.Lat,
+        Previous_Lon = self.PositionSetpointTripletMsg.Previous.Lon,
+        Previous_X = self.PositionSetpointTripletMsg.Previous.X,
+        Previous_Y = self.PositionSetpointTripletMsg.Previous.Y,
+        Previous_Z = self.PositionSetpointTripletMsg.Previous.Z,
+        Previous_VX = self.PositionSetpointTripletMsg.Previous.VX,
+        Previous_VY = self.PositionSetpointTripletMsg.Previous.VY,
+        Previous_VZ = self.PositionSetpointTripletMsg.Previous.VZ,
+        Previous_Alt = self.PositionSetpointTripletMsg.Previous.Alt,
+        Previous_Yaw = math.radians(self.PositionSetpointTripletMsg.Previous.Yaw),
+        Previous_Yawspeed = self.PositionSetpointTripletMsg.Previous.Yawspeed,
+        Previous_YawBody = math.radians(self.PositionSetpointTripletMsg.Previous.YawBody),
+        Previous_PitchBody = math.radians(self.PositionSetpointTripletMsg.Previous.PitchBody),
+        Previous_RollBody = math.radians(self.PositionSetpointTripletMsg.Previous.RollBody),
+        Previous_LoiterRadius = self.PositionSetpointTripletMsg.Previous.LoiterRadius,
+        Previous_PitchMin = self.PositionSetpointTripletMsg.Previous.PitchMin,
+        Previous_AX = self.PositionSetpointTripletMsg.Previous.AX,
+        Previous_AY = self.PositionSetpointTripletMsg.Previous.AY,
+        Previous_AZ = self.PositionSetpointTripletMsg.Previous.AZ,
+        Previous_AcceptanceRadius = self.PositionSetpointTripletMsg.Previous.AcceptanceRadius,
+        Previous_CruisingSpeed = self.PositionSetpointTripletMsg.Previous.CruisingSpeed,
+        Previous_CruisingThrottle = self.PositionSetpointTripletMsg.Previous.CruisingThrottle,
+        Previous_Valid = self.PositionSetpointTripletMsg.Previous.Valid,
+        # FIXME:Shouln't have to know that a "spare exists"
+        Previous_spare0 = 0,
+        Previous_Type = self.PositionSetpointTripletMsg.Previous.Type.value,
+        Previous_PositionValid = self.PositionSetpointTripletMsg.Previous.PositionValid,
+        Previous_VelocityValid = self.PositionSetpointTripletMsg.Previous.VelocityValid,
+        Previous_VelocityFrame = self.PositionSetpointTripletMsg.Previous.VelocityFrame,
+        Previous_AltValid = self.PositionSetpointTripletMsg.Previous.AltValid,
+        Previous_YawValid = self.PositionSetpointTripletMsg.Previous.YawValid,
+        Previous_DisableMcYawControl = self.PositionSetpointTripletMsg.Previous.DisableMcYawControl,
+        Previous_YawspeedValid = self.PositionSetpointTripletMsg.Previous.YawspeedValid,
+        Previous_LoiterDirection = self.PositionSetpointTripletMsg.Previous.LoiterDirection,
+        Previous_AccelerationValid = self.PositionSetpointTripletMsg.Previous.AccelerationValid,
+        Previous_AccelerationIsForce = self.PositionSetpointTripletMsg.Previous.AccelerationIsForce,
+        # FIXME:Shouln't have to know that a "spare exists"
+        Previous_spare_end = 0,
+
+        Current_Timestamp = 109,
+        Current_Lat = self.PositionSetpointTripletMsg.Current.Lat,
+        Current_Lon = self.PositionSetpointTripletMsg.Current.Lon,
+        Current_X = self.PositionSetpointTripletMsg.Current.X,
+        Current_Y = self.PositionSetpointTripletMsg.Current.Y,
+        Current_Z = self.PositionSetpointTripletMsg.Current.Z,
+        Current_VX = self.PositionSetpointTripletMsg.Current.VX,
+        Current_VY = self.PositionSetpointTripletMsg.Current.VY,
+        Current_VZ = self.PositionSetpointTripletMsg.Current.VZ,
+        Current_Alt = self.PositionSetpointTripletMsg.Current.Alt,
+        Current_Yaw =  math.radians(self.PositionSetpointTripletMsg.Current.Yaw),
+        Current_Yawspeed = self.PositionSetpointTripletMsg.Current.Yawspeed,
+        Current_YawBody = math.radians(self.PositionSetpointTripletMsg.Current.YawBody),
+        Current_PitchBody = math.radians(self.PositionSetpointTripletMsg.Current.PitchBody),
+        Current_RollBody = math.radians(self.PositionSetpointTripletMsg.Current.RollBody),
+        Current_LoiterRadius = self.PositionSetpointTripletMsg.Current.LoiterRadius,
+        Current_PitchMin = self.PositionSetpointTripletMsg.Current.PitchMin,
+        Current_AX = self.PositionSetpointTripletMsg.Current.AX,
+        Current_AY = self.PositionSetpointTripletMsg.Current.AY,
+        Current_AZ = self.PositionSetpointTripletMsg.Current.AZ,
+        Current_AcceptanceRadius = self.PositionSetpointTripletMsg.Current.AcceptanceRadius,
+        Current_CruisingSpeed = self.PositionSetpointTripletMsg.Current.CruisingSpeed,
+        Current_CruisingThrottle = self.PositionSetpointTripletMsg.Current.CruisingThrottle,
+        Current_Valid = self.PositionSetpointTripletMsg.Current.Valid,
+        # FIXME:Shouln't have to know that a "spare exists"
+        Current_spare0 = 0,
+        Current_Type = self.PositionSetpointTripletMsg.Current.Type.value,
+        Current_PositionValid = self.PositionSetpointTripletMsg.Current.PositionValid,
+        Current_VelocityValid = self.PositionSetpointTripletMsg.Current.VelocityValid,
+        Current_VelocityFrame = self.PositionSetpointTripletMsg.Current.VelocityFrame,
+        Current_AltValid = self.PositionSetpointTripletMsg.Current.AltValid,
+        Current_YawValid = self.PositionSetpointTripletMsg.Current.YawValid,
+        Current_DisableMcYawControl = self.PositionSetpointTripletMsg.Current.DisableMcYawControl,
+        Current_YawspeedValid = self.PositionSetpointTripletMsg.Current.YawspeedValid,
+        Current_LoiterDirection = self.PositionSetpointTripletMsg.Current.LoiterDirection,
+        Current_AccelerationValid = self.PositionSetpointTripletMsg.Current.AccelerationValid,
+        Current_AccelerationIsForce = self.PositionSetpointTripletMsg.Current.AccelerationIsForce,
+        # FIXME:Shouln't have to know that a "spare exists"
+        Current_spare_end = 0,
+
+
+
+
+        Next_Timestamp = 109,
+        Next_Lat = self.PositionSetpointTripletMsg.Next.Lat,
+        Next_Lon = self.PositionSetpointTripletMsg.Next.Lon,
+        Next_X = self.PositionSetpointTripletMsg.Next.X,
+        Next_Y = self.PositionSetpointTripletMsg.Next.Y,
+        Next_Z = self.PositionSetpointTripletMsg.Next.Z,
+        Next_VX = self.PositionSetpointTripletMsg.Next.VX,
+        Next_VY = self.PositionSetpointTripletMsg.Next.VY,
+        Next_VZ = self.PositionSetpointTripletMsg.Next.VZ,
+        Next_Alt = self.PositionSetpointTripletMsg.Next.Alt,
+        Next_Yaw =  math.radians(self.PositionSetpointTripletMsg.Next.Yaw),
+        Next_Yawspeed = self.PositionSetpointTripletMsg.Next.Yawspeed,
+        Next_YawBody = math.radians(self.PositionSetpointTripletMsg.Next.YawBody),
+        Next_PitchBody = math.radians(self.PositionSetpointTripletMsg.Next.PitchBody),
+        Next_RollBody = math.radians(self.PositionSetpointTripletMsg.Next.RollBody),
+        Next_LoiterRadius = self.PositionSetpointTripletMsg.Next.LoiterRadius,
+        Next_PitchMin = self.PositionSetpointTripletMsg.Next.PitchMin,
+        Next_AX = self.PositionSetpointTripletMsg.Next.AX,
+        Next_AY = self.PositionSetpointTripletMsg.Next.AY,
+        Next_AZ = self.PositionSetpointTripletMsg.Next.AZ,
+        Next_AcceptanceRadius = self.PositionSetpointTripletMsg.Next.AcceptanceRadius,
+        Next_CruisingSpeed = self.PositionSetpointTripletMsg.Next.CruisingSpeed,
+        Next_CruisingThrottle = self.PositionSetpointTripletMsg.Next.CruisingThrottle,
+        Next_Valid = self.PositionSetpointTripletMsg.Next.Valid,
+        # FIXME:Shouldn't have to know that a "spare exists"
+        Next_spare0 = 0,
+        Next_Type = self.PositionSetpointTripletMsg.Next.Type.value,
+        Next_PositionValid = self.PositionSetpointTripletMsg.Next.PositionValid,
+        Next_VelocityValid = self.PositionSetpointTripletMsg.Next.VelocityValid,
+        Next_VelocityFrame = self.PositionSetpointTripletMsg.Next.VelocityFrame,
+        Next_AltValid = self.PositionSetpointTripletMsg.Next.AltValid,
+        Next_YawValid = self.PositionSetpointTripletMsg.Next.YawValid,
+        Next_DisableMcYawControl = self.PositionSetpointTripletMsg.Next.DisableMcYawControl,
+        Next_YawspeedValid = self.PositionSetpointTripletMsg.Next.YawspeedValid,
+        Next_LoiterDirection = self.PositionSetpointTripletMsg.Next.LoiterDirection,
+        Next_AccelerationValid = self.PositionSetpointTripletMsg.Next.AccelerationValid,
+        Next_AccelerationIsForce = self.PositionSetpointTripletMsg.Next.AccelerationIsForce,
+        # FIXME:Shouldn't have to know that a "spare exists"
+        Next_spare_end = 0,
+        )
         self.comms.send_message(SetPoint)
         pass
     
@@ -935,11 +1029,12 @@ class Nav():
             #         || !Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_TAKEOFF))
 
             # I THINK this is right....
-            if not(not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_WAYPOINT) \
-                    or not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_UNLIM) \
-                    or not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_TIME) \
-                    or not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LAND) \
-                    or not(Item.NavCmd == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_TAKEOFF)):
+            # print(f"ConvertMissionItemToCurrentSetpoint**1:{Item.NavCmd}")
+            if not(not(Item.NavCmd) == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_WAYPOINT) \
+                    or not(Item.NavCmd) == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_UNLIM \
+                    or not(Item.NavCmd) == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LOITER_TIME \
+                    or not(Item.NavCmd) == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_LAND \
+                    or not(Item.NavCmd) == PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_TAKEOFF:
             
                 PosSetpoint.Lat = Item.Lat
                 PosSetpoint.Lon = Item.Lon
@@ -963,11 +1058,13 @@ class Nav():
 
                 PosSetpoint.YawBody = Item.YawBody
                 PosSetpoint.PitchBody = Item.PitchBody
+                # print(f"PosSetpoint.PitchBody:{PosSetpoint.PitchBody}")
                 PosSetpoint.RollBody = Item.RollBody
 
                 # // PosSetpoint.CruisingSpeed = GetCruisingSpeed()
                 PosSetpoint.CruisingSpeed = Item.CruisingSpeed
                 PosSetpoint.CruisingThrottle = self.GetCruisingThrottle()
+                # print("ConvertMissionItemToCurrentSetpoint**2")
 # TODO: Implement CVT
 #                     if PX4_VehicleCmd_t.PX4_VEHICLE_CMD_NAV_TAKEOFF:
 #                     {
@@ -1007,6 +1104,7 @@ class Nav():
                 else:
                     PosSetpoint.Type = PX4_SetpointType_t.PX4_SETPOINT_TYPE_POSITION
                 PosSetpoint.Valid = True
+            # print("ConvertMissionItemToCurrentSetpoint**13")
 
 
     def ATP(self):

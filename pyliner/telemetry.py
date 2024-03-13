@@ -50,7 +50,8 @@ class Telemetry(Message):
     def to_dict(self):
         json = {'name': self.name}
         if len(self):
-            json['args'] = [{'name': name.replace("_", "."),
+            # FIXME: This needs to be fixed, horrible hack with "spare" specific name
+            json['args'] = [{'name': name.replace("_", ".") if name.find('_spare') == -1 else  name.replace('_', '._', 1),
                              'value': value() if callable(value) else value}
                             for name, value in self.items()]
         return json
