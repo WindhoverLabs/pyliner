@@ -6,6 +6,6 @@ junit_xml
 protobuf==3.6
 sortedcontainers
 flufl.enum
-xtce-generator==1.2.3
+xtce-generator==1.2.5
 lxml==4.6
 bitarray
