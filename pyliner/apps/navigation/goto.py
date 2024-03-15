@@ -1,5 +1,8 @@
 import time
-from collections import Iterable
+try:
+    from collections.abc import Iterable  # python >= version 3.10
+except ImportError:
+    from collections import Iterable  # python < version 3.10
 from datetime import datetime
 from numbers import Real
 

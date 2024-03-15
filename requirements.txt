@@ -1,5 +1,3 @@
-orderedset
-enum34
 future
 geographiclib
 junit_xml

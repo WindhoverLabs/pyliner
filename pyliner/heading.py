@@ -10,7 +10,12 @@ Classes:
     HeadingRange  Defines a space between two Headings that it `contains`.
 """
 
-from collections import Container
+try:
+    from collections.abc import Container  # python >= version 3.10
+except ImportError:
+    from collections import Container  # python < version 3.10
+
+
 from numbers import Real
 
 from enum import Enum

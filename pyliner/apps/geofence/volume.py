@@ -11,7 +11,11 @@ Volumes:
 import itertools
 import warnings
 from abc import ABCMeta, abstractmethod
-from collections import Container
+
+try:
+    from collections.abc import Container  # python >= version 3.10
+except ImportError:
+    from collections import Container  # python < version 3.10
 from numbers import Real
 
 from pyliner.apps.geographic_app import GeographicApp

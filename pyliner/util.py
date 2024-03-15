@@ -34,12 +34,15 @@ import socket
 import sys
 import threading
 import time
-from collections import Iterator, Iterable
+try:
+    from collections.abc import Iterable  # python >= version 3.10
+except ImportError:
+    from collections import Iterable  # python < version 3.10
 from datetime import datetime
 from os import mkdir
 from os.path import join, isdir, exists
 
-from orderedset import OrderedSet
+# from orderedset import OrderedSet
 import queue
 import socketserver
 
@@ -95,20 +98,29 @@ class OrderedSetQueue(queue.Queue):
 
     Allows use of the in-operator.
     """
+
     def __contains__(self, item):
         return item in self.queue
 
     def _init(self, maxsize):
-        self.queue = OrderedSet()
+        # FIXME: Implement with PriorityQueue
+        pass
+        # self.queue = OrderedSet()
 
     def _get(self):
-        return self.queue.pop(last=False)
+        # FIXME: Implement with PriorityQueue
+        # return self.queue.pop(last=False)
+        pass
 
     def _put(self, item):
-        self.queue.add(item)
+        # FIXME: Implement with PriorityQueue
+        # self.queue.add(item)
+        pass
 
     def remove(self, elem):
-        self.queue.remove(elem)
+        # FIXME: Implement with PriorityQueue
+        # self.queue.remove(elem)
+        pass
 
 
 class OverlayDict(object):
@@ -275,7 +287,7 @@ def enable_logging(log_dir=None, log_file=None, script=None, level=logging.INFO,
     log_path = join(log_dir, log_file)
     if not isdir(log_dir):
         mkdir(log_dir)
-        
+
     print('Log at {}'.format(log_path))
     logging.basicConfig(
         level=level,
