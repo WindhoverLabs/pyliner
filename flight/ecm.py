@@ -108,7 +108,7 @@ class ECM():
         self.gpio_status = 0
         self.actuator_armed = False
         self.nav = Nav(self.comms)
-        self.nav.LoadJSON("/home/lgomez/projects/pyliner/pyliner/flight/mission_items.json")
+        self.nav.LoadJSON("./mission_items.json")
 
         # ATP will be Pyliner's own internal command, as opposed to NAV
         # self.AtpCommand = Command("/cfs/cpd/apps/gpio/Engage")
