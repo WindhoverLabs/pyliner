@@ -7,3 +7,4 @@ flufl.enum
 xtce-generator==1.2.5
 lxml==4.6
 bitarray
+opencv-python
