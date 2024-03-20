@@ -389,12 +389,14 @@ class Nav():
         # TODO:Add timestamp to prev, curr, next
         # find_aggregate_param_type(self, type_name: str, namespace: str) -> Union[xtce.AggregateParameterType, None]:
         # print(f"self.PositionSetpointTripletMsg.Previous.Type:{type(self.PositionSetpointTripletMsg.Previous.Type)}")
+        current_timestamp = self.PositionSetpointTripletMsg.Timestamp
+
         SetPoint = Telemetry(
             # Previous_Timestamp = self.PositionSetpointTripletMsg.Previous.Timestamp,
             '/cfs/cpd/apps/px4lib/PX4_POSITION_SETPOINT_TRIPLET_MID',
 
-            Timestamp=108,
-            Previous_Timestamp=109,
+            Timestamp=self.PositionSetpointTripletMsg.Timestamp,
+            Previous_Timestamp=self.PositionSetpointTripletMsg.Previous.Timestamp,
             Previous_Lat=self.PositionSetpointTripletMsg.Previous.Lat,
             Previous_Lon=self.PositionSetpointTripletMsg.Previous.Lon,
             Previous_X=self.PositionSetpointTripletMsg.Previous.X,
@@ -418,8 +420,6 @@ class Nav():
             Previous_CruisingSpeed=self.PositionSetpointTripletMsg.Previous.CruisingSpeed,
             Previous_CruisingThrottle=self.PositionSetpointTripletMsg.Previous.CruisingThrottle,
             Previous_Valid=self.PositionSetpointTripletMsg.Previous.Valid,
-            # FIXME:Shouldn't have to know that a "spare exists"
-            Previous_spare0=0,
             Previous_Type=self.PositionSetpointTripletMsg.Previous.Type.value,
             Previous_PositionValid=self.PositionSetpointTripletMsg.Previous.PositionValid,
             Previous_VelocityValid=self.PositionSetpointTripletMsg.Previous.VelocityValid,
@@ -431,10 +431,8 @@ class Nav():
             Previous_LoiterDirection=self.PositionSetpointTripletMsg.Previous.LoiterDirection,
             Previous_AccelerationValid=self.PositionSetpointTripletMsg.Previous.AccelerationValid,
             Previous_AccelerationIsForce=self.PositionSetpointTripletMsg.Previous.AccelerationIsForce,
-            # FIXME:Shouldn't have to know that a "spare exists"
-            Previous_spare_end=0,
 
-            Current_Timestamp=109,
+            Current_Timestamp=self.PositionSetpointTripletMsg.Current.Timestamp,
             Current_Lat=self.PositionSetpointTripletMsg.Current.Lat,
             Current_Lon=self.PositionSetpointTripletMsg.Current.Lon,
             Current_X=self.PositionSetpointTripletMsg.Current.X,
@@ -458,8 +456,6 @@ class Nav():
             Current_CruisingSpeed=self.PositionSetpointTripletMsg.Current.CruisingSpeed,
             Current_CruisingThrottle=self.PositionSetpointTripletMsg.Current.CruisingThrottle,
             Current_Valid=self.PositionSetpointTripletMsg.Current.Valid,
-            # FIXME:Shouldn't have to know that a "spare exists"
-            # Current_spare0=0,
             Current_Type=self.PositionSetpointTripletMsg.Current.Type.value,
             Current_PositionValid=self.PositionSetpointTripletMsg.Current.PositionValid,
             Current_VelocityValid=self.PositionSetpointTripletMsg.Current.VelocityValid,
@@ -471,10 +467,8 @@ class Nav():
             Current_LoiterDirection=self.PositionSetpointTripletMsg.Current.LoiterDirection,
             Current_AccelerationValid=self.PositionSetpointTripletMsg.Current.AccelerationValid,
             Current_AccelerationIsForce=self.PositionSetpointTripletMsg.Current.AccelerationIsForce,
-            # FIXME:Shouldn't have to know that a "spare exists"
-            # Current_spare_end=0,
 
-            Next_Timestamp=109,
+            Next_Timestamp=self.PositionSetpointTripletMsg.Next.Timestamp,
             Next_Lat=self.PositionSetpointTripletMsg.Next.Lat,
             Next_Lon=self.PositionSetpointTripletMsg.Next.Lon,
             Next_X=self.PositionSetpointTripletMsg.Next.X,
@@ -498,8 +492,6 @@ class Nav():
             Next_CruisingSpeed=self.PositionSetpointTripletMsg.Next.CruisingSpeed,
             Next_CruisingThrottle=self.PositionSetpointTripletMsg.Next.CruisingThrottle,
             Next_Valid=self.PositionSetpointTripletMsg.Next.Valid,
-            # FIXME:Shouldn't have to know that a "spare exists"
-            # Next_spare0=0,
             Next_Type=self.PositionSetpointTripletMsg.Next.Type.value,
             Next_PositionValid=self.PositionSetpointTripletMsg.Next.PositionValid,
             Next_VelocityValid=self.PositionSetpointTripletMsg.Next.VelocityValid,
@@ -511,8 +503,6 @@ class Nav():
             Next_LoiterDirection=self.PositionSetpointTripletMsg.Next.LoiterDirection,
             Next_AccelerationValid=self.PositionSetpointTripletMsg.Next.AccelerationValid,
             Next_AccelerationIsForce=self.PositionSetpointTripletMsg.Next.AccelerationIsForce,
-            # FIXME:Shouldn't have to know that a "spare exists"
-            Next_spare_end=0,
         )
         self.comms.send_message(SetPoint)
         pass
@@ -520,7 +510,7 @@ class Nav():
     def Execute(self):
         Now: int = 0
         # /* Set vehicle arming state */
-        if self.CVT.VehicleStatusMsg.Timestamp != 0 and not (self.VehicleStatusUpdateOnce):
+        if self.CVT.VehicleStatusMsg.Timestamp != 0 and not self.VehicleStatusUpdateOnce:
             self.CVT.VehicleStatusMsg.ArmingState = PX4_ArmingState_t.PX4_ARMING_STATE_STANDBY
             self.VehicleStatusUpdateOnce = True
 
